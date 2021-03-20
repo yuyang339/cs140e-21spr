@@ -19,15 +19,15 @@ In general:
   very easy to miss that some sellers ship from China.
 
   3. If you already have the pieces you need, you are more than welcome
-  to just use that (e.g., from cs107e), with the caveat that you have
+  to just use that (e.g., from cs107e), with the caveat that you need to have
   two of everything.
-  
+
 
 What you need:
 
   0. A laptop that runs Linux or MacOS.  Windows has a a variety of
-     tedious issues and we won't be able to help you with, especially
-     since the class is online.
+     tedious issues which we won't be able to help you with, especially
+     since the class is online (this is true even if you use WSL).
 
      In the past, some die-hard Windows users have made it about half
      way through the quarter before giving up and converting to a Linux
@@ -38,11 +38,14 @@ What you need:
      or model B+)
 
      R/pi A+ ($20) from [Newark](https://www.newark.com/raspberry-pi/raspbrry-moda-512m/silicon-manufacturer-broadcom/dp/81Y5333).
-   
-     R/pi zero W also works ($14); it's smaller and cheaper.
+
+     R/pi Zero W also works ($14); they're smaller and cheaper.
      But some places might not allow you to order two.  
-     [Sparkfun](https://www.sparkfun.com/products/15470) appears to have 
-     some in stock.  (You should also order a R/pi A+ as well.)
+     [Sparkfun](https://www.sparkfun.com/products/15470) appears to have some 
+     Zero W's in stock.  (You should also order a R/pi A+ as well.)
+
+     The Zero (without a W) should be fine too, just make sure it comes with 
+     headers pre-soldered.
 
   2. A bag of big 10MM LEDs so we don't need resistors or a breadboard.
 
@@ -56,17 +59,19 @@ What you need:
 
      [These too](https://www.amazon.com/gp/product/B07D6LLX19/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
 
+    Note: If you order from other places, look for adaptors which use the CP2102 
+    chipset.  Other chips may work, but we haven't tested them.
 
   4. You'll also need a set of jumpers in order to connect your pi to stuff:
 
      [These seem reasonable](https://www.amazon.com/SIM-NAT-Breadboard-Arduino-Raspberry/dp/B07RX78T9L/ref=sr_1_11?dchild=1&keywords=female+to+female+jumper&qid=1616196142&refinements=p_85%3A2470955011%2Cp_72%3A1248879011&rnid=1248877011&rps=1&s=electronics&sr=1-11)
 
      [These worked for Akshay](https://www.amazon.com/EDGELEC-Breadboard-Optional-Assorted-Multicolored/dp/B07GD2BWPY/)
-   
-     Note: if you order from other places, make sure you get 
-     "female-to-female" jumpers.   
 
-  5. Depending on your laptop you might need a USB-c to USB-A adaptor,
+     Note: if you order from other places, make sure you get 
+     "female-to-female" jumpers.
+
+  5. Depending on your laptop you might need a USB-C to USB-A adaptor,
      and/or an adaptor for microSD cards so that you can connect the
      USB-TTL device above and format microSD cards.  (Note: You will
      almost certainly need both types of adaptors if you have a Mac.)
