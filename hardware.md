@@ -8,12 +8,12 @@ issue to pay for this, email me (engler) and I'll paypal you a supplement.
 
 In general: 
 
-  1.  Hardware can arrive broken, or it can become broken, either "just
-  because" or because you plug things together wrong (ask me how I know!).
-  Hardware is a noun, and nouns are easy to lose.  So for the following,
-  always order *at least* two of everything (two pi's, two usb adaptors,
-  two microSD cards).  Additionally, you'll need two working pi's for the
-  networking labs.
+  1.  Hardware can arrive broken, or it can become broken, either
+  "just because" or because you plug things together wrong (ask me
+  how I know!).  Also, hardware is a noun, and nouns are easy to lose.
+  So for the following, always order *at least* two of everything (two
+  pi's, two usb adaptors, two microSD cards).  Additionally, you'll need
+  two working pi's for the networking labs.
 
   2. Pay attention to ship dates so that it will arrive in time.  It's
   very easy to miss that some sellers ship from China.
@@ -25,12 +25,14 @@ In general:
 
 What you need:
 
-  0. A laptop that runs Linux or MacOS.  In the past, some people have
-     made it about half way through the quarter before converting to 
-     a linux dual-boot.   If you are very good, and very dedicated
-     you might be able to make Windows work well enough, but there's
-     a variety of tedious issues and we won't be able to help you.
-     So please just get Linux or MacOS running!
+  0. A laptop that runs Linux or MacOS.  Windows has a a variety of
+     tedious issues and we won't be able to help you with, especially
+     since the class is online.
+
+     In the past, some die-hard Windows users have made it about half
+     way through the quarter before giving up and converting to a Linux
+     dual-boot system, so doing that before the quarter starts will
+     save you time :).
 
   1. We use the r/pi model 1 A+  (Not the model 2 model 3 or model 4
      nor the model B+).
