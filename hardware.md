@@ -24,6 +24,7 @@ In general:
   
 
 What you need:
+
   0. A laptop that runs Linux or MacOS.  In the past, some people have
      made it about half way through the quarter before converting to 
      a linux dual-boot.   If you are very good, and very dedicated
