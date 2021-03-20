@@ -48,22 +48,28 @@ What you need:
 
      [These seem reasonable](https://www.amazon.com/Gikfun-Emitting-Diodes-Diffused-Arduino/dp/B06XWTN1YM/ref=sr_1_4?dchild=1&keywords=10mm+LED&qid=1616195942&refinements=p_85%3A2470955011&rnid=2470954011&rps=1&sr=8-4).
 
-  3. USB to TTL adaptors so you can communicate from your laptop to 
-     the pi.  
- 
-     [These have worked in the past](https://www.amazon.com/gp/product/B07CWKHTLH/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
+  3. At least two USB to TTL adaptors so you can communicate from your
+     laptop to the pi.
+
+     [These have worked in the
+     past](https://www.amazon.com/gp/product/B07CWKHTLH/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
 
      [These too](https://www.amazon.com/gp/product/B07D6LLX19/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
 
 
-  4. You'll also need jumpers in order to connect your pi to stuff:
+  4. You'll also need a set of jumpers in order to connect your pi to stuff:
 
      [These seem reasonable](https://www.amazon.com/SIM-NAT-Breadboard-Arduino-Raspberry/dp/B07RX78T9L/ref=sr_1_11?dchild=1&keywords=female+to+female+jumper&qid=1616196142&refinements=p_85%3A2470955011%2Cp_72%3A1248879011&rnid=1248877011&rps=1&s=electronics&sr=1-11)
 
      [These worked for Akshay](https://www.amazon.com/EDGELEC-Breadboard-Optional-Assorted-Multicolored/dp/B07GD2BWPY/)
    
-  5. Depending on your laptop you might need a USB-c to USB-A adaptor, 
-     and/or an adaptor for microSD cards.
+     Note: if you order from other places, make sure you get 
+     "female-to-female" jumpers.   
+
+  5. Depending on your laptop you might need a USB-c to USB-A adaptor,
+     and/or an adaptor for microSD cards so that you can connect the
+     USB-TTL device above and format microSD cards.  (Note: You will
+     almost certainly need both types of adaptors if you have a Mac.)
 
      [All-in-one adaptor that worked in the past](https://www.amazon.com/gp/product/B07NW8RPYN/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
 
