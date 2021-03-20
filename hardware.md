@@ -34,17 +34,18 @@ What you need:
      dual-boot system, so doing that before the quarter starts will
      save you time :).
 
-  1. We use the r/pi model 1 A+  (Not the model 2 model 3 or model 4
-     nor the model B+).
+  1. At least two r/pi model 1 A+'s.  (Do not order: model 2, model 3, model 4
+     or model B+)
 
      R/pi A+ ($20) from [Newark](https://www.newark.com/raspberry-pi/raspbrry-moda-512m/silicon-manufacturer-broadcom/dp/81Y5333).
    
      R/pi zero W also works ($14); it's smaller and cheaper.
      But some places might not allow you to order two.  
      [Sparkfun](https://www.sparkfun.com/products/15470) appears to have 
-     in stock.
+     some in stock.  (You should also order a R/pi A+ as well.)
 
-  2. You'll want some big 10MM LEDs so we don't need resistors.
+  2. A bag of big 10MM LEDs so we don't need resistors or a breadboard.
+
      [These seem reasonable](https://www.amazon.com/Gikfun-Emitting-Diodes-Diffused-Arduino/dp/B06XWTN1YM/ref=sr_1_4?dchild=1&keywords=10mm+LED&qid=1616195942&refinements=p_85%3A2470955011&rnid=2470954011&rps=1&sr=8-4).
 
   3. USB to TTL adaptors so you can communicate from your laptop to 
