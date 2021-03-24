@@ -205,6 +205,7 @@ Dawson Engler (engler@) and Akshay Srivatsan (akshay01@).
 ### What to do now.
 
 First things first: 
+
  0. Make sure you order [the hardware](guides/hardware.md) immediately!
     You will need it for the first lab.
 
