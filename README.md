@@ -8,7 +8,7 @@
 This is a lab-based class with no explicit lectures.  We will do two
 three-to-five hour labs each week.  You should be able to complete
 almost all of the lab in one sitting.  There will be several homeworks,
-that act as mini-captone projects tying together the preceding labs.
+that act as mini-capstone projects tying together the preceding labs.
 Since we are breaking new ground by having the class virtual only,
 we may add an additional discussion section to help people that need it.
 
@@ -205,6 +205,8 @@ Dawson Engler (engler@) and Akshay Srivatsan (akshay01@).
 ### What to do now.
 
 First things first: 
+ 0. Make sure you order [the hardware](guides/hardware.md) immediately!
+    You will need it for the first lab.
 
  1. clone the class repository:
 
