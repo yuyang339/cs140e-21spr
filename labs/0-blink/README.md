@@ -157,6 +157,7 @@ The LED should be blinking.  If you get this working, please help anyone
 else that is stuck so we all kind of stay about the same speed.
 
 Troubleshooting:
+
    0. First try to trouble shooting from part 1.
    1. If it's not blinking, swap in someone else's card that is working.
    2. If that works, compare their SD card to yours.
@@ -182,7 +183,7 @@ Mac:
   - Download and install the drivers for a
    CP210x USB-to-UART driver as described in the 
    [cs107e docs](http://cs107e.github.io/guides/install/mac/).
-   - Make sure you reboot after doing so.
+   - Make sure you reboot after doing so!  (Go Apple!)
 
 Linux:
   - You shouldn't need drivers, however you may need to add yourself to
@@ -198,13 +199,13 @@ Mechanically:
 
   0. Unplug your pi. Don't modify your current wiring.
   1. Copy `firmware/bootloader.bin` on your SD card as `kernel.img` (see a 
- 	pattern?).
+ 	pattern?), `sync`, and plug back into the pi.
   2. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
      switch them?  (Hint: Think about the semantics of TX (transmit)
      and RX (receive).)
   3. Copy `bin/pi-install.linux` or `bin/pi-install.macos` to your
      local `bin/pi-install`.  Make sure when you type `pi-install`
-     something happens!  If not, make sure your local `bin/` directory
+     something happens!  If not, make sure your local `~/bin/` directory
      is in your path, and that you have sourced your shell startup file.
   4. Run `pi-install part1/blink-pin20.bin`
 
