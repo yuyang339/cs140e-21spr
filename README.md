@@ -1,10 +1,5 @@
 ## CS140E: embedded operating systems (Engler, Spring 2021)
 
-***This is currently being updated***
-
-
-
-
 This is a lab-based class with no explicit lectures.  We will do two
 three-to-five hour labs each week.  You should be able to complete
 almost all of the lab in one sitting.  There will be several homeworks,
