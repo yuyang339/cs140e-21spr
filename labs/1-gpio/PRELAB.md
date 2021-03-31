@@ -46,22 +46,16 @@ You likely have a short somewhere and in the worst-case can fry your laptop.
      which will call into your code.  (You won't modify these two
      latter files.)
 
-----------------------------------------------------------------------
-### Questions you should be able to answer
+  4. Note: where the broadcom document uses addresses `0x7420xxxx`, you'll use
+     `0x2020xxxx`.
 
-Note: where the broadcom document uses addresses `0x7420xxxx`, you'll use
-`0x2020xxxx`.  
-
-You can work with someone else on this:
+Questions you should be able to answer:
 
   0. Where are `put32` and `get32` defined?
-
   1. Write out the call to `put32` that will set GPIO pin 20 to be an
      output pin (i.e., give the address and expression used as arguments).
-
   2. Write out the call to `put32` that will set GPIO pin 20 to be an
      input pin (i.e., give the address and expression used as arguments).
-
   3. Write out the call to `get32` to determine what value is held in
      GPIO pin 21.
 
