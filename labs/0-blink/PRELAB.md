@@ -53,8 +53,8 @@ Your partner's does.  You plug your setup into their laptop.
 --------------------------------------------------------------------
 ### Part 0: git and checking out the class repo
 
-   1. Install `git` on your laptop if you don't have it: we use `git`
-      to push all assignments and code to you.  
+   1. If you don't have `git`, install it on your laptop.  We use `git`
+      to push all assignments and code to you.
 
       MacOS seems to ship with `git`, but you might need to install the
       xcode command line tools with:
@@ -108,14 +108,13 @@ micro-SD card on your laptop:
       the OS to flush out all dirty blocks to all stable media (SD card,
       flash drive, etc).  At this point you can pull the card out.
 
-      Pro tip: ***do not omit either a `sync` or some file manager eject
-      action*** if you do, parts of the copied file(s) may in fact not
-      be on the SD card.  (Why: writes to stable storage are slow, so
-      the OS tends to defer them.)
-
+      Pro tip: ***do not omit either a `sync` or some equivalant file
+      manager eject action*** if you do, parts of the copied file(s)
+      may in fact not be on the SD card.  (Why: writes to stable storage
+      are slow, so the OS tends to defer them.)
 
 --------------------------------------------------------------------
-### Part 2: change your Path
+### Part 2: change your `PATH` variable
 
 To save you time, typing and mistakes: tell your shell to look for
 executable programs in a `bin` directory located in your home directory.
@@ -125,10 +124,10 @@ executable programs in a `bin` directory located in your home directory.
      programs in a local `~/bin` directory and not have to constantly
      type out the path to them.  E.g.,
 
-           % cd ~
-           % mkdir bin
-           % cd bin
-           % pwd     
+           % cd ~          # change to your home dir
+           % mkdir bin     # make a bin directory
+           % cd bin        # cd into it
+           % pwd           # get the absolute path
            /home/engler/bin
            
      To figure out your shell, you can typically check in `/etc/password`:
@@ -165,7 +164,7 @@ executable programs in a `bin` directory located in your home directory.
       and source it the same way as the `.tcshrc`.
 
 --------------------------------------------------------------------
-#### Install the rest of the code
+#### Install the rest of the code 
 
 Gates wireless can really suck, so it's best if you download the rest
 of the code that you need: look in Part 3 (serial drivers) and Part 4
@@ -219,7 +218,8 @@ your Stanford journey much easier:
 
      Easy.
 
+----------------------------------------------------------------
 ### Acknowledgements
 
-Thanks to Ian (in class this year!) for helping improve the writeup
-of this and the next lab.
+Thanks to Ian (taking the class now!) for helping greatly improve the
+writeup of this and the next lab.
