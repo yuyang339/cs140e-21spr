@@ -59,12 +59,12 @@ The final sign off for the lab:
 #### 0. Make sure you have everything.
 
 You should have:
-  1. one or more R/PI A+;
+  1. one or more R/PI A+ (or Zero);
   2. one or more microSD card and adapter;
   3. one or more CP2102 USB-TTL adapter;
   4. however many led's you want;
   5. some female-female jumpers;
-  6. printout of the pi's pins.
+  6. printout of the pi's pins (digital is okay, but a printout will be more convenient).
 
 <table><tr><td>
   <img src="images/manifest.jpg"/>

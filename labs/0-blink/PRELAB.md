@@ -67,11 +67,11 @@ Your partner's does.  You plug your setup into their laptop.
 
    2. Use `git` to clone (check out) the class repository:
 
-          % git clone git@github.com:dddrrreee/cs140e-win20.git  
+          % git clone git@github.com:dddrrreee/cs140e21-spr.git  
 
       If you don't want to install a key on github, use:
 
-          % git clone https://github.com/dddrrreee/cs140e-win20.git
+          % git clone https://github.com/dddrrreee/cs140e-21spr.git
 
       Pro tip: run your `git clone` command in some sensible directory
       (e.g., `~/class/`) and remember where you checked your repository
@@ -94,7 +94,8 @@ micro-SD card on your laptop:
        (with pictures!).
 
    2. Figure out where your SD card is mounted (usually on MacOS it is in
-      `/Volumes` and on linux in `/media/yourusername/`).   Figure out
+      `/Volumes` and on linux in `/media/yourusername/`, some newer linuxes 
+      might put it in `/run/media/$USER/`).   Figure out
       how to copy files to the SD card from the command line using
       `cp`, which is much much faster and better than using a gui (e.g.,
       you can put it in a
@@ -186,6 +187,8 @@ your Stanford journey much easier:
      functions, variables.  This makes understanding code
      ***much much*** faster and easier.   [A description for
      `vim`](https://vim.fandom.com/wiki/Browsing_programs_with_tags).
+
+     See [the ctags guide](../../../guides/ctags.md) for more detailed info.
 
    - Longer term: eliminate as much mouse usage as you can; ***especially
      eliminate screen switching***.  Ideally you'll have your code in one
