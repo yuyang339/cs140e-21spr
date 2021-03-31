@@ -12,6 +12,7 @@ about some basic concept, cs107e has a good set of guides on electricity,
 shell commands, pi stuff in general:
    - [CS107E repo] (http://cs107e.github.io/guides/)
 
+--------------------------------------------------------------------
 ### Deliverables before thursday:
 
 Do these on your own (described more in the rest of the document):
@@ -23,13 +24,13 @@ Do these on your own (described more in the rest of the document):
     an adaptor. 
  3. Make sure you know how to use common unix commands such as: `ls`,
     `mkdir`, `cd`, `pwd`.
- 4. Read through the [README.md](README.md) and look through the code.
+ 4. Read through the [README](README.md) and look through the code.
  5. Ideally: Install the rest of the software needed by Part 3 and Part 
-    4 of the lab.
+    4 of the lab (described in the `README`).
 
 ### *Turn-in*
 
-The wednesday lab is broken down into five parts:
+The thursday lab is broken down into five parts:
   1. You'll turn on an LED manually;
   2. Then copy a pre-compiled program to an micro-SD and boot up your pi;
   3. Then use a bootloader to ship the program to the pi directly;
@@ -49,6 +50,7 @@ Your partner's does.  You plug your setup into their laptop.
   1. Yours works in their laptop: what do you know?
   2. Yours does not work in thier laptop: what do you know?
   
+--------------------------------------------------------------------
 ### Part 0: git and checking out the class repo
 
    1. Install `git` on your laptop if you don't have it: we use `git`
@@ -80,6 +82,7 @@ Your partner's does.  You plug your setup into their laptop.
       .zip file***!  Direct download will be both tedious and overwrite
       any local changes you do later.
 
+--------------------------------------------------------------------
 #### Part 1: micro-SD card stuff
 
 In order to run code on the pi, you will need to be able to write to a
@@ -111,6 +114,7 @@ micro-SD card on your laptop:
       the OS tends to defer them.)
 
 
+--------------------------------------------------------------------
 ### Part 2: change your Path
 
 To save you time, typing and mistakes: tell your shell to look for
@@ -160,12 +164,14 @@ executable programs in a `bin` directory located in your home directory.
 
       and source it the same way as the `.tcshrc`.
 
+--------------------------------------------------------------------
 #### Install the rest of the code
 
 Gates wireless can really suck, so it's best if you download the rest
 of the code that you need: look in Part 3 (serial drivers) and Part 4
 (gcc toolchain) of the lab, and install the software it says.
 
+--------------------------------------------------------------------
 #### Nice-haves: Extra, very useful things.
 
 You don't need these for the first lab, but they will make
