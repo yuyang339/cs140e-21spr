@@ -66,9 +66,15 @@ You should have:
   5. some female-female jumpers;
   6. printout of the pi's pins (digital is okay, but a printout will be more convenient).
 
+
 <table><tr><td>
-  <img src="images/manifest.jpg"/>
+  <img src="images/pi-start.jpg"/>
 </td></tr></table>
+
+The pi is oriented with the two rows of pins on the right of the board.
+The two pins at the top of the rightmost row are 5v, the top left 3v.
+When connecting things I usually try to use the bottom left ground pin,
+and the bottom right GPIO 21 pin, since these are impossible to miscount.
 
 --------------------------------------------------------------------------
 #### 1. Make sure hardware is working:
