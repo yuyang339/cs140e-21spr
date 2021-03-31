@@ -125,24 +125,32 @@ What can go wrong:
 --------------------------------------------------------------------------
 #### 2.  Make sure you're able to install firmware, etc:
 
-You'll run a precompiled program (`part1/blink-pin20.bin`) on the pi and make
-sure it can blink pin 20.
+Now you'll run a precompiled program (`part1/blink-pin20.bin`) on the
+pi and make sure it can blink pin 20.
 
-Note: in the next assignment  when you develop your own remote bootloader
-(see next step), if your code is broken you'll need to use this SD
-card method to load a new version, so pay attention to how you do it on
-your computer.
+Note: next week when you develop your own remote bootloader (see next
+step) you have to use this SD card method repeatedly to load new versions,
+so pay attention to how you do it on your computer!
 
 Mechanically:
   1. Unplug the USB-TTY.
   2. Plug SD card into your computer and figure out where it's mounted.
-  3. As discussed in the `PRELAB`, copy all the files from class `firmware` directory onto the SD card (`cp firmware/* /<sdcard path>/`)
-  4. copy `part1/blink-pin20.bin` to the SD card as `kernel.img`.
-  5. type `sync` and then eject the SD card (don't just pull it out!  data may not be written out.)
-  6. connect the LED to GPIO20 and ground. 
+  3. As discussed in the `PRELAB`, copy all the files from class
+     `firmware` directory onto the SD card.  Then copy
+     `part1/blink-pin20.bin` to the SD card as `kernel.img`.  Then type
+     `sync` and then eject the SD card (don't just pull it out!  data may
+     not be written out.)
+
+     For me, this is:
+
+        % cp firmware/* /media/engler/0330-444/
+        % cp part1/blink-pin20.bin /media/engler/0330-444/kernel.img
+        % sync
+        
+  4. connect the LED to GPIO20 and ground. 
      Use `docs/gpio.png` to figure out which this is.
-  7. Plug the SD card into your pi
-  8. Plug in the USB-TTY to your USB to power the pi.  The pi will jump
+  5. Plug the SD card into your pi
+  6. Plug in the USB-TTY to your USB to power the pi.  The pi will jump
   to whatever code is in `kernel.img`.
 
 The LED should be blinking.  If you get this working, please help anyone
