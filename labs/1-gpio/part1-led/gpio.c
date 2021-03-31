@@ -82,4 +82,3 @@ void gpio_write(unsigned pin, unsigned v) {
     else
        gpio_set_off(pin);
 }
-
