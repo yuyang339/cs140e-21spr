@@ -13,12 +13,6 @@ lab down into many (perhaps too-many) small steps.   Our theorem for this
 class: the smaller the step, the more obvious what the actual (distal)
 error is and the less time you have to spend debugging.
 
-If you learn one thing from this class, hopefully it's the 
-counter-intuitive realization that:
-
-   - when building systems, smaller the step you take the faster you
-     can run ("epsilon sprinting").
-
 We'll use different variations of a blinky light using GPIO pin 20 
 (second from bottom on the right):
 
@@ -34,14 +28,15 @@ The final sign off for the lab:
 
   1. Show you have a working `blink` compiled using the tool chain and started
      using the bootloader.
-  2. Bonus: write up a short example problem you ran into (or someone you helped
+  2. Bonus: Use one pi to cause a light to blink on a second pi.  
+  3. Bonus: write up a short example problem you ran into (or someone you helped
      ran into) and how you solved them and post to the newsgroup so we can 
      start accumulating examples. 
 
 --------------------------------------------------------------------------
 ### Crucial: Life and death rules for pi hardware.
 
-Always:
+**Always**:
 
   1. Whenever you make a hardware change --- messing with wires,
      pulling the SD card in/out --- ***make sure pi is disconnected
