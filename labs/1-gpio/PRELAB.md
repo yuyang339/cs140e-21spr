@@ -1,4 +1,3 @@
-
 ### Always obey the first rule of PI-CLUB
 
   - ***IF YOUR PI GETS HOT TO THE TOUCH UNPLUG IT***  
@@ -11,28 +10,10 @@
 
 You likely have a short somewhere and in the worst-case can fry your laptop.
 
-#### Setup your  CS140E_2021_PATH variable.
-
-Similar to how you added your local `~/bin` directory to your
-shell's path on the first lab, today you're going to edit your
-shell configuration file (e.g., `.tcshrc`, `.bash_profile`, etc)
-to set set an environment variable `CS140E_PATH` to contain where
-you have your repository.
-
-E.g., for me, since I'm running `tcsh` I edit my `.tcshrc` file and
-add:
-
-    setenv CS140E_2021_PATH /home/engler/class/cs140e-21win-dev/
-
-To the end of it.  If you use `bash` you'll do an:
-
-    export CS140E_2021_PATH=<path to your repo>
-
-And, as before, don't forget to source your configuration file.
-
+---------------------------------------------------------------------
 ### Reading before lab:
 
-  1. Read throuh `Part 0` of the lab (in the README.md)
+  1. Read throuh `Part 0` of the lab (in the [README.md](README.md))
      to get a big-picture background of how the r/pi (and many computer
      systems) control devices.
 
@@ -67,7 +48,8 @@ And, as before, don't forget to source your configuration file.
      which will call into your code.  (You won't modify these two
      latter files.)
 
-### Hand-in deliverables:
+----------------------------------------------------------------------
+### Questions you should be able to answer
 
 Note: where the broadcom document uses addresses `0x7420xxxx`, you'll use
 `0x2020xxxx`.  
@@ -76,10 +58,33 @@ You can work with someone else on this:
 
   0. Where are `put32` and `get32` defined?
 
-  1. Write out the call to `put32` that will set GPIO pin 20 to be an output pin 
-    (i.e., give the address and expression used as arguments).
+  1. Write out the call to `put32` that will set GPIO pin 20 to be an
+     output pin (i.e., give the address and expression used as arguments).
 
-  2. Write out the call to `put32` that will set GPIO pin 20 to be an input pin 
-    (i.e., give the address and expression used as arguments).
+  2. Write out the call to `put32` that will set GPIO pin 20 to be an
+     input pin (i.e., give the address and expression used as arguments).
 
-  3. Write out the call to `get32` to determine what value is held in GPIO pin 21.
+  3. Write out the call to `get32` to determine what value is held in
+     GPIO pin 21.
+
+---------------------------------------------------------------------
+### Setup your  CS140E_2021_PATH variable.
+
+The course Makefiles use this variable to locate where your repository is.
+
+Similar to how you added your local `~/bin` directory to your
+shell's path on the previous lab, today you're going to edit your shell
+configuration file (e.g., `.tcshrc`, `.bash_profile`, etc) to set
+an environment variable `CS140E_PATH` to contain where you have your
+repository.
+
+E.g., for me, since I'm running `tcsh` I edit my `.tcshrc` file and
+add:
+
+    setenv CS140E_2021_PATH /home/engler/class/cs140e-21spr/
+
+To the end of it.  If you use `bash` you'll do an:
+
+    export CS140E_2021_PATH=<path to your repo>
+
+And, as before, don't forget to source your configuration file.
