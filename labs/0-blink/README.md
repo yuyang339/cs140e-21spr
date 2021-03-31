@@ -94,7 +94,6 @@ hardware and that you know how to wire.
 <p float="left">
   <img src="images/part1-full.jpg" width="250" />
   <img src="images/part1-devices.jpg" width="250" /> 
-  <img src="images/part1-pi.jpg" width="250" />
   <img src="images/part1-pi-power.jpg" width="250" />
 </p>
 
