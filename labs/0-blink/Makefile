@@ -14,7 +14,7 @@ $(SUBDIRS): force
 	$(MAKE) -s -C $@ $(TARGET)
 
 clean:
-	rm -f *~ *.bak
+	rm -f *~ *.bak */*~
 
 .PHONY: force
 	force :;

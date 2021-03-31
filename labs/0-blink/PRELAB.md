@@ -1,8 +1,8 @@
 ### Pre-lab for 0-blink
 
-Read through the below and do any action item before wednesday's lab.
-Since this is the first lab and people are missing context, we
-over-explain --- the other labs should have less prose.
+Read through the below and do any action item before our first lab pi lab
+(Thursday).  Since this is the first lab and people are missing context,
+we over-explain --- the other labs will be more succinct.
 
 For this lab, we'll use different variations of a blinky light to check
 that parts of your toolchain / understanding are working.
@@ -15,14 +15,14 @@ shell commands, pi stuff in general:
 ### Deliverables before the first lab (wed):
 
 Do these on your own (described more in the rest of the document):
-   1. Check-out the class git repo.
-   2. Figure out how to add a local `~/bin` directory in your home directory to your shell's `PATH` variable.
-   3. Have a way to mount a micro-SD card on your laptop.  You may need an adaptor.
+   0. Check-out the class git repo.
+   1. Figure out how to add a local `~/bin` directory in your home directory to your shell's `PATH` variable.
+   2. Have a way to mount a micro-SD card on your laptop.  You may need an adaptor.
       We will have some at the lab, but it's better if you have your own.
-   4. Make sure you know how to use common unix commands such as:
+   3. Make sure you know how to use common unix commands such as:
       `ls`, `mkdir`, `cd`, `pwd`.
-   5. Read through the first lab (`0-blink/README.md`) and look through the code.
-   6. Ideally: Install the rest of the software needed by Part 3 and Part 4 of the lab.
+   4. Read through the first lab (`0-blink/README.md`) and look through the code.
+   5. Ideally: Install the rest of the software needed by Part 3 and Part 4 of the lab.
 
 ### *Turn-in*
 
@@ -46,7 +46,7 @@ Your partner's does.  You plug your setup into their laptop.
   1. Yours works in their laptop: what do you know?
   2. Yours does not work in thier laptop: what do you know?
   
-### git and checking out the class repo
+### Part 0: git and checking out the class repo
 
    1. Install `git` on your laptop if you don't have it: we use `git`
       to push all assignments and code to you.  
@@ -77,7 +77,7 @@ Your partner's does.  You plug your setup into their laptop.
       .zip file***!  Direct download will be both tedious and overwrite
       any local changes you do later.
 
-#### micro-SD card stuff
+#### Part 1: micro-SD card stuff
 
 In order to run code on the pi, you will need to be able to write to a
 micro-SD card on your laptop:
@@ -108,7 +108,7 @@ micro-SD card on your laptop:
       the OS tends to defer them.)
 
 
-### change your Path
+### Part 2: change your Path
 
 To save you time, typing and mistakes: tell your shell to look for
 executable programs in a `bin` directory located in your home directory.
@@ -173,9 +173,11 @@ your Stanford journey much easier:
      but you can google.
 
    - Figure out how to use tags.  Both `emacs` or `vim` support "tags",
-     which use keyboard shortcuts to essentially treat identifiers as urls
-     and navigate to the definitions of structures, functions, variables.
-     This makes understanding code ***much much*** faster and easier.   [A description for `vim`](https://vim.fandom.com/wiki/Browsing_programs_with_tags).
+     which use keyboard shortcuts to essentially treat identifiers
+     as urls and navigate to the definitions of structures,
+     functions, variables.  This makes understanding code
+     ***much much*** faster and easier.   [A description for
+     `vim`](https://vim.fandom.com/wiki/Browsing_programs_with_tags).
 
    - Longer term: eliminate as much mouse usage as you can; ***especially
      eliminate screen switching***.  Ideally you'll have your code in one

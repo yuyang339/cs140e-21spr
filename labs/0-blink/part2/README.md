@@ -1,9 +1,9 @@
-Pat's lab1 blink code from 107e.
+Pat's lab1 blink code from cs107e.
 
-Blink an LED connected to GPIO 20.
+   1. Connect an LED to pin 20 and to ground.
+   2. Run: 
 
-Run: 
-   1. `sh make.sh` 
-   2. `pi-install blink-pin20.bin`
+        % sh make.sh                   # assemble blink-pin20.s 
+        % pi-install blink-pin20.bin   # bootload it over to the pi
 
-It should blink your pi.
+   3. Your LED should be blinking.
