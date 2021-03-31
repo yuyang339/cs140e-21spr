@@ -82,6 +82,28 @@ The way you use ctags will be slightly different depending on what editor you
 use.  I've given a brief overview for Vim/Neovim, Emacs, and VSCode, but you 
 should look up tutorials for your specific editor to get a full guide.
 
+To regenerate your tags file from the command line, the simplest way is what 
+was mentioned earlier: run `ctags -R .` from the root directory of the cs140e 
+directory.  However, this may be suboptimal for a few reasons: since each of 
+our labs will define its own functions, you may end up with a bunch of 
+irrelevant definitions in your results; you may not be able to autocomplete 
+some library functions; you probably don't want to cd back to the root every 
+time you regenerate your tags, etc.
+
+A more advanced way to generate your tags is:
+1. run `ctags -R .` from your code directory (wherever your Makefile is)
+2. run `ctags -aR $CS140E_PATH/libpi` to append the tags from your libpi 
+   directory.
+    - You can run the latter command again with other paths you want to 
+      include.
+This will limit your tags to only those functions which are relevant to the 
+current lab.  This means you can open your editor in this directory, but still 
+jump-to-definition into other directories if you need to.
+
+You can configure your Makefile to do these steps automatically every time you build.
+
+For Emacs, add the `-e` flag to every ctags invocation (e.g. `ctags -eR $CS140E_PATH/libpi`).
+
 ### Vim/Neovim
 
 Vim has ctags support built in.
@@ -90,18 +112,21 @@ Vim has ctags support built in.
     - This is also available as `:tag <tag> <RET>`
     - use `:tn` and `:tp` to jump to other definitions
 * You can also use `g ]` (list all definitions) if a symbol is ambiguous.
-* To autocomplete, use `<C-n>` or `<C-p>` (autocomplete forward and 
-  autocomplete backwards, respectively).
+* To autocomplete, use `<C-x><C-]>` or `<C-x><C-o>` (autocomplete tag and 
+  omnicomplete, respectively).
 * Use `:ts <symbol name> <RET>` to search for a symbol.
+* You can set the `tags` setting to the paths of the tags files you want to 
+  use.
 
-Helpful plugin: [Gutentags](https://github.com/ludovicchabant/vim-gutentags) 
-automatically updates your tags file every time you save.  It auto-detects git 
-repositories and figures out where your tags files are.
 
 More info:
 - [Vim Wiki](https://vim.fandom.com/wiki/Browsing_programs_with_tags)
 - [Vim/Ctags Tutorial](https://andrew.stwrt.ca/posts/vim-ctags/)
 - type `:help tags` in vim to open the built-in documentation
+- [Gutentags](https://github.com/ludovicchabant/vim-gutentags) automatically 
+  updates your tags file every time you save.  It auto-detects git repositories 
+  and creates a tags file for the entire repository.
+
 
 ### Emacs
 
