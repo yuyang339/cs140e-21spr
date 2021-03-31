@@ -234,10 +234,13 @@ Install the toolchain:
 
            sudo apt-get install libnewlib-arm-none-eabi
 
-Compile `part2/blink-pin20.s` using the shell script.
+Now test that the toolchain works and produces a runnable binary:
 
-   1. `cd part2`.   Run `sh make.sh`. We will use `make` frequently in the future to compile our code before sending if off to the pi. If you don't know what `make` does, or how a `Makefile` works, see the [CS107E Guide to Make](http://cs107e.github.io/guides/make/).
-   2. reset your pi: unplug the TTY-USB then plug it back in to your laptop.
-   3.  `pi-install part2/blink-pin20.bin`.   Should blink.  If
-	not isolate the problem by trying the blink-pin20.bin in `part1/`,
-	your lab partner's, etc.
+   1. Reset your pi: unplug the TTY-USB then plug it back in to your laptop.
+   2. Compile and bootload `part2/blink-pin20.s` using the shell script.
+
+        % cd part2
+        % sh make.sh     # compile blink-pin20.s to blink-pin20.bin
+        % ls
+        blink-pin20.bin  blink-pin20.s	make.sh  README.md
+        % pi-install blink-pin20.bin    # your pi should start blinking.
