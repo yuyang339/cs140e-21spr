@@ -1,8 +1,12 @@
 # The labs
 
 This is only a rough guide ---- we are currently doing significant
-lab rewrites.
+lab rewrites.  The first chunk of labs should remain roughly the
+same, just with more photos (and maybe video if I can figure out OBS).
+The subsequent labs will likely get modified with some new ideas we have
+from teaching cs240lx and cs340lx last year.
 
+---------------------------------------------------------------------
 ### Part 1: Going down.
 
 The first chunk of the class will be writing all the low-level code needed
@@ -11,11 +15,12 @@ remove all magic from what is going on since all of the interesting code
 on both the pi and unix side will be written by you:
 
   - [0-blink](0-blink/): get everyone up to speed and all
-      necessary software installed.    This should be a fast lab.
+      necessary software installed.  This should be a fast lab.
 
-  - [1-gpio](1-gpio/): write your own code to control the r/pi `GPIO`
-     pins using the Broadcom document GPIO description.  You will use
-     this to implement your own blink and touch sensor.
+  - [1-gpio](1-gpio/): start getting used to understanding hardware
+     datasheets by writing your own code to control the r/pi `GPIO` pins
+     using the Broadcom document GPIO description.  You will use this
+     to implement your own blink and simple network between your r/pi's.
 
   - [2-bootloader](2-bootloader/): you will implement your own
      bootloader to transfer the code from your laptop to the pi.  The
@@ -25,8 +30,8 @@ on both the pi and unix side will be written by you:
      will later make it easier to do a network boot.
 
   - [3-cross-check](3-cross-check/): you will use read-write logging
-     to verify that your GPIO code is equivalent to everyone else's.   If one
-     person got the code right, everyone will have it right.
+     to verify that your GPIO code is equivalent to everyone else's.
+     If one person got the code right, everyone will have it right.
 
      A key part of this class is having you write all the low-level,
      fundamental code your OS will need.  The good thing about this
@@ -67,7 +72,13 @@ code ever breaks.
 We are now going to switch gears to intensively implementing core OS
 functionality: threads, interrupts, virtual memory and file systems.
 
+-------------------------------------------------------------------------
 ### Part 2: Threads and Interrupts, with Tricks:
+
+These are going to change alot. We are getting rid of the ESP and going
+with an I2C network device instead (the NRF24L01).  I think we'll pull
+a simple virtual memory setup earlier so you can have simple memory
+protection.
 
   - [6-threads](6-threads/): we build a simple, but functional
     threads package.  You will write the code for non-preemptive context
@@ -107,7 +118,7 @@ functionality: threads, interrupts, virtual memory and file systems.
    control other pi's.  The code depends on having an interrupt-based 
    UART channel.
 
-
+-------------------------------------------------------------------------
 ### Part 3: file systems.
 
   - [11-fuse.A](11-fuse/): In this lab you will use the FUSE file
