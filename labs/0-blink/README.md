@@ -143,9 +143,9 @@ Mechanically:
 
      For me, this is:
 
-        % cp firmware/* /media/engler/0330-444/
-        % cp part1/blink-pin20.bin /media/engler/0330-444/kernel.img
-        % sync
+            % cp firmware/* /media/engler/0330-444/
+            % cp part1/blink-pin20.bin /media/engler/0330-444/kernel.img
+            % sync
         
   4. connect the LED to GPIO20 and ground. 
      Use `docs/gpio.png` to figure out which this is.
