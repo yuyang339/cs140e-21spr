@@ -74,8 +74,9 @@ You should have:
 --------------------------------------------------------------------------
 #### 1. Make sure hardware is working:
 
-Before we mess with software, we first make sure the hardware works.  When doing
-something for the first time, you always want to isolate into small pieces.
+Before we mess with software that will control hardware, we first make
+sure the hardware works: When doing something for the first time,
+you always want to isolate into small pieces.
 
 So as our first step, we will use the USB-TTY to power the pi, and
 use the pi's power to directly turn on an LED.  This tests some basic
@@ -105,8 +106,9 @@ Mechanically:
      If still doesn't go on, plug someone else's working version into
      your computer.  If that doesn't work, ask.
 
-     (Note: the color of the wire does not matter for electricity, but it 
-     makes it much easier to keep track of what goes where.)
+     (Note: the color of the wire does not matter for electricity,
+     but it makes it much easier to keep track of what goes where:
+     pleaes use red for power, black for ground.)
   4. Try another LED and try some of the other ground and power pins.
 
 (EE folks: We don't use a breadboard b/c it's bulky; we don't use
