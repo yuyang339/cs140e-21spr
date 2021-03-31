@@ -12,17 +12,20 @@ about some basic concept, cs107e has a good set of guides on electricity,
 shell commands, pi stuff in general:
    - [CS107E repo] (http://cs107e.github.io/guides/)
 
-### Deliverables before the first lab (wed):
+### Deliverables before thursday:
 
 Do these on your own (described more in the rest of the document):
-   0. Check-out the class git repo.
-   1. Figure out how to add a local `~/bin` directory in your home directory to your shell's `PATH` variable.
-   2. Have a way to mount a micro-SD card on your laptop.  You may need an adaptor.
-      We will have some at the lab, but it's better if you have your own.
-   3. Make sure you know how to use common unix commands such as:
-      `ls`, `mkdir`, `cd`, `pwd`.
-   4. Read through the first lab (`0-blink/README.md`) and look through the code.
-   5. Ideally: Install the rest of the software needed by Part 3 and Part 4 of the lab.
+
+ 0. Check-out the class git repo.
+ 1. Figure out how to add a local `~/bin` directory in your home directory
+    to your shell's `PATH` variable.
+ 2. Have a way to mount a micro-SD card on your laptop.  You may need
+    an adaptor. 
+ 3. Make sure you know how to use common unix commands such as: `ls`,
+    `mkdir`, `cd`, `pwd`.
+ 4. Read through the [README.md](README.md) and look through the code.
+ 5. Ideally: Install the rest of the software needed by Part 3 and Part 
+    4 of the lab.
 
 ### *Turn-in*
 
@@ -209,3 +212,8 @@ your Stanford journey much easier:
           $1 = 683
 
      Easy.
+
+### Acknowledgements
+
+Thanks to Ian (in class this year!) for helping improve the writeup
+of this and the next lab.
