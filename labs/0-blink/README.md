@@ -49,7 +49,7 @@ The final sign off for the lab:
      the pi --- ***DISCONNECT***!  Sometimes devices have manufacturing
      errors (welcome to hardware), sometimes you've made a mistake.
      Any of these can lead to frying the device or, in the worst case,
-     your laptop.  So don't assume you have a safety net: its up to you
+     your laptop.  So don't assume you have a safety net: it's up to you
      to avert disaster.
 
   3. While the pi has its own unique features, it's also like all other
