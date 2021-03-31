@@ -28,8 +28,7 @@ The final sign off for the lab:
 
   1. Show you have a working `blink` compiled using the tool chain and started
      using the bootloader.
-  2. Bonus: Use one pi to cause a light to blink on a second pi.  
-  3. Bonus: write up a short example problem you ran into (or someone you helped
+  2. Bonus: write up a short example problem you ran into (or someone you helped
      ran into) and how you solved them and post to the newsgroup so we can 
      start accumulating examples. 
 
@@ -147,11 +146,12 @@ Mechanically:
             % cp part1/blink-pin20.bin /media/engler/0330-444/kernel.img
             % sync
         
-  4. connect the LED to GPIO20 and ground. 
-     Use `docs/gpio.png` to figure out which this is.
+  4. With your pi disconnected from your laptop, 
+     connect the LED to gpio pin 20 and ground. 
+     (Use `docs/gpio.png` to figure out which these are.)
   5. Plug the SD card into your pi
   6. Plug in the USB-TTY to your USB to power the pi.  The pi will jump
-  to whatever code is in `kernel.img`.
+     to whatever code is in `kernel.img`.
 
 The LED should be blinking.  If you get this working, please help anyone
 else that is stuck so we all kind of stay about the same speed.
@@ -161,7 +161,6 @@ Troubleshooting:
    1. If it's not blinking, swap in someone else's card that is working.
    2. If that works, compare their SD card to yours.
    3. If that doesn't work, try your card in their rpi.  
-
 
 --------------------------------------------------------------------------
 #### 3.  Send a new pi program from your computer rather than SD card.
