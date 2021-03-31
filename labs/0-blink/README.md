@@ -91,12 +91,17 @@ hardware and that you know how to wire.
   <img src="../../docs/gpio.png"/>
 </td></tr></table>
 
+<table><tr><td>
+  <img src="images/part1-full.jpg"/>
+  <img src="images/part1-devices.jpg"/>
+  <img src="images/part1-pi.jpg"/>
+</td></tr></table>
+
 Mechanically:
 
   1. Connect the USB-to-TTL Serial cable's power (red) and ground  (black)
      wires to a 5v pin (not the 3v pin) and ground pins on the pi that
-     are next to each other
-	 (see your printout; upper right corner).
+     are next to each other (see your printout; upper right corner).
   2. Plug the USB-TTY into your laptop's USB port.
   3. Using a red (power) and black(ground)  female jumper wires, connect
      your LED to an unused ground pin and the 3v power pin (there are
