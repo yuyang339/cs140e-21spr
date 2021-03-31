@@ -93,8 +93,6 @@ hardware and that you know how to wire.
 
 <table><tr><td>
   <img src="images/part1-full.jpg"/>
-  <img src="images/part1-devices.jpg"/>
-  <img src="images/part1-pi.jpg"/>
 </td></tr></table>
 
 Mechanically:
