@@ -92,9 +92,9 @@ hardware and that you know how to wire.
 </td></tr></table>
 
 <p float="left">
-  <img src="images/part1-full.jpg" width="100" />
-  <img src="images/part1-devices.jpg" width="100" /> 
-  <img src="images/part1-pi.jpg" width="100" />
+  <img src="images/part1-full.jpg" width="300" />
+  <img src="images/part1-devices.jpg" width="300" /> 
+  <img src="images/part1-pi.jpg" width="300" />
 </p>
 
 Mechanically:
