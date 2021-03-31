@@ -91,9 +91,11 @@ hardware and that you know how to wire.
   <img src="../../docs/gpio.png"/>
 </td></tr></table>
 
-<table><tr><td>
-  <img src="images/part1-full.jpg"/>
-</td></tr></table>
+<p float="left">
+  <img src="images/part1-full.jpg" width="100" />
+  <img src="images/part1-devices.jpg" width="100" /> 
+  <img src="images/part1-pi.jpg" width="100" />
+</p>
 
 Mechanically:
 
