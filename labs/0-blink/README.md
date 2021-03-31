@@ -5,7 +5,7 @@
 This is a relatively trivial lab to make sure your r/pi (model 1 A+)
 and ARM toolchain works.
 
-    - **Make sure you do the [prelab](PRELAB.md) first!**
+  - **Make sure you do the [prelab](PRELAB.md) first!**
 
 There's a lot of fiddly little details in getting a pi working, and this
 lab is many people's first time working with hardware, so we break the
