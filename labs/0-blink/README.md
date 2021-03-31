@@ -239,8 +239,8 @@ Now test that the toolchain works and produces a runnable binary:
    1. Reset your pi: unplug the TTY-USB then plug it back in to your laptop.
    2. Compile and bootload `part2/blink-pin20.s` using the shell script.
 
-        % cd part2
-        % sh make.sh     # compile blink-pin20.s to blink-pin20.bin
-        % ls
-        blink-pin20.bin  blink-pin20.s	make.sh  README.md
-        % pi-install blink-pin20.bin    # your pi should start blinking.
+            % cd part2
+            % sh make.sh     # compile blink-pin20.s to blink-pin20.bin
+            % ls
+            blink-pin20.bin  blink-pin20.s	make.sh  README.md
+            % pi-install blink-pin20.bin    # your pi should start blinking.
