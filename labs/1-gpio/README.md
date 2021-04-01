@@ -3,7 +3,7 @@
 **Important: as always, read and complete the [PRELAB](PRELAB.md)
 before lab!**
 
-The first lab was just setup.  Today we get to the fun part: you'll use
+The first lab was just setup.  Now we get to the fun part: you'll use
 the Broadcom document (`../../docs/BCM2835-ARM-Peripherals.annot.PDF`)
 to figure out how to write the code to turn the GPIO pins on/off yourself
 as well as reading them to get values produced by a digital device.
@@ -12,10 +12,14 @@ touch sensor is touched.
 
 Sign off: to get credit for the lab show the following:
 
-   1. That [part1-blink](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/1-gpio/part1-blink) blinks two LEDs on pin 20 and 21 in opposite orders (i.e., if 20 is on, 21 should be off and vice versa).  (This will point out a subtle mistake people make reading the docs).
+   1. That `code/2-blink.c` correctly blinks two LEDs on pin 20 and 21 in
+      opposite orders (i.e., if 20 is on, 21 should be off and vice
+      versa).  (This will point out a subtle mistake people make reading
+      the docs).
 
-   2. That [part2-touch](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/1-gpio/part2-touch)
-   turns off the pin 20 LED when the touch sensor is touched.
+   2. That `code/3-input.c` turns on the pin 21 when pin 20 is connected
+      to 3v (either directly or via a touch sensor or whatever other
+      device you might want to try).
 
 --------------------------------------------------------------------------
 ### Part 0.  Background on how to think about the Broadcom document.
@@ -113,7 +117,7 @@ You'll implement the following routines in `gpio.c`:
    4.  After doing so, wire up the LED pins to pin 20 and 21, power-cycle
        the pi, and use the bootloader to load the code:
 
-             % pi-install blink.bin
+             % pi-install 1-blink.bin
 
        Don't forget to make `blink.c` into binary!
 
@@ -147,9 +151,9 @@ Hints:
 ### Part 2.  Make the touch sensor work.
 
 Part 1 used GPIO for output, you'll extend your code to handle input and
-use this to read a capacitive touch sensor.  At this point you have the
-tools to control a surprising number of digital devices you can buy on
-eBay, adafruit, sparkfun, alibaba, etc.
+use this to read input.  At this point you have the tools to control
+a surprising number of digital devices you can buy on eBay, adafruit,
+sparkfun, alibaba, etc.
 
 What you will do below:
    1. Before you write any code: Wire up the touch sensor and make sure the wiring works.
@@ -183,8 +187,7 @@ LED.
    - Verify that when you touch the sensor the LED lights up and when you 
      release it, it turns off.
 
-****Put a photo here****.
-
+***Put a photo here***.
 
 ---------------------------------
 ##### B. Write the code (10 minutes)
