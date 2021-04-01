@@ -278,10 +278,10 @@ system to understand better what is going on.
       Change your code to just loop for a small fixed number of times and make
       sure reboot() works.  
 
-    3. Force the blink loop to be at different code alignments mod 64.
-       If you look at `1-blink.list` you can see the executable code and
-       the addresses it is at.   Do you notice any difference in timing?
-       (You may have to make your delay longer.)  What is going on?
+   3. Force the blink loop to be at different code alignments mod 64.
+      If you look at `1-blink.list` you can see the executable code and
+      the addresses it is at.   Do you notice any difference in timing?
+      (You may have to make your delay longer.)  What is going on?
 
 --------------------------------------------------------------------------
 #### Additional information
