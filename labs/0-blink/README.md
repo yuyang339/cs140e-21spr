@@ -345,10 +345,26 @@ Now test that the toolchain works and produces a runnable binary:
 --------------------------------------------------------------------------
 #### 5.  Now do the same for your second pi!
 
-This is a great way to re-enforce the steps above.  Also you're going
-to want two working systems at all times.  It will make it much easier
-to isolate what a problem is by swapping pi's and then (if needed)
-swapping components.
+Configuring your second pi is a great way to re-enforce the steps above.
+Also you're going to want two working systems at all times.  It will make
+it much easier to isolate what a problem is by swapping pi's and then
+(if needed) swapping components (e.g., switching SD cards).
 
-You should be able to run both pi's at once by giving the tty device on
-the command line.  (Otherwise `pi-install` will try to load the same one.)
+You should be able to run both pi's at once by `pi-install` each distinct
+ttl-USB device on the command line.  (Otherwise it will try to load the
+same one.)
+
+To see where the devices are loaded, you can do `ls -lrt /dev/` as above.
+On many Unix systems you can also look at the end of the kernel log.
+For example, on Linux:
+
+        % tail -f /var/log/kern.log
+        # plug in the device
+        [105660.736891] usb 1-2: new full-speed USB device number 22 
+        ... lots of stuff ...
+        [105660.933050] cp210x 1-2:1.0: cp210x converter detected
+        [105660.935793] usb 1-2: cp210x converter now attached to ttyUSB0
+
+We can see it's connected to `ttyUSB0`
+
+Your system likely has an even better way; so it's worth searching online.
