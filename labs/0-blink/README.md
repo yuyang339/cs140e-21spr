@@ -269,9 +269,9 @@ Mechanically:
             % pi-install part1/blink-pin20.bin
             # the pi is now blinking.
 
-Success: Your LED should be blinking, just like before.
-If you unplug your pi and re-plug it in, you should be able 
-to run a hello program:
+   5. Your LED should be blinking, just like before.  
+   6. If you unplug your pi and re-plug it in, you should be able to
+      run a hello program:
 
             %  pi-install part1/hello.bin
             opened tty port </dev/ttyUSB0>.
@@ -280,6 +280,16 @@ to run a hello program:
             listening on ttyusb=</dev/ttyUSB0>
             hello world
             DONE!!!
+
+      It exits in such a way that you can rerun it multiple times.
+
+
+Trouble shooting: 
+  - if `pi-install` can't find the ttl-usb device, run `ls -lrt /dev`
+    and look for a something with `USB` in its name towards the end.
+    You can give the specific device as an argument:
+
+            %  pi-install /dev/ttyUSB0 part1/hello.bin
 
 --------------------------------------------------------------------------
 #### 4.  Make sure your r/pi toolchain is working.
