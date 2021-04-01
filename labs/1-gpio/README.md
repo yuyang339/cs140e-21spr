@@ -253,7 +253,14 @@ What you will do below:
             # touch jumper to pin 21: LED goes on
             # remove jumper: LED goes off.
 
-   5. Done!
+
+   5. Success looks like:
+
+<p float="left">
+  <img src="images/part2-succ-on.jpg" width="450" />
+  <img src="images/part2-succ-off.jpg" width="450" />
+</p>
+
 
 
 --------------------------------------------------------------------------
