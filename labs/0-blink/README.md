@@ -30,7 +30,15 @@ The final sign off for the lab:
      using the bootloader.
   2. Bonus: write up a short example problem you ran into (or someone you helped
      ran into) and how you solved them and post to the newsgroup so we can 
-     start accumulating examples. 
+     start accumulating examples.
+
+Note: you obviously have to do your own work, but please help others if they 
+get stuck or if you figure out something.  This is the kind of class where 
+talking over things will make everything a lot clearer, and where having 
+multiple people debug an issue is an order of magnitude more effective than 
+working alone.  If you think of a way of explaining something that's clearer 
+than the documentation or the README, post it in the newsgroup so others can 
+benefit from your insight!
 
 --------------------------------------------------------------------------
 ### Crucial: Life and death rules for pi hardware.
@@ -114,8 +122,13 @@ Mechanically:
      indicate which one is for power, which is for ground.  You can 
      empirically determine which is which.
 
-     If still doesn't go on, plug someone else's working version into
-     your computer.  If that doesn't work, ask.
+     ~~If still doesn't go on, plug someone else's working version into
+     your computer.  If that doesn't work, ask.~~
+     If it still doesn't go on, try with your other Pi and/or another LED.  If 
+     that doesn't work, ask.  (Thanks to virtual classes, you are your own lab 
+     partner.  Don't hesitate to ask others for help if something isn't 
+     working; normally you'd be side-by-side with a few dozen others who could 
+     help you.)
 
      (Note: the color of the wire does not matter for electricity,
      but it makes it much easier to keep track of what goes where:
@@ -128,10 +141,12 @@ fry it.)
 
 What can go wrong:
 
-  1. If your USB-to-TTL starts heating up, disconnnect!   It appears that 1 in 8
-     is defective.   
-  2. If your pi starts heating up, now or ever, disconnect!   If you have a short,
-     where a pin with power feeds right into ground, you'll fry it.
+  1. If your USB-to-TTL starts heating up, disconnnect!   It appears that 1 in 
+     8 is defective.   
+  2. If your pi starts heating up, now or ever, disconnect!   If you have a 
+     short, where a pin with power feeds right into ground, you'll fry it.
+  3. If you see smoke, disconnect!  Smoke means something has fried, and the 
+     longer you leave it plugged in the more things will get destroyed.
 
 Success looks like the following photos:
 
@@ -241,7 +256,9 @@ need to set up the tools needed to `cross-compile` r/pi programs on
 your computer and to r/pi binaries.
 
 Install the toolchain:
-   -  For a mac use the [cs107e install notes](http://cs107e.github.io/guides/install/mac/).  Note: do not install the python stuff.
+   -  For a mac use the [cs107e install 
+      notes](http://cs107e.github.io/guides/install/mac/).  Note: do not 
+      install the python stuff.
 
    -  For [ubuntu/linux](https://github.com/eistec/mulle/wiki/Installing-toolchain-%28GCC%29):
 
@@ -254,6 +271,10 @@ Install the toolchain:
       If gcc can't find header files, try:
 
            sudo apt-get install libnewlib-arm-none-eabi
+
+    - For other Linuxes, search your package manager for "arm-none-eabi-gcc".  
+      Worst case, install from [the ARM developer 
+      site](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads)
 
 Now test that the toolchain works and produces a runnable binary:
 
@@ -268,3 +289,9 @@ Now test that the toolchain works and produces a runnable binary:
 
     3. If everything worked, your LED light should be blinking.  
        Congratulations!
+
+### Deliverables
+
+0. The deliverables from [the prelab](PRELAB.md)
+1. Show that you can use pi-install to send over "blink-pin20.bin", and your 
+   LED blinks when you do.

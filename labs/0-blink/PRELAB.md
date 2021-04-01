@@ -30,7 +30,9 @@ Do these on your own (described more in the rest of the document):
 
 ### *Turn-in*
 
-The thursday lab is broken down into five parts:
+For this lab, you can just write the answers to these questions in a text file.
+
+The Thursday lab is broken down into five parts:
   1. You'll turn on an LED manually;
   2. Then copy a pre-compiled program to an micro-SD and boot up your pi;
   3. Then use a bootloader to ship the program to the pi directly;
@@ -48,7 +50,7 @@ Differential debugging: Your pi setup in step 2 is not working.
 Your partner's does.  You plug your setup into their laptop.
 
   1. Yours works in their laptop: what do you know?
-  2. Yours does not work in thier laptop: what do you know?
+  2. Yours does not work in their laptop: what do you know?
   
 --------------------------------------------------------------------
 ### Part 0: git and checking out the class repo
@@ -67,7 +69,7 @@ Your partner's does.  You plug your setup into their laptop.
 
    2. Use `git` to clone (check out) the class repository:
 
-          % git clone git@github.com:dddrrreee/cs140e21-spr.git  
+          % git clone git@github.com:dddrrreee/cs140e-21spr.git  
 
       If you don't want to install a key on github, use:
 
@@ -95,7 +97,7 @@ micro-SD card on your laptop:
 
    2. Figure out where your SD card is mounted (usually on MacOS it is in
       `/Volumes` and on linux in `/media/yourusername/`, some newer linuxes 
-      might put it in `/run/media/$USER/`).   Figure out
+      might put it in `/run/media/yourusername/`).   Figure out
       how to copy files to the SD card from the command line using
       `cp`, which is much much faster and better than using a gui (e.g.,
       you can put it in a
@@ -162,14 +164,20 @@ executable programs in a `bin` directory located in your home directory.
 
            export PATH="$PATH:your/path/here:your/other/path/here"
 
-      and source it the same way as the `.tcshrc`.
+      and source it the same way as the `.tcshrc`.  The instructions for `zsh` 
+      (the default on some newer Macs) are the same as for `bash`, but edit 
+      `~/.zshrc` instead.
 
 --------------------------------------------------------------------
 #### Install the rest of the code 
 
-Gates wireless can really suck, so it's best if you download the rest
+~~Gates wireless can really suck, so it's best if you download the rest
 of the code that you need: look in Part 3 (serial drivers) and Part 4
-(gcc toolchain) of the lab, and install the software it says.
+(gcc toolchain) of the lab, and install the software it says.~~
+
+We don't have to worry about Gates wireless this year, but you'll still want to 
+download everything else before lab.  Look in Part 3 (serial drivers) and Part 
+4 (gcc toolchain) of [the lab](README.md), and install the software it says.
 
 --------------------------------------------------------------------
 #### Nice-haves: Extra, very useful things.
@@ -188,7 +196,7 @@ your Stanford journey much easier:
      ***much much*** faster and easier.   [A description for
      `vim`](https://vim.fandom.com/wiki/Browsing_programs_with_tags).
 
-     See [the ctags guide](../../../guides/ctags.md) for more detailed info.
+     See [the ctags guide](../../guides/ctags.md) for more detailed info.
 
    - Longer term: eliminate as much mouse usage as you can; ***especially
      eliminate screen switching***.  Ideally you'll have your code in one
@@ -199,7 +207,7 @@ your Stanford journey much easier:
 
      The single biggest productivity slowdown I see in stanford undergrads
      (grads too) is the slow, laborious use of taking their hand off
-     a keyboard, moving a mouse, clicking, switchin screens, clicking
+     a keyboard, moving a mouse, clicking, switching screens, clicking
      on something else, switching back, etc.   You don't realize how
      much this will cripple you until you watch someone who writes code
      well and compare their fluent flow to your plodding agrarian
@@ -209,6 +217,21 @@ your Stanford journey much easier:
      programming flow state, which is basically the only real way you
      can get significant, effective work done.  Any time you move the
      mouse, you're not doing work.  Do what you can to stop this.
+
+     Note from Akshay: using the mouse too much is also a good way to develop 
+     wrist issues; mouse movements are fairly unnatural, and moving your hand 
+     back and forth from a mouse to a keyboard is an extremely repetitive 
+     action.  This is actually a UX thing Windows does much better than Macs by 
+     default; on macOS you can use tools like 
+     [Rectangle](https://github.com/rxhanson/Rectangle) to avoid using the 
+     mouse for trivial actions like switching between your terminal and your 
+     command line.  Linux users have tons of options, such as the popular 
+     [i3](https://i3wm.org/).
+
+     Vim and Emacs are good, popular, well-supported editors which don't use 
+     the mouse.  They integrate with all the tools we'll use in this class by 
+     default, and you can automate anything you do often.  See [the editor 
+     guide](../../guides/editor.md).
 
    - Install `gdb` if you can --- it makes things easier in other classes
      (e.g., you can do a backtrace after a crash to figure out where the
