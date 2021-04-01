@@ -289,6 +289,15 @@ Trouble shooting:
     and look for a something with `USB` in its name towards the end.
     You can give the specific device as an argument:
 
+            % ls -lrt /dev
+            ... lots of stuff ...
+            drwxr-xr-x  4 root root            80 Mar 31 19:03 serial
+            drwxr-xr-x  2 root root          4420 Mar 31 19:03 char
+            crw-rw----  1 root dialout 188,     0 Mar 31 19:07 ttyUSB0
+            drwxrwxrwt  2 root root            40 Mar 31 19:09 shm
+            crw-rw-rw-  1 root tty       5,     2 Mar 31 19:09 ptmx
+
+            # use ttyUSB0
             %  pi-install /dev/ttyUSB0 part1/hello.bin
 
 --------------------------------------------------------------------------
