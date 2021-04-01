@@ -382,7 +382,7 @@ This part is simple:
 
 
 <p float="left">
-  <img src="images/part5-succ-far.jpg" width="450" />
+  <img src="images/part5-succ-far.jpg" width="350" />
 </p>
 
 
