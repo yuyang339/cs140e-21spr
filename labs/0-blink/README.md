@@ -381,9 +381,10 @@ This part is simple:
      Success looks like:
 
 
-<table><tr><td>
-  <img src="images/part5-succ-far.jpg" "width=200"/>
-</td></tr></table>
+<p float="left">
+  <img src="images/part5-succ-far.jpg" width="450" />
+</p>
+
 
 
 
