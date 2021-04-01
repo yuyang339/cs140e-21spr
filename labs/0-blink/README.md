@@ -166,9 +166,12 @@ Mechanically:
             % cp part1/blink-pin20.bin /media/engler/0330-444/kernel.img
             % sync
         
-  4. With your pi disconnected from your laptop, 
-     connect the LED to gpio pin 20 and ground. 
-     (Use `docs/gpio.png` to figure out which these are.)
+     On linux 20.04: the cards are often shipped with a corrupt FAT32 file
+     system.  Linux seems unable to repair this and will mount read-only.
+     I had to mount it on a windows machine and format it.   
+
+  4. With your pi disconnected from your laptop,
+     reconnect the LED power from the 3v pin to gpio pin 20.
   5. Plug the SD card into your pi -- you should feel a "click" when 
      you push it in.
   6. Plug in the USB-TTY to your USB to power the pi.  The pi will jump
@@ -183,6 +186,11 @@ Troubleshooting:
    1. If it's not blinking, swap in someone else's card that is working.
    2. If that works, compare their SD card to yours.
    3. If that doesn't work, try your card in their rpi.  
+
+Success looks like:
+<table><tr><td>
+  <img src="images/part2-success.jpg"/>
+</td></tr></table>
 
 --------------------------------------------------------------------------
 #### 3.  Send a new pi program from your computer rather than SD card.
