@@ -17,9 +17,9 @@ Sign off: to get credit for the lab show the following:
       versa).  (This will point out a subtle mistake people make reading
       the docs).
 
-   2. That `code/3-input.c` turns on the pin 21 when pin 20 is connected
-      to 3v (either directly, via an LED, or via a touch sensor or
-      whatever other device you might want to try).
+   2. That `code/3-input.c` turns on an LED connected to pin 20 when
+      pin 21 is connected to 3v (either directly, via an LED, or via a
+      touch sensor or whatever other device you might want to try).
 
 --------------------------------------------------------------------------
 ### Part 0.  Background on how to think about the Broadcom document.
