@@ -239,10 +239,10 @@ What you will do below:
    4. Run the code:
 
 
-        % make
-        % pi-install 3-input.bin
-        # touch jumper to pin 21: LED goes on
-        # remove jumper: LED goes off.
+            % make
+            % pi-install 3-input.bin
+            # touch jumper to pin 21: LED goes on
+            # remove jumper: LED goes off.
 
    5. Done!
 
