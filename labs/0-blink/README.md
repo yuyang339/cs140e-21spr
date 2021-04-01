@@ -211,13 +211,16 @@ Success looks like:
 #### 3.  Send a new pi program from your computer rather than SD card.
 
 As you've noticed, running new programs on the pi using the SD card
-method is tedious.  This step shows makes it so you can send programs
+method is tedious.  We now set up your system so you can send programs
 directly from your computer to a plugged-in pi.
 
 Method: install a program (which we somewhat inaccurately call a
-"bootloader").   This program will wait on the pi for a program sent by
-your computer, copy it into pi memory, and then jump to it.  We currently
-give you a pre-compiled version (`firmware/bootloader.bin`).
+"bootloader") on the SD card (as before) that spins in a loop,
+waiting for your laptop to send a program over the UART-TTL. If the
+bootloader successfully receives a program, it copies it into pi memory,
+and then jumps to it.  We currently give you a pre-compiled version
+(`firmware/bootloader.bin`).  The next lab will have you implement
+your own.
 
 <table><tr><td>
   <img src="images/assembled.jpg"/>
@@ -242,18 +245,41 @@ Linux:
 Mechanically:
 
   0. Unplug your pi. Don't modify your current wiring.
-  1. Copy `firmware/bootloader.bin` on your SD card as `kernel.img` (see a 
+  1. Did you unplug your pi?
+  2. Copy `firmware/bootloader.bin` on your SD card as `kernel.img` (see a 
  	pattern?), `sync`, and plug back into the pi.
-  2. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
+
+            # from the 0-blink directory
+            % cp ../../firmware/bootloader.bin /media/engler/0330-444/kernel.img
+            % sync
+            # now safe to unplug the SD card
+        
+  3. Hook the TX and RX wires up to the pi.  Do you TX/TX and RX/RX or
      switch them?  (Hint: Think about the semantics of TX (transmit)
      and RX (receive).)
-  3. Copy `bin/pi-install.linux` or `bin/pi-install.macos` to your
+  4. Copy `bin/pi-install.linux` or `bin/pi-install.macos` to your
      local `bin/pi-install`.  Make sure when you type `pi-install`
      something happens!  If not, make sure your local `~/bin/` directory
      is in your path, and that you have sourced your shell startup file.
-  4. Run `pi-install part1/blink-pin20.bin`
 
-Your LED should be blinking.
+     On `tcsh` on my linux machine, after plugging the pi back in:
+
+            % cp ../../bin/pi-install.unix ~/bin/pi-install
+            % rehash  # so the shell refreshes its cache 
+            % pi-install part1/blink-pin20.bin
+            # the pi is now blinking.
+
+Success: Your LED should be blinking, just like before.
+If you unplug your pi and re-plug it in, you should be able 
+to run a hello program:
+
+            %  pi-install part1/hello.bin
+            opened tty port </dev/ttyUSB0>.
+            pi-install: tty-usb=</dev/ttyUSB0> program=<part1/hello.bin>
+            ...
+            listening on ttyusb=</dev/ttyUSB0>
+            hello world
+            DONE!!!
 
 --------------------------------------------------------------------------
 #### 4.  Make sure your r/pi toolchain is working.
