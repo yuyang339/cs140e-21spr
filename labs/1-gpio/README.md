@@ -188,6 +188,17 @@ You'll implement the following routines in `code/gpio.c`:
              % pi-install 2-blink.bin
              # the LEDs on pin 20 and pin 21 should be in opposite orders.
 
+      Success looks like:
+
+Success looks like the following photos:
+
+<p float="left">
+  <img src="images/part1-succ-green.jpg" width="450" />
+  <img src="images/part1-succ-blue.jpg" width="450" />
+</p>
+
+
+
 Hints:
    1. You write `GPFSELn` register (pages 91 and 92) to set up a pin as an
       output or input. You'll have to set GPIO 20 in GPFSEL2 to output.
