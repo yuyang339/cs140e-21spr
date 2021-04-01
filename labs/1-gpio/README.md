@@ -248,15 +248,18 @@ What you will do below:
 
 
 --------------------------------------------------------------------------
-#### 3. Extra: Break and tweak stuff.
+#### Extra: Break and tweak stuff.
 
-You're going to break and change your code to see effects of things going 
-wrong and to make it somewhat better:
+If you finish, the are a bunch of ways you can "kick the tires" on your
+system to understand better what is going on.
 
-   1. Change the delay in the blink code to increasingly smaller amounts.   What is going on?
+
+   1. Change the delay in the blink code to increasingly smaller amounts.
+      What is going on?
+
 
    2. Add the reboot code below (we'll go into what different things mean)
-   so that you don't have to unplug, plug your rpi each time:
+      so that you don't have to unplug, plug your rpi each time:
 
            // define: dummy to immediately return and PUT32 as above.
            void reboot(void) {
@@ -266,17 +269,19 @@ wrong and to make it somewhat better:
                 const int PM_RSTC_WRCFG_FULL_RESET = 0x00000020;
                 int i;
                 for(i = 0; i < 100000; i++)
-                     dummy(i);
+                     nop();
                 PUT32(PM_WDOG, PM_PASSWORD | 1);
                 PUT32(PM_RSTC, PM_PASSWORD | PM_RSTC_WRCFG_FULL_RESET);
                 while(1);
            }
-   Change your code to just loop for a small fixed number of times and make
-   sure reboot() works.
 
-   3. Force the blink loop to be at different code alignments mod 64.   Do 
-   you notice any difference in timing?  (You may have to make your 
-   delay longer.)  What is going on?  
+      Change your code to just loop for a small fixed number of times and make
+      sure reboot() works.  
+
+    3. Force the blink loop to be at different code alignments mod 64.
+       If you look at `1-blink.list` you can see the executable code and
+       the addresses it is at.   Do you notice any difference in timing?
+       (You may have to make your delay longer.)  What is going on?
 
 --------------------------------------------------------------------------
 #### Additional information
