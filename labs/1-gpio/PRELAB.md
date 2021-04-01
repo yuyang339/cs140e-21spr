@@ -40,11 +40,11 @@ You likely have a short somewhere and in the worst-case can fry your laptop.
      output on.  Your fetchquest is to chase down what addresses these
      are for GPIO pin 20, and what values you need.
 
-  3. Look through the `gpio.h` and `gpio.c` files in `part1-blink`
-     you'll be filling this in as well as the two simple programs
-    `part1-led/blink.c` and `part2-touch/touch.c`
-     which will call into your code.  (You won't modify these two
-     latter files.)
+  3. Look through the `code` directory.  You'll be implementing the
+     routines in `gpio.c` which is used by three simple programs: `1-blink.c`
+     `2-blink.c` and `3-input.c`.  You only modify `gpio.c`.  We provide
+     prototypes (in `rpi.h`) and some trivial assembly routines in
+     `start.S`.
 
   4. Note: where the broadcom document uses addresses `0x7420xxxx`, you'll use
      `0x2020xxxx`.
@@ -58,25 +58,3 @@ Questions you should be able to answer:
      input pin (i.e., give the address and expression used as arguments).
   3. Write out the call to `get32` to determine what value is held in
      GPIO pin 21.
-
----------------------------------------------------------------------
-### Setup your  CS140E_2021_PATH variable.
-
-The course Makefiles use this variable to locate where your repository is.
-
-Similar to how you added your local `~/bin` directory to your
-shell's path on the previous lab, today you're going to edit your shell
-configuration file (e.g., `.tcshrc`, `.bash_profile`, etc) to set
-an environment variable `CS140E_PATH` to contain where you have your
-repository.
-
-E.g., for me, since I'm running `tcsh` I edit my `.tcshrc` file and
-add:
-
-    setenv CS140E_2021_PATH /home/engler/class/cs140e-21spr/
-
-To the end of it.  If you use `bash` you'll do an:
-
-    export CS140E_2021_PATH=<path to your repo>
-
-And, as before, don't forget to source your configuration file.

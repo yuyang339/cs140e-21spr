@@ -1,6 +1,6 @@
-SUBDIRS= part1-led  part2-touch
+SUBDIRS= code
 
-.PHONY: all check clean
+.PHONY: all clean
 all check clean: $(SUBDIRS)
 
 all: TARGET=all
