@@ -161,14 +161,16 @@ Mechanically:
 
      For me, this is:
 
-            % cp firmware/* /media/engler/0330-444/
+            #  from the 0-blink directory
+            % cp ../../firmware/* /media/engler/0330-444/
             % cp part1/blink-pin20.bin /media/engler/0330-444/kernel.img
             % sync
         
   4. With your pi disconnected from your laptop, 
      connect the LED to gpio pin 20 and ground. 
      (Use `docs/gpio.png` to figure out which these are.)
-  5. Plug the SD card into your pi
+  5. Plug the SD card into your pi -- you should feel a "click" when 
+     you push it in.
   6. Plug in the USB-TTY to your USB to power the pi.  The pi will jump
      to whatever code is in `kernel.img`.
 
