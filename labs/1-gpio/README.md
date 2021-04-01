@@ -82,9 +82,9 @@ this) writes the given value of the second argument to the address
 specified by the first.   
 
 In addition to correctness, this method of using `put32` and `get32`
-makes it trivial for use to write code that monitors, records or intercepts
+makes it trivial for us to write code that monitors, records, or intercepts
 all read and writes to device memory.   This trivial bit of instructure
-can let you easily do a bunch of surprisingly powerful tricks:
+makes it easy for you to do a bunch of surprisingly powerful tricks:
 
 
   1. Instead of performing them on the local device memory we can
