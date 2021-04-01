@@ -169,9 +169,10 @@ You'll implement the following routines in `code/gpio.c`:
        take only a few lines of code.
    2. `gpio_set_on(pin)` which will turn `pin` on.  This should take one line of code.
    3. `gpio_set_off(pin)` which will turn `pin` off.  This should take one line of code.
-   4.  After doing so, wire up the LED pins to pin 20 and 21, power-cycle
+   4.  After doing so, wire up an LED pin to pin 20, power-cycle
        the pi, and use the bootloader to load the code:
 
+             # unplug the pi.
              # connect an LED to pin 20
              % cd code
              # do your edits
@@ -181,10 +182,11 @@ You'll implement the following routines in `code/gpio.c`:
 
    5. Make sure that `code/2-blink.c` also works:
 
+             # unplug the pi
              # connect an LED to pin 21
+             # plug back in to reset.
              % pi-install 2-blink.bin
              # the LEDs on pin 20 and pin 21 should be in opposite orders.
-
 
 Hints:
    1. You write `GPFSELn` register (pages 91 and 92) to set up a pin as an
