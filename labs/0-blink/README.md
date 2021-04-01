@@ -133,6 +133,13 @@ What can go wrong:
   2. If your pi starts heating up, now or ever, disconnect!   If you have a short,
      where a pin with power feeds right into ground, you'll fry it.
 
+Success looks like the following photos:
+
+<p float="left">
+  <img src="images/part1-success.jpg" width="230" />
+  <img src="images/part1-ttl.jpg" width="230" /> 
+</p>
+
 --------------------------------------------------------------------------
 #### 2.  Make sure you're able to install firmware, etc:
 
