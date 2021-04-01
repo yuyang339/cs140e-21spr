@@ -21,6 +21,14 @@ Sign off: to get credit for the lab show the following:
       pin 21 is connected to 3v (either directly, via an LED, or via a
       touch sensor or whatever other device you might want to try).
 
+   3. That you can forward the signal from one pi to another.
+      This requires the ability to run two pi's at once (as described
+      in 0-blink).
+
+      Not everyone will be able to do this if you need to buy additional
+      adaptors for your laptop --- make sure you can do this part very
+      soon, since we need two pi's at once for networking.
+
 --------------------------------------------------------------------------
 ### Part 0.  Background on how to think about the Broadcom document.
 
@@ -260,6 +268,41 @@ What you will do below:
   <img src="images/part2-succ-on.jpg" width="450" />
   <img src="images/part2-succ-off.jpg" width="450" />
 </p>
+
+
+--------------------------------------------------------------------------
+### Part 3. Forward one pi signal to another.
+
+We now do a cool trick: transparently forward signals from one pi to
+another. While mechanically trivial, this is a "hello world" version of
+some deep topics.
+
+What to do:
+
+   1. Hook up pin 20 from one pi (call this pi-1) to pin 21 of the other
+      (pi-2).  
+
+
+      Note: strictly speaking, when connecting two devices we must
+      connect (share) ground as well.  However, since these are both
+      powered from your laptop they already do.
+
+   2. Plug pi-2 in and run `3-input.bin` input program.
+
+        % pi-install /dev/ttyUSB0 code/3-input.bin
+
+   2. Plug pi-1 in and run `1-blink.bin` program.
+
+        % pi-install /dev/ttyUSB1 code/1-blink.bin
+
+
+   3. Success looks like:
+<p float="left">
+  <img src="images/part3-succ-on.jpg" width="230" />
+  <img src="images/part3-succ-off.jpg" width="230" />
+  <img src="images/part3-succ-close.jpg" width="230" />
+</p>
+
 
 
 
