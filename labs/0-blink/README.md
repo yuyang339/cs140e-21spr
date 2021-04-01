@@ -339,8 +339,9 @@ Now test that the toolchain works and produces a runnable binary:
             blink-pin20.bin  blink-pin20.s	make.sh  README.md
             % pi-install blink-pin20.bin    # send it to the pi.
 
-    3. If everything worked, your LED light should be blinking.  
-       Congratulations!
+
+   3. If everything worked, your LED light should be blinking.  
+      Congratulations!
 
 --------------------------------------------------------------------------
 #### 5.  Now do the same for your second pi!
