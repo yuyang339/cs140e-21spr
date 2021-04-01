@@ -227,7 +227,9 @@ What you will do below:
    1. Implement `gpio_set_input` --- it should just be a few lines of
       code, which will look very similar to `gpio_set_output`. 
 
-      Make sure you do not overwrite a previous configuration in `fsel`.
+      Make sure you do not overwrite a previous configuration in `fsel`
+      for other pins!   You code will likely still work today, but later
+      if you have multiple devices it will not.
 
    2. Implement `gpio_read` --- make sure you do not return bits that
       are spurious!  This can lead to garbage results.
@@ -235,6 +237,7 @@ What you will do below:
    3. Hook a jumper to one of the pi's 3v outputs: DO NOT CONNECT TO 5V!
  
    4. Run the code:
+
 
         % make
         % pi-install 3-input.bin
