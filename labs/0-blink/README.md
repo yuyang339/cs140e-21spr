@@ -136,8 +136,8 @@ What can go wrong:
 Success looks like the following photos:
 
 <p float="left">
-  <img src="images/part1-success.jpg" width="430" />
-  <img src="images/part1-ttl.jpg" width="430" /> 
+  <img src="images/part1-success.jpg" width="630" />
+  <img src="images/part1-ttl.jpg" width="630" /> 
 </p>
 
 --------------------------------------------------------------------------
