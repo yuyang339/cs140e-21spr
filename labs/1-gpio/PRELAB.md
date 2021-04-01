@@ -26,12 +26,12 @@ You likely have a short somewhere and in the worst-case can fry your laptop.
      pieces in class.
 
      As discussed in `Part 0` of the lab, your specific goal is to figure
-     out how to configure GPIO pin 20 (the lower right pin sticking
-     up from the r/pi when orientated with pins on the right) to be
-     either an output pin (e.g., that can blink an led) or an input pin
-     (that detects when it is receiving a voltage `> 3.3v`).  In the
-     former case you want to figure out how to turn the pin off and on.
-     In the latter you want to read it if it is off or on.
+     out how to configure GPIO pin 20 (the second from the bottom right
+     pin sticking up from the r/pi when orientated with pins on the right)
+     to be either an output pin (e.g., that can blink an led) or an
+     input pin (that detects when it is receiving a voltage `>= 3.3v`).
+     In the former case you want to figure out how to turn the pin off
+     and on.  In the latter you want to read it if it is off or on.
 
      The general game here (and with most hardware) is that each pin has
      a set of associated memory addresses (confusingly called `registers`

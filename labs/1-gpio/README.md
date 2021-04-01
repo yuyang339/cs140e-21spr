@@ -18,8 +18,8 @@ Sign off: to get credit for the lab show the following:
       the docs).
 
    2. That `code/3-input.c` turns on the pin 21 when pin 20 is connected
-      to 3v (either directly or via a touch sensor or whatever other
-      device you might want to try).
+      to 3v (either directly, via an LED, or via a touch sensor or
+      whatever other device you might want to try).
 
 --------------------------------------------------------------------------
 ### Part 0.  Background on how to think about the Broadcom document.
@@ -33,52 +33,75 @@ An old-school, obsolete approach for device communication is to have
 special assembly instructions that the pi CPU could issue.  This sucks,
 since each new device needs its own set of instructions.
 
-Instead, modern systems use the following hack: they 
-give each device its own chunk of the physical address space and code can 
-read or write these locations with magic, device-specific values 
-to communicate with the device.   
+Instead, modern systems use the following hack: they give each device
+its own chunk of the physical address space and code can read or write
+these locations with magic, device-specific values to communicate with
+the device.   
 
 For example, to turn on GPIO pin 20, we look in the Broadcom document:
    1. On page 95 states that a write to the ith bit of `GPSET0` will set
       the ith GPIO pin on.
 
-   2. Using the table on page 90 we see `GPSET0` is located at address 
-      `0x7E20001C` (note: a constant prefixed with `0x` this given in hex notation.)
+   2. Using the table on page 90 we see `GPSET0` is located at address
+      `0x7E20001C` (note: a constant prefixed with `0x` means it is
+      written in hex notation.)
 
    3. Finally, just to confuse things, we know after staring at the diagram on 
       page 5 that the broadcom "CPU bus addresses" at 
       `0x7Exx xxxx` are mapped to physical addresses at `0x20xx xxxx` on the pi.  
       Thus the actual address we write is `0x2020001C`.
-      (Note: such ad hoc, "you
-      just have to know" factoids are wildly common when dealing with
-      hardware, which is why this is a lab class.  Otherwise you can get
-      stuck for weeks on some uninteresting fact you simply do not know.
-      Hopefully, after this class you operate robustly in the face of such nonsense.)
+
+      Note: such ad hoc, "you just have to know" factoids are wildly
+      common when dealing with hardware, which is why this is a lab class.
+      Otherwise you can get stuck for weeks on some uninteresting fact
+      you simply do not know.  Hopefully, after this class you operate
+      robustly in the face of such nonsense.)
 
 The result of all this investigation is the following sleazy C code:
 
         *(volatile unsigned *)0x2020001C = (1 << 20);
 
-I.e., cast the locations `0x2020001C` to a `volatile unsigned` pointer and write  (store) the
-constant produced by shifting a 1 to the 20th (`1 << 20`) position there:
+I.e., cast the locations `0x2020001C` to a `volatile unsigned` pointer
+and write  (store) the constant produced by shifting a 1 to the 20th
+(`1 << 20`) position there:
+
    - `volatile` tells the compiler this pointer is magic and don't optimize its use away.
    - `unsigned` on the pi is 32-bits.   
 
 Morally the above is fine, despite what some people might tell you.
 However, empirically, it is very easy to forget a `volatile` type
 qualifier, which will cause the compiler to (sometimes!) silently remove
-reads or writes.  In this class we will *never* directly read or write
-device memory, instead we will call the procedures `get32` and `put32`
-to read and write addresses.  For example:
+and/or reorder reads or writes.  In this class we will *never* directly
+read or write device memory, instead we will call the procedures `get32`
+and `put32` to read and write addresses.  For example:
 
         put32(0x2020202, (1 << 20));
 
 `put32` will call out to assembly code (`gcc` currently cannot optimize
 this) writes the given value of the second argument to the address
-specified by the first.   In addition, by using `put32` and `get32`,
-it becomes trivial to record all the reads and writes that are done to
-device memory, and later use this for testing.  (You will use this in the
-next lab to sort-of prove that the code you write in this lab is correct.)
+specified by the first.   
+
+In addition to correctness, this method of using `put32` and `get32`
+makes it trivial for use to write code that monitors, records or intercepts
+all read and writes to device memory.   This trivial bit of instructure
+can let you easily do a bunch of surprisingly powerful tricks:
+
+
+  1. Instead of performing them on the local device memory we can
+     send them over the network and control one or many remote r/pi's.
+
+  2. We can record the reads and writes that are done to device memory
+     and then use this for testing, or construct a program replaces our
+     original and simply replays them.
+
+     Lab 3 uses this trick to sort-of-prove that your code is correct.
+     It works by running your code and checking that it does the same
+     reads and writes in the same order with the same values as everyone
+     else.  This makes it easy to show your code is equivalant to everyone
+     else's code --- despite the fact that it will look very different.
+     If one person is correct, all must be correct.
+
+  3. Many many others!
 
 Generally, whenever you need to control a device, you'll do something like
 the following: 
@@ -92,9 +115,9 @@ Devices typically require some kind of initialization, a sequence of
 writes to kick-start the device down a set of actions, and some number
 of reads when we know data is (or could be) available.
 
-In our case, we want to get the GPIO pin initialized to be an output pin 
-(to control and LED) or input 
-(so that we can read the value being produced by the device).  So:
+In our case, we want to get the GPIO pin initialized to be an output
+pin (to control and LED) or input (so that we can read the value being
+produced by the device).  So:
 
    1. Figure out what location to write to set a pin to input or output.
    2. Implement `gpio_write` to write the value of an output pin (LED).
@@ -106,10 +129,42 @@ on is pretty simple, there is just a bunch of jargon, a few loads or
 stores to weird addresses, and with a few lines of code you can start
 to control some pretty neat stuff.
 
+Important correctness note:
+
+  - While the device operations are initiated using memory loads and
+    stores, what actually occurs "behind the scenes" is often far
+    more complex and expensive than a memory operation.  (While they
+    look like memory operations they are closer to arbitrarily complex
+    procedure calls.)  Thus, they will take much longer than a normal
+    memory operation.  Their cost leads to the following hard-to-debug
+    problem (I had one that literally took two days a few years back.)
+
+    On many machines, including the pi, when you perform a store
+    to a device, the store can return before the device operation
+    completes.  This hack can give a big speed improvement by, among
+    other things, allowing you to pipeline operations to the same device.
+    However, it also can lead to subtle ordering mistakes.   
+
+    The pi does guarantee that all reads and writes to the same device
+    occur in order (these operations are "sequentially consistent"
+    w.r.t. each other).  However it *does not* guarantee that a write to
+    one device A followed by a second write to device B will complete in
+    that order.  If they are entirely independent, this may not matter.
+    However, if the device operations were supposed to happen in that
+    order (A then B), the code is broken.
+
+    The way we handle this is to put in a "memory barrier" that
+    (over-simplifying) guarantees that all previous loads and stores
+    to memory or devices have completed before execution goes beyond
+    the barrier.  You can use these to impose ordering.  We will discuss
+    them at length later.  There are some very subtle issues, especially
+    when dealing with virtual memory hardware.   We don't worry about this
+    for the current lab.
+
 --------------------------------------------------------------------------
 ### Part 1.  Make blink work. (30 minutes)
 
-You'll implement the following routines in `gpio.c`:
+You'll implement the following routines in `code/gpio.c`:
    1. `gpio_set_output(pin)` which will set `pin` to an output pin.  This should 
        take only a few lines of code.
    2. `gpio_set_on(pin)` which will turn `pin` on.  This should take one line of code.
@@ -117,9 +172,19 @@ You'll implement the following routines in `gpio.c`:
    4.  After doing so, wire up the LED pins to pin 20 and 21, power-cycle
        the pi, and use the bootloader to load the code:
 
+             # connect an LED to pin 20
+             % cd code
+             # do your edits
+             % make
              % pi-install 1-blink.bin
+             # the LED on pin 20 should be blinking.
 
-       Don't forget to make `blink.c` into binary!
+   5. Make sure that `code/2-blink.c` also works:
+
+             # connect an LED to pin 21
+             % pi-install 2-blink.bin
+             # the LEDs on pin 20 and pin 21 should be in opposite orders.
+
 
 Hints:
    1. You write `GPFSELn` register (pages 91 and 92) to set up a pin as an
@@ -148,7 +213,7 @@ Hints:
 	  rewiring your pi to use pins in each group.
 
 --------------------------------------------------------------------------
-### Part 2.  Make the touch sensor work.
+### Part 2.  Make input work.
 
 Part 1 used GPIO for output, you'll extend your code to handle input and
 use this to read input.  At this point you have the tools to control
@@ -156,49 +221,26 @@ a surprising number of digital devices you can buy on eBay, adafruit,
 sparkfun, alibaba, etc.
 
 What you will do below:
-   1. Before you write any code: Wire up the touch sensor and make sure the wiring works.
-   2. Implement `gpio_set_input(pin)` and `gpio_read(pin)` in `part1-led/gpio.c`.
-   3. `cd` into `part2-touch`, compile the code (`make`) and use the bootloader to 
-      load it onto your pi and verify it works.
-   4. Celebrate.
 
----------------------------------
-##### A. Get the hardware working. (10 minutes)
+   1. Implement `gpio_set_input` --- it should just be a few lines of
+      code, which will look very similar to `gpio_set_output`. 
 
-We always try to test our hardware setup without software since doing so
-minimizes the places we need to debug if things do not work. A standard
-novice mistake is to wire up everything, write all the code, and ---
-when it invariably does not work --  then get stuck on all the different
-combinations of things that could be causing problems.  Our approach
-of trying to do everything one-at-a-time, in the smallest step we can
-think of, dramatically reduces the IQ needed to figure out mistakes.
+      Make sure you do not overwrite a previous configuration in `fsel`.
 
-Note, we are wiring up a bunch of stuff, so it'd be standard to use a breadboard
-(for a [tutorial](https://learn.sparkfun.com/tutorials/how-to-use-a-breadboard)).
-However to minimize confusion we will just use female-to-female jumper wires
-to connect everything.
+   2. Implement `gpio_read` --- make sure you do not return bits that
+      are spurious!  This can lead to garbage results.
 
-In our case, when the touch sensor is touched, it will produce voltage on its
-output pin.  We can check that it does so by just hardwiring this pin to an 
-LED.
-   - Connect the `Vcc` output to the 3v pin on the pi.
-   - Connect `Gnd` to one of the ground pins.  
-   - Connect `Vout` to the leg of an LED and the LED ground leg to ground.
-   - Verify that when you touch the sensor the LED lights up and when you 
-     release it, it turns off.
+   3. Hook a jumper to one of the pi's 3v outputs: DO NOT CONNECT TO 5V!
+ 
+   4. Run the code:
 
-***Put a photo here***.
+        % make
+        % pi-install 3-input.bin
+        # touch jumper to pin 21: LED goes on
+        # remove jumper: LED goes off.
 
----------------------------------
-##### B. Write the code (10 minutes)
+   5. Done!
 
-This should be fast:
-  1. Implement `gpio_set_input` --- it should just be a few lines of code, which will
-     look very similar to `gpio_set_output`.
-  2. Hook the `Vout` pin to pin 16 on the pi and an LED to pin 20.
-  3. Run the code and see that the LED turns on when you press the button and off
-     when you release.
-  4. Done!
 
 --------------------------------------------------------------------------
 #### 3. Extra: Break and tweak stuff.
