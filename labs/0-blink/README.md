@@ -28,9 +28,9 @@ The final sign off for the lab:
 
   1. Show you have a working `blink` compiled using the tool chain and started
      using the bootloader.
-  2. Bonus: write up a short example problem you ran into (or someone you helped
-     ran into) and how you solved them and post to the newsgroup so we can 
-     start accumulating examples.
+  2. Bonus: write up a short example problem you ran into (or someone
+     you helped ran into) and how you solved them and post to the
+     newsgroup so we can start accumulating examples.
 
 Note: you obviously have to do your own work, but please help others if they 
 get stuck or if you figure out something.  This is the kind of class where 
@@ -67,13 +67,13 @@ benefit from your insight!
 #### 0. Make sure you have everything.
 
 You should have:
-  1. one or more R/PI A+ (or Zero);
-  2. one or more microSD card and adapter;
-  3. one or more CP2102 USB-TTL adapter;
-  4. however many led's you want;
-  5. some female-female jumpers;
-  6. printout of the pi's pins (digital is okay, but a printout will be more convenient).
-
+  1. two or more R/PI A+ (or Zero);
+  2. two or more microSD card and adapter;
+  3. two or more CP2102 USB-TTL adapter;
+  4. a bunch of LEDs
+  5. a bunch of female-female jumpers;
+  6. printout of the pi's pins (digital is okay, but a printout will be
+     more convenient).
 
 <table><tr><td>
   <img src="images/pi-start.jpg"/>
@@ -132,7 +132,7 @@ Mechanically:
 
      (Note: the color of the wire does not matter for electricity,
      but it makes it much easier to keep track of what goes where:
-     pleaes use red for power, black for ground.)
+     please use red for power, black for ground.)
   4. Try another LED and try some of the other ground and power pins.
 
 (EE folks: We don't use a breadboard b/c it's bulky; we don't use
@@ -141,7 +141,7 @@ fry it.)
 
 What can go wrong:
 
-  1. If your USB-to-TTL starts heating up, disconnnect!   It appears that 1 in 
+  1. If your USB-to-TTL starts heating up, disconnect!   It appears that 1 in 
      8 is defective.   
   2. If your pi starts heating up, now or ever, disconnect!   If you have a 
      short, where a pin with power feeds right into ground, you'll fry it.
@@ -309,8 +309,7 @@ need to set up the tools needed to `cross-compile` r/pi programs on
 your computer and to r/pi binaries.
 
 Install the toolchain:
-   -  For a mac use the [cs107e install 
-      notes](http://cs107e.github.io/guides/install/mac/).  Note: do not 
+   -  For a mac use the [cs107e install notes](http://cs107e.github.io/guides/install/mac/).  Note: do not 
       install the python stuff.
 
    -  For [ubuntu/linux](https://github.com/eistec/mulle/wiki/Installing-toolchain-%28GCC%29):
@@ -343,8 +342,13 @@ Now test that the toolchain works and produces a runnable binary:
     3. If everything worked, your LED light should be blinking.  
        Congratulations!
 
-### Deliverables
+--------------------------------------------------------------------------
+#### 5.  Now do the same for your second pi!
 
-0. The deliverables from [the prelab](PRELAB.md)
-1. Show that you can use pi-install to send over "blink-pin20.bin", and your 
-   LED blinks when you do.
+This is a great way to re-enforce the steps above.  Also you're going
+to want two working systems at all times.  It will make it much easier
+to isolate what a problem is by swapping pi's and then (if needed)
+swapping components.
+
+You should be able to run both pi's at once by giving the tty device on
+the command line.  (Otherwise `pi-install` will try to load the same one.)
