@@ -320,12 +320,12 @@ tricks:
       and 1 we can send anything.
 
       With some simple changes (we will do these in later labs) you
-      can use wire to general-pupose messages.  And if you add a second
-      wire, you easily can do so with incredibly low latency and speed:
-      almost certainly lower than between two full-fledged Unix servers.
-      (One of many examples where we will be able to write custom, clean,
-      simple code that is far faster or more powerful than a full-fledged
-      "real" system.)
+      can use this method to send general-pupose messages between pi's.
+      And if you add a second wire, you easily can do so with incredibly
+      low-latency: almost certainly lower than between two full-fledged
+      Unix servers.  (One of many examples where we will be able to write
+      custom, clean, simple code that is far faster or more powerful
+      than a full-fledged "real" system.)
 
 --------------------------------------------------------------------------
 ### Extension: Break and tweak stuff.
