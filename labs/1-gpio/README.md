@@ -91,8 +91,8 @@ makes it easy for you to do a bunch of surprisingly powerful tricks:
      send them over the network and control one or many remote r/pi's.
 
   2. We can record the reads and writes that are done to device memory
-     and then use this for testing, or construct a program replaces our
-     original and simply replays them.
+     and then use this for testing, or automatically construct a bare-bones
+     program replaces our original and simply replays them.
 
      Lab 3 uses this trick to sort-of-prove that your code is correct.
      It works by running your code and checking that it does the same
