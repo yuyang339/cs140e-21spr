@@ -248,7 +248,7 @@ What you will do below:
 
 
 --------------------------------------------------------------------------
-#### Extra: Break and tweak stuff.
+### Extension: Break and tweak stuff.
 
 If you finish, the are a bunch of ways you can "kick the tires" on your
 system to understand better what is going on.
