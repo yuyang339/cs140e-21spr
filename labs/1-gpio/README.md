@@ -312,8 +312,8 @@ tricks:
       assumed it running locally, controlling its own device and made
       it transparently control a remote device (or even many).
 
-      Among other examples this trick (on a much grander scale) is how
-      virtual machines work.
+      Among other examples this trick (on a much grander scale) is similar
+      in spirit to how virtual machines such as VMWare work.
 
    2. You can view this single wire as a very primitive network or bus.
       On = sending a 1 bit.  Off = sending a 0.  And, if we can send 0
