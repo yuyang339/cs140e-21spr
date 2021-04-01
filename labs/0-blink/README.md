@@ -382,7 +382,7 @@ This part is simple:
 
 
 <table><tr><td>
-  <img src="images/part5-succ-far.jpg" />
+  <img src="images/part5-succ-far.jpg" "width=400"/>
 </td></tr></table>
 
 
