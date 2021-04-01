@@ -190,8 +190,6 @@ You'll implement the following routines in `code/gpio.c`:
 
       Success looks like:
 
-Success looks like the following photos:
-
 <p float="left">
   <img src="images/part1-succ-green.jpg" width="450" />
   <img src="images/part1-succ-blue.jpg" width="450" />
