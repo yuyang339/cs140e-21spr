@@ -351,16 +351,24 @@ Now test that the toolchain works and produces a runnable binary:
 --------------------------------------------------------------------------
 #### 5.  Run two pi's at once
 
-This part is simple:
+Configuring your second pi is a great way to re-enforce the steps above.
+Also you're going to want two working systems at all times.  It will make
+it much easier to isolate what a problem is by swapping pi's and then
+(if needed) swapping components (e.g., switching SD cards).  Finally,
+you will need two pi's for the networking labs.
+
+The steps:
 
   1. Configure your second pi as above.  The microSD will likely have a different
      name.
 
+            # from the 0-blink directory
             % cp ../../firmware/* /media/engler/sdd1/
             % cp ../../firmware/bootloader.bin  /media/engler/sdd1/kernel.img 
             % sync
-            # unplug and put into rpi
-            # run hello since it doesn't need wiring
+            # unplug the microSD from your laptop and plug into your pi
+
+            # as a quick test: run hello since it doesn't need wiring
             % pi-install part1/hello.bin   
             find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
             opened tty port </dev/ttyUSB0>.
@@ -369,8 +377,12 @@ This part is simple:
             DONE!!!
 
   2. In two different terminal windows, run `blink-pin20.bin`  on each.
-     You will need to specify the device on the command line.  For me
-     (again: Linux.  MacOS will have a different device mount point.):
+     You will need to specify each distinct TTL-USB device on the
+     `pi-install` command line, otherwise `pi-install` will try to load
+     the same one (the last mounted device).
+
+     For me (again: Linux.  MacOS will have a different device mount
+     point.):
 
             # in one terminal
             % pi-install /dev/ttyUSB0 part1/blink-pin20.bin 
@@ -380,22 +392,21 @@ This part is simple:
 
      Success looks like:
 
-
 <p float="left">
   <img src="images/part5-succ-far.jpg" width="350" />
 </p>
 
 
+Trouble shooting:
 
+   1. If running blink does not work try running `part1/hello.bin`
+      (an LED wire might have come loose.)
 
-Configuring your second pi is a great way to re-enforce the steps above.
-Also you're going to want two working systems at all times.  It will make
-it much easier to isolate what a problem is by swapping pi's and then
-(if needed) swapping components (e.g., switching SD cards).
-
-You should be able to run both pi's at once by `pi-install` each distinct
-ttl-USB device on the command line.  (Otherwise it will try to load the
-same one.)
+   2. If that doesn't fix it, check that a small red light is blinking
+      when you plug in the pi.  If not, the bootloader isn't running.
+      Unplug/plug-in the pi and see if that fixes it.  If not, unplug
+      it and check the microSD is all the way in.  If not, check the
+      TTY connections on both the device and the pi.
 
 To see where the devices are loaded, you can do `ls -lrt /dev/` as above.
 On many Unix systems you can also look at the end of the kernel log.
