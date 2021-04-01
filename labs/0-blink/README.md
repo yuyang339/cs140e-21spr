@@ -28,7 +28,13 @@ The final sign off for the lab:
 
   1. Show you have a working `blink` compiled using the tool chain and started
      using the bootloader.
-  2. Bonus: write up a short example problem you ran into (or someone
+
+  2. Show that you can run two pi's at the same time.  Not everyone will
+     be able to do this if you need to buy additional adaptors for your
+     laptop --- make sure you can do this part very soon, since we need
+     two pi's at once for networking.
+
+  3. Bonus: write up a short example problem you ran into (or someone
      you helped ran into) and how you solved them and post to the
      newsgroup so we can start accumulating examples.
 
@@ -343,7 +349,44 @@ Now test that the toolchain works and produces a runnable binary:
    3. If everything worked, your LED light should be blinking.  Congratulations!
 
 --------------------------------------------------------------------------
-#### 5.  Now do the same for your second pi!
+#### 5.  Run two pi's at once
+
+This part is simple:
+
+  1. Configure your second pi as above.  The microSD will likely have a different
+     name.
+
+            % cp ../../firmware/* /media/engler/sdd1/
+            % cp ../../firmware/bootloader.bin  /media/engler/sdd1/kernel.img 
+            % sync
+            # unplug and put into rpi
+            # run hello since it doesn't need wiring
+            % pi-install part1/hello.bin   
+            find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
+            opened tty port </dev/ttyUSB0>.
+            ... stuff ...
+            hello world
+            DONE!!!
+
+  2. In two different terminal windows, run `blink-pin20.bin`  on each.
+     You will need to specify the device on the command line.  For me
+     (again: Linux.  MacOS will have a different device mount point.):
+
+            # in one terminal
+            % pi-install /dev/ttyUSB0 part1/blink-pin20.bin 
+
+            # in another terminal
+            % pi-install /dev/ttyUSB1 part1/blink-pin20.bin 
+
+     Success looks like:
+
+
+<p float="left">
+  <img src="images/part5-succ-close.jpg" width="450" />
+  <img src="images/part5-succ-far.jpg" width="450" />
+</p>
+
+
 
 Configuring your second pi is a great way to re-enforce the steps above.
 Also you're going to want two working systems at all times.  It will make
@@ -365,6 +408,8 @@ For example, on Linux:
         [105660.933050] cp210x 1-2:1.0: cp210x converter detected
         [105660.935793] usb 1-2: cp210x converter now attached to ttyUSB0
 
-We can see it's connected to `ttyUSB0`
+We can see it's connected to `ttyUSB0`.  Using `tail -f` lets us see
+immediately as the log file changes (e.g., when you plug in or pull out
+your TTL-usb).
 
 Your system likely has an even better way; so it's worth searching online.
