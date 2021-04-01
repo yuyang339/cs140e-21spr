@@ -303,8 +303,29 @@ What to do:
   <img src="images/part3-succ-close.jpg" width="230" />
 </p>
 
+This doesn't seem like much, but is shows the glimmer of several deeper 
+tricks:
 
+   1. It shows how you can take code written with very strong assumptions
+      and --- without any software changes --- dramatically change
+      its behavior, correctly.  In this case we take a system that
+      assumed it running locally, controlling its own device and made
+      it transparently control a remote device (or even many).
 
+      Among other examples this trick (on a much grander scale) is how
+      virtual machines work.
+
+   2. You can view this single wire as a very primitive network or bus.
+      On = sending a 1 bit.  Off = sending a 0.  And, if we can send 0
+      and 1 we can send anything.
+
+      With some simple changes (we will do these in later labs) you
+      can use wire to general-pupose messages.  And if you add a second
+      wire, you easily can do so with incredibly low latency and speed:
+      almost certainly lower than between two full-fledged Unix servers.
+      (One of many examples where we will be able to write custom, clean,
+      simple code that is far faster or more powerful than a full-fledged
+      "real" system.)
 
 --------------------------------------------------------------------------
 ### Extension: Break and tweak stuff.
