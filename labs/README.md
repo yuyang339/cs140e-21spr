@@ -22,14 +22,7 @@ on both the pi and unix side will be written by you:
      using the Broadcom document GPIO description.  You will use this
      to implement your own blink and simple network between your r/pi's.
 
-  - [2-bootloader](2-bootloader/): you will implement your own
-     bootloader to transfer the code from your laptop to the pi.  The
-     most common r/pi bootloader out there uses the `xmodem` protocol.
-     This approach is overly complicated.  You will do a much simpler,
-     more likely to be correct protocol.  It has the advantage that it
-     will later make it easier to do a network boot.
-
-  - [3-cross-check](3-cross-check/): you will use read-write logging
+  - [2-cross-check](2-cross-check/): you will use read-write logging
      to verify that your GPIO code is equivalent to everyone else's.
      If one person got the code right, everyone will have it right.
 
@@ -38,6 +31,13 @@ on both the pi and unix side will be written by you:
      approach is that there is no magic.  A bad thing is that a single
      mistake makes more a miserable quarter.  Thus, we show you modern
      tricks for ensuring your code is correct.
+
+  - [3-bootloader](3-bootloader/): you will implement your own
+     bootloader to transfer the code from your laptop to the pi.  The
+     most common r/pi bootloader out there uses the `xmodem` protocol.
+     This approach is overly complicated.  You will do a much simpler,
+     more likely to be correct protocol.  It has the advantage that it
+     will later make it easier to do a network boot.
 
   - [4-uart](4-uart/): you write your first real device driver,
      for the UART, using only the Broadcom document.  At this point,

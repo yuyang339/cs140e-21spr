@@ -244,9 +244,13 @@ Linux:
 
         sudo adduser <your username> dialout
 
+    If you do this, make sure you login and logout.
+
     If that still doesn't work, you may have to remove `modemmanager`:
 
         sudo apt-get remove modemmanager
+
+    In this case you may need to reboot.
 
 Mechanically:
 
