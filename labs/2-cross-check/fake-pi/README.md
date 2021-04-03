@@ -5,7 +5,6 @@ you to debug your `gpio.c` code on your laptop.  You can compile it along
 with `gpio.c` and whatever driver you want to produce an executable that
 you can run on your laptop.
 
-
         cd 2-cross-check/fake-pi
         # not necessary but makes things easier:
         #    make a sym link to shorten the paths.
@@ -41,6 +40,12 @@ you can run on your laptop.
         PUT32(20200028) = 100000
         GET32(20200034) = 0
         ... repeats forever ...
+
+You can also just use:
+
+        % make
+        % ls
+        1-blink  2-blink  3-input  fake-pi.c  Makefile	README.md
 
 Some nice things:
 
@@ -93,4 +98,3 @@ and when you can use this kind of trick in other places.
      We will do a hack like this in an upcoming lab.  It's especially cool
      when you do this over a network, and broadcast the messages to many
      pi's that operate in unison.  (E.g., for large light installations.)
-

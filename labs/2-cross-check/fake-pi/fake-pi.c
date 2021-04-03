@@ -57,7 +57,6 @@
     exit(1);                                                        \
 } while(0)
 
-
 // main pi-specific thing is a tiny model of device
 // memory: for each device address, what happens when you
 // read or write it?   in real life you would build this
@@ -80,7 +79,6 @@ static unsigned
         gpio_fsel2_v,
         gpio_set0_v,
         gpio_clr0_v;
-
 
 void put32(volatile void *addr, uint32_t v) {
     panic("not implemented\n");
@@ -116,7 +114,9 @@ uint32_t GET32(uint32_t addr) {
     // to fake a changing environment, we want gpio_lev0 to 
     // change --- we just use a uniform random coin toss, 
     // but you would bias these as well or make them more 
-    // realistic by correlating with other pins or time or ...
+    // realistic by reading from a trace from a run on 
+    // the raw hardware, correlating with other pins or 
+    // time or ...
     case gpio_lev0:  v = random() % 2;  break;
     default: panic("read of illegal address: %x\n", addr);
     }
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     void notmain(void);
 
     // initialize "device memory" to random values.
-    // extensio: do multiple iterations, initializing to
+    // extension: do multiple iterations, initializing to
     // different values each time.
     gpio_fsel0_v = random();
     gpio_fsel1_v = random();
@@ -143,6 +143,8 @@ int main(int argc, char *argv[]) {
     gpio_set0_v  = random();
     gpio_clr0_v  = random();
 
+    // extension: run in a subprocess to isolate
+    // errors.
     output("calling pi code\n");
     notmain();
     output("pi exited cleanly\n");
