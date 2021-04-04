@@ -61,10 +61,13 @@ Running `blink-pin20.bin` from the SD card won't blink:
     should have the same checksum.  Even if you copied correctly, it's
     possible the OS did not write everything out or a stray electrical
     signal corrupted the SD.
+  - Make sure you ran `sync` after copying the file to the SD card.  Otherwise 
+    the OS might have queued up the write but not actually executed it before 
+    you pulled out the SD card.
   - There is a small chance pin 20 is dead: there are several binaries that
     blink different pins: try those.
   - If you have one, try a second pi at any one of these steps and use it 
-    to delta debug down to the faulty component.   
+    to delta debug down to the faulty component.
 
 Bootloading:
 
@@ -73,7 +76,12 @@ Bootloading:
     make sure your "enable_uart=1" is uncommented out.
 
   - You may have to give the path to the TTY-usb device on your laptop.
-    See the lab.  On MacOS it seems to be prefixed by "cu.".
+    See the lab.  On MacOS it seems to be prefixed by "cu.".  You may have a 
+    device name like "cu.SLAB_USBtoUART" on macOS.
+
+  - If you're unsure about which TTY in `/dev` to use, try running `ls -lrt 
+    /dev`.  The devices near the bottom were added more recently, so they were 
+    probably the ones you just plugged in.
 
   - As above, run `cksum bootloader.bin` and `cksum kernel.img` and make sure
     they give the same value!
@@ -83,6 +91,22 @@ Bootloading:
     UART is connected, getting signals, etc.
 
   - Again: make sure all your wires are seated.
+
+  - Make sure you're powering the Pi correctly (5V to 5V, GND to GND).  All the 
+    pins you need should be in a row on the Pi's GPIO header (5V, GND, TX, RX).
+
+  - Make sure you connected RX and TX correctly between the Pi and the USB-tty.  
+    Think about the semantics of receiving and transmitting data.  If in doubt, 
+    you can try switching them.
+
+  - If you have the bootloader running, you should see the "RX" LED on your 
+    USB-tty blinking dimly a few times a second.  When you run `pi-install`, 
+    the "RX" LED should turn off and the "TX" LED should turn on brightly for a 
+    few moments.
+
+  - There's a tiny chance your RX or TX pins are burned out.  The best way to 
+    check this is to try with another Pi, since the RX and TX pins need to work 
+    to bootload anything.
 
   - If you have two pi's try the other.  Start swapping components to 
     narrow down the issue if one works and the other does not.
