@@ -21,7 +21,7 @@ SD card issues:
 LED won't turn on using 3v:
 
   - Ideally: you are working with a partner and if their LED worked
-    you could quickly try theirs (differential debugging).  If it didn't
+    you could quickly try theirs (delta debugging).  If it didn't
     work there is likely a problem with your laptop's USB prot.  If it did
     work there is a problem with your hardware (see below).
 
@@ -30,26 +30,27 @@ LED won't turn on using 3v:
   - Bo K. noticed that the red LEDs in this batch often blow out quickly.  Try
     a different color.
 
-  - Make sure your TTL-usb actually has power: for the ones I've seen
+  - Make sure your TTL-usb actually has power: for the ones we've seen
     there should also be an LED on.   In the past, we've had up to 1 in
-    10 TTLs arrive defective.  Try swapping another one in (differential
+    10 TTLs arrive defective.  Try swapping another one in (delta
     debugging).
 
   - Make sure the pi is actually on: for A+ there's a small LED on the
-    board that should be on.  It's possible your pi is defective out
-    of the box (though surprisingly I don't recall seeing this) ---
-    it's more likely you did not connect 5v power or ground correctly.
+    board that should be on.  It's possible your pi is defective out of
+    the box (though surprisingly it hasn't happened before in the class)
+    --- it's more likely you did not connect 5v power or ground correctly.
     Recheck!  If you did, swap a different pi.
 
-  - If your LED does not turn on, or is intermittent there may be a problem with the 
-    wires ("jumpers") --- make sure that they are pushed all the way down (you should
-    not be able to see the silver part of the pin) also, push them back and forth some.
-    The LED might turn on (indicating a loose jumper) or turn off (same).  In either
-    case try replacing the jumper and throwing away the old one --- intermittent
+  - If your LED does not turn on, or is intermittent there may be a
+    problem with the wires ("jumpers") --- make sure that they are pushed
+    all the way down (you should not be able to see the silver part of
+    the pin) also, push them back and forth some.  The LED might turn on
+    (indicating a loose jumper) or turn off (same).  In either case try
+    replacing the jumper and throwing away the old one --- intermittent
     connections are a real pain to debug.
 
-  - If it still does not turn on, try a different 3v connection.  There is a very
-    small chance that that one is burned out. 
+  - If it still does not turn on, try a different 3v connection.
+    There is a very small chance that that one is burned out.
 
 Running `blink-pin20.bin` from the SD card won't blink:
 
@@ -86,9 +87,9 @@ Bootloading:
   - As above, run `cksum bootloader.bin` and `cksum kernel.img` and make sure
     they give the same value!
 
-  - Try running `part1/hello.bin` first to make it prints "hello" --- I do 
-    this immediately if I have any kind of problem, since it shows if the 
-    UART is connected, getting signals, etc.
+  - Try running `part1/hello.bin` first to make it prints "hello" ---
+    we do this immediately if we have any kind of problem, since it
+    shows if the UART is connected, getting signals, etc.
 
   - Again: make sure all your wires are seated.
 
@@ -105,7 +106,7 @@ Bootloading:
     few moments.
 
   - There's a tiny chance your RX or TX pins are burned out.  The best way to 
-    check this is to try with another Pi, since the RX and TX pins need to work 
+    check this is to try with another Pi.  The RX and TX pins need to work 
     to bootload anything.
 
   - If you have two pi's try the other.  Start swapping components to 
