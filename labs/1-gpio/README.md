@@ -3,9 +3,6 @@
 **Important: as always, read and complete the [PRELAB](PRELAB.md)
 before lab!**
 
-  - In addition, there is now a [POSTLAB](POSTLAB.md) that lists out
-    many of the common solutions to problems that people ran into.
-
 The first lab was just setup.  Now we get to the fun part: you'll use
 the Broadcom document (`../../docs/BCM2835-ARM-Peripherals.annot.PDF`)
 to figure out how to write the code to turn the GPIO pins on/off yourself
