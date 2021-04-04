@@ -2,16 +2,18 @@ We're writing out the prelab.  For the momemt, you should look at:
   
    0. Setting your `CS140E_2021_PATH` variable (see below).
 
-   1. `fake-pi` : trivial user-level emulator for your pi code.
+   1. `0-hello`: checks that step 0 above worked.
+
+   2. `0-fake-pi` : trivial user-level emulator for your pi code.
       You will use this approach to cross-check your implementation
       against everyone else's to ensure everyone is equivalant.  Thus,
       if one person is correct, everyone is correct.
 
-   2. `trace` : simple example of how to override routines using
-      the linker.  You will use this to trace the PUT/GET calls when run
-      on the actual pi hardware and do the same comparison to everyone
-      else, and compare to when you replace our staff `gpio.o` with
-      your own.
+   3. `0-tracing-unix` and `0-tracing-pi`: simple example of how to override
+      routines using the linker.  You will use this to trace the PUT/GET
+      calls when run on the actual pi hardware and do the same comparison
+      to everyone else, and compare to when you replace our staff `gpio.o`
+      with your own.
 
 If you're going to modify these, please copy the directory --- I'm
 still modifying and playing around with the code, so you'd get conflicts
