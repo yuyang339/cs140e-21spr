@@ -1,8 +1,9 @@
 ### Post-lab
 
-If you finished, congratulations!  It may seem like a small bit of code, but it's 
-a non-trivial step to have a working system and have done a simple driver.   There
-are so many things that can go wrong, but they did not, or you solved them.
+If you finished, congratulations!  It may seem like a small bit of code,
+but it's a non-trivial step to have a working system that can actually
+generate and bootload pi binaries.  There are so many things that can
+go wrong, but they did not, or you solved them.
 
 On that note, if you are still struggling with the lab, below are some of the 
 methods to figure out what is going on:
