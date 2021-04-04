@@ -1,4 +1,4 @@
-SUBDIRS= fake-pi
+SUBDIRS= 0-hello 0-fake-pi 0-tracing
 
 .PHONY: all clean
 all check clean: $(SUBDIRS)
