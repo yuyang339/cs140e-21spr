@@ -81,7 +81,7 @@ static unsigned
         gpio_clr0_v;
 
 void put32(volatile void *addr, uint32_t v) {
-    panic("not implemented\n");
+    PUT32((uint32_t)(uint64_t)addr, v);
 }
 
 // same, but takes <addr> as a uint32_t
@@ -99,7 +99,7 @@ void PUT32(uint32_t addr, uint32_t v) {
 }
 
 uint32_t get32(const volatile void *addr) {
-    panic("not implemented\n");
+    return GET32((uint32_t)(uint64_t)addr);
 }
 
 // same but takes <addr> as a uint32_t
