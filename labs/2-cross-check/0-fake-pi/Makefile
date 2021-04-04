@@ -1,7 +1,7 @@
 # define where gpio.c is, and the programs you want to run.
-CODE_PATH = ../../1-gpio/code.staff/
+CODE_PATH = ../../1-gpio/code/
 PROGS        := 1-blink 2-blink 3-input
-GPIO         := $(CODE_PATH)/staff-gpio.c
+GPIO         := $(CODE_PATH)/gpio.c
 
 CODE         := fake-pi.c $(GPIO)
 
