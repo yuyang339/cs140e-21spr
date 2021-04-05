@@ -126,12 +126,11 @@ You should definitely back up your work somewhere--having only your local copy i
 
 1. Create a new repo on GitHub. [See here](https://docs.github.com/en/github/getting-started-with-github/create-a-repo) for instructions.  Make sure the new repo is private, so other people can't see it.  **Do not** select "initialize this repository with a README".
 2. Clone the repo to your computer.
-3. In the repo, run:
+3. In the repo, run: (credit to jqlin for posting this in the group)
 ```sh
 git remote add upstream https://github.com/dddrrreee/cs140e-21spr.git
 git pull --allow-unrelated-histories upstream main
 ```
-    - credit to jqlin for posting this in the group
 4. Whenever you want to get new changes from the class repo, run:
 ```sh
 git pull upstream
