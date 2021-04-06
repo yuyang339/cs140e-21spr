@@ -5,13 +5,11 @@ GPIO         := $(CODE_PATH)/gpio.c
 
 CODE         := fake-pi.c $(GPIO)
 
+CC = gcc
 CFLAGS = -I$(CODE_PATH) -Wall -Wno-unused-function -Wno-unused-variable 
 
 all: $(PROGS)
 
-# to keep makefile trivial, we just always remake everything.
-#1-blink: $(CODE_PATH)/1-blink.c  $(CODE)
-#	$(CC) $(CFLAGS) $< $(CODE) -o $@ 
 $(PROGS):%: $(CODE_PATH)/%.c  $(CODE)
 	$(CC) $(CFLAGS) $< $(CODE) -o $@ 
 

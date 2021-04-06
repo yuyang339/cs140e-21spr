@@ -36,9 +36,9 @@ you can run on your laptop.
         PUT32(20200008) = 643c9869
         GET32(20200008) = 643c9869
         PUT32(20200008) = 643c9841
-        GET32(20200034) = 1
+        GET32(20200034) = 19495cff
         PUT32(20200028) = 100000
-        GET32(20200034) = 0
+        GET32(20200034) = 2ae8944a
         ... repeats forever ...
 
 You can also just use:

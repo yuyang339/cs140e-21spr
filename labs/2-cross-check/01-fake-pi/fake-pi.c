@@ -112,12 +112,13 @@ uint32_t GET32(uint32_t addr) {
     case gpio_set0:  v = gpio_set0_v;  break;
     case gpio_clr0:  v = gpio_clr0_v;  break;
     // to fake a changing environment, we want gpio_lev0 to 
-    // change --- we just use a uniform random coin toss, 
-    // but you would bias these as well or make them more 
+    // change --- so we return a random value for (which
+    // will be roughly uniform random for a given bit).
+    // you could bias these as well or make them more 
     // realistic by reading from a trace from a run on 
     // the raw hardware, correlating with other pins or 
     // time or ...
-    case gpio_lev0:  v = random() % 2;  break;
+    case gpio_lev0:  v = random();  break;
     default: panic("read of illegal address: %x\n", addr);
     }
     output("GET32(%x) = %x\n", addr,v);
