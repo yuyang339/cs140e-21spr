@@ -15,6 +15,8 @@ We're writing out the prelab.  For the momemt, you should look at:
       to everyone else, and compare to when you replace our staff `gpio.o`
       with your own.
 
+   4. A quick and dirty `Makefile` [tutorial](http://nuclear.mutantstargoat.com/articles/make/).
+
 If you're going to modify these, please copy the directory --- I'm
 still modifying and playing around with the code, so you'd get conflicts
 otherwise.
