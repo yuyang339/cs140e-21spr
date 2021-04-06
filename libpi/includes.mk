@@ -18,10 +18,11 @@ ifndef CS140E_2021_LIBPI_PATH
 $(error CS140E_2021_LIBPI_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
 endif
 
-INC = -I$(CS140E_2021_LIBPI_PATH)/include -I.
+INC = -I$(CS140E_2021_LIBPI_PATH)/include -I$(CS140E_2021_LIBPI_PATH)/ -I.
+
 #  -I$(CS140E_2021_LIBPI_PATH)/cs140e-src -I$(CS140E_LIBPI_PATH)/cs140e-interrupt
 
-CFLAGS = -Og -Wall -nostdlib -nostartfiles -ffreestanding -mcpu=arm1176jzf-s -mtune=arm1176jzf-s  -std=gnu99 $(INC) -ggdb -Wno-pointer-sign
+CFLAGS = -Og -Wall -nostdlib -nostartfiles -ffreestanding -mcpu=arm1176jzf-s -mtune=arm1176jzf-s  -std=gnu99 $(INC) -ggdb -Wno-pointer-sign 
 
 ASFLAGS = --warn --fatal-warnings  -mcpu=arm1176jzf-s -march=armv6zk $(INC)
 

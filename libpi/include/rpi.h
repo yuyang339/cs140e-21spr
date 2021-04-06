@@ -16,6 +16,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+void uart_init(void);
+
 int (printk)(const char *format, ...);
 
 // reboot after printing out a string to cause the unix my-install to shut down.
@@ -41,4 +43,17 @@ void BRANCHTO(unsigned addr);
 void dummy(unsigned);
 
 #include "gpio.h"
+
+#define nop() dummy(0)
+
+// hack for the first couple labs: countdown 'ticks' cycles
+static inline void delay(unsigned ticks) {
+    while(ticks-- > 0)
+        nop();
+}
+
+
+#ifndef RPI_UNIX
+#   include "libc/assert.h"
+#endif
 #endif
