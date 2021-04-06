@@ -30,3 +30,6 @@ Workflow.  For each program, from easy to hardest:
   - Run cksum on the result: `cksum *.out`
   - Compare to other people.
   - Repeat.
+
+
+There are a couple of .ref files for reference.
