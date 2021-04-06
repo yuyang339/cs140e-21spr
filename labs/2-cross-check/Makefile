@@ -1,4 +1,4 @@
-SUBDIRS= 00-hello 01-fake-pi 02-tracing-pi 02-tracing-unix 1-code 2-code
+SUBDIRS= 00-hello 01-fake-pi 02-tracing-pi 02-tracing-unix 1-fake-pi 2-trace
 
 .PHONY: all clean
 all check clean: $(SUBDIRS)
