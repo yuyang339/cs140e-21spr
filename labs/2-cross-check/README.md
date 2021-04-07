@@ -1,7 +1,7 @@
 Lab: automatically cross-check your pi code against everyone else's.
 ======================================================================
 
-*** this is currently being modified, some of the details need to be updated. ***
+\*\*\* this is currently being modified, some of the details need to be updated. \*\*\*
 
 ***As usual, start with the [PRELAB](PRELAB.md)!***
 
@@ -68,6 +68,25 @@ you'll have to do the following:
      of `get32` and `put32` so that we can override what happens when
      your code writes to GPIO memory.
 
+Essentially, this is all based on the observation that the only real thing we 
+ever _do_ in terms of I/O on the Pi is access memory--and even then, we only 
+ever do that using the functions `put32` and `get32`.  This means, rather than 
+simulating every single thing going on within the Pi, we can simply simulate 
+`put32` and `get32` and still get a simulator that's really similar to the 
+actual behavior on the Pi.  We of course still need to write some logic around 
+those two functions--some of the `put32`s go to RAM, others to GPIO, etc.--but 
+these two primitives can simulate our entire program.
+
+Note that there's a tradeoff here--we can simulate things at different levels 
+of complexity, and in return we get different levels of accuracy.  The *most* 
+accurate simulation would be to simulate the actual hardware on the Pi, but 
+doing so would be a monumental effort.  However, since we only care about the 
+I/O interactions via `put32` and `get32`, we don't have to bother simulating 
+anything lower-level than that; the code compiled for your laptop is close 
+enough to the code compiled for the Pi.  Later we'll want to simulate and test 
+more things (timers, specific hardware devices like the serial port, etc.), and 
+we'll run into the same tradeoff again.
+
 ----------------------------------------------------------------------
 #### 0. make sure your `gpio.c` can compile on Unix.
 
@@ -78,7 +97,7 @@ If you do:
 
 It should work.
 
-As discussed in the PRELABpre-lab, copy your `gpio.c` into libpi and make sure
+As discussed in the [PRELAB](PRELAB.md), copy your `gpio.c` into libpi and make sure
 it compiles. You'll have to:
 
   1. Confirm that your GPIO code uses `get32` and `put32`
@@ -104,7 +123,7 @@ For the moment, we will do things in a much simpler, though manual way.
 
 You'll now build a fake memory so that you can implement `put32` and
 `get32`.  First:
-  - Look in `fake-put-get.c` and read the comments.  
+  - Look in `1-fake-pi/fake-put-get.c` and read the comments.  
 
 For `put32(addr,v)`: 
   1. Create an entry for `addr` in your fake memory if `addr` doesn't exist.
@@ -127,7 +146,7 @@ To test it:
      It should run without crashing and, importantly, print out the
      values for each `put32` and `get32` in the exact order they happened.
      `make cksumall` will chksum their output.  
-    
+
      Don't be afraid to look in the `Makefile` to see what it is doing!
 
   2. Compare the cksum to your partner.
@@ -138,6 +157,8 @@ To test it:
 
 ----------------------------------------------------------------------
 #### 3. Check your code against everyone else (5 minutes)
+
+**this section is still being updated**
 
 After you checked your fake `put32` and `get32` we now want to check that
 your `gpio` code works the same as everyone else.  Given the `get32` and
@@ -249,7 +270,7 @@ Modify your code to:
     partners (you will need to make it loop a finite number of times).
     What should you do about `delay`? 
 
-    2.  Show that its equivalant even when you set output pins
+    2.  Show that it's equivalent even when you set output pins
     in different order.  Hint: you likely want to be able
     easily mark some memory as "last writer wins" where it doesn't
     matter the actual order, just the final value.   I would
