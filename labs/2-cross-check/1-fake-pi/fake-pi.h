@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "fake-mem.h"
 #include "fake-random.h"
 
 // there is no assembly or other weird things in rpi.h so we can

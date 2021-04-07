@@ -2,8 +2,6 @@
 // gpio.c code. 
 #include "fake-pi.h"
 
-static mem_t fake_mem = {};
-
 // main pi-specific thing is a tiny model of device
 // memory: for each device address, what happens when you
 // read or write it?   in real life you would build this
@@ -26,7 +24,6 @@ void put32(volatile void *addr, uint32_t v) {
 
 // same, but takes <addr> as a uint32_t
 void PUT32(uint32_t addr, uint32_t v) {
-    mem_ent_t *m;
     switch(addr) {
     case gpio_lev0:  panic("illegal write to gpio_lev0!\n");
     default: 
@@ -49,7 +46,6 @@ uint32_t get32(const volatile void *addr) {
  */
 uint32_t GET32(uint32_t addr) {
     unsigned v;
-    mem_ent_t *m;
 
     switch(addr) {
     // to fake a changing environment, we want gpio_lev0 to 
