@@ -14,13 +14,11 @@ START = $(LPP)/cs140e-start.o
 
 MEMMAP=$(LPP)/memmap
 
-ifndef CS140E_2021_LIBPI_PATH
-$(error CS140E_2021_LIBPI_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
+ifndef CS140E_2021_PATH
+$(error CS140E_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
 endif
 
-INC = -I$(CS140E_2021_LIBPI_PATH)/include -I$(CS140E_2021_LIBPI_PATH)/ -I.
-
-#  -I$(CS140E_2021_LIBPI_PATH)/cs140e-src -I$(CS140E_LIBPI_PATH)/cs140e-interrupt
+INC = -I$(LPP)/include -I$(LPP)/ -I.
 
 CFLAGS = -Og -Wall -nostdlib -nostartfiles -ffreestanding -mcpu=arm1176jzf-s -mtune=arm1176jzf-s  -std=gnu99 $(INC) -ggdb -Wno-pointer-sign 
 
