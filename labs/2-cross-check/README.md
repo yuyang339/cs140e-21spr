@@ -147,14 +147,14 @@ First:
 For `put32(addr,v)`: 
   1. Create an entry for `addr` in your fake memory if `addr` doesn't exist.
   2. Write `v` to `addrs` entry.
-  3. Call `print_write(addr,v)`.
+  3. Print out these values using the `trace` call.
 
 On `get32(addr)`:
 
   1. If `addr` does not exist, insert `(addr, random())` (but do not
      print anything).
   2. Get the value `v` associated with `addr`.
-  3. Call `print_read(addr,v)` to print out the address and value.
+  3. Print out these values using the `trace` call.
   4. Return `v`.
 
 To test it:
