@@ -251,24 +251,25 @@ What you will do below:
    2. Implement `gpio_read` --- make sure you do not return bits that
       are spurious!  This can lead to garbage results.
 
-   3. Hook a jumper to one of the pi's 3v outputs: DO NOT CONNECT TO 5V!
+   3. Connect the positive leg of an LED to one of the pi's 3v outputs: 
+      DO NOT CONNECT TO 5V!  Test it by touching the other LED leg to ground: 
+      it should turn on.
  
    4. Run the code:
 
 
             % make
             % pi-install 3-input.bin
-            # touch jumper to pin 21: LED goes on
-            # remove jumper: LED goes off.
+            # touch the LED leg to pin 21: the second LED (connected to pin 20) goes on.
+            # remove the LEG touching pin 21: LED (connected to pin 20) goes off.
 
-
-   5. Success looks like:
+   5. Success looks like the following (note: we used a bare jumper, but that is
+      likely asking for trouble):
 
 <p float="left">
   <img src="images/part2-succ-on.jpg" width="450" />
   <img src="images/part2-succ-off.jpg" width="450" />
 </p>
-
 
 --------------------------------------------------------------------------
 ### Part 3. Forward one pi signal to another.
