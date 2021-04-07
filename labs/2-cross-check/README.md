@@ -291,27 +291,28 @@ even when code writes values in different orders, you can still
 show equivalance.
 
 Modify your code to:
-    1. Check that your opposing blink code is identical to your
-       partners (you will need to make it loop a finite number of times).
-       What should you do about `delay`? 
 
-    2.  Show that it's equivalent even when you set output pins
-       in different order.  Hint: you likely want to be able
-       easily mark some memory as "last writer wins" where it doesn't
-       matter the actual order, just the final value.   I would
-       do this by tracing each function, automatically marking the
-       addresses it writes as last-writer addresses.
+  1. Check that your opposing blink code is identical to your
+     partners (you will need to make it loop a finite number of times).
+     What should you do about `delay`? 
 
-    3. How to show equivalance when you set and clear in different orders?
-       This is trickier.  You will need to come up with a clean scheme to
-       indicate that non-overlapping bit-writes do not interfere.
+  2.  Show that it's equivalent even when you set output pins
+     in different order.  Hint: you likely want to be able
+     easily mark some memory as "last writer wins" where it doesn't
+     matter the actual order, just the final value.   I would
+     do this by tracing each function, automatically marking the
+     addresses it writes as last-writer addresses.
 
-    4. Within a device, often you can write some fields in any order, and
-       there is a final "commit" location you write to turn the device on.
-       Devise a good way to cleanly indicate these differences.
+  3. How to show equivalance when you set and clear in different orders?
+     This is trickier.  You will need to come up with a clean scheme to
+     indicate that non-overlapping bit-writes do not interfere.
 
-    5. Strictly speaking, we need memory barriers when writing to
-       different devices.  Add support for checking this.
+  4. Within a device, often you can write some fields in any order, and
+     there is a final "commit" location you write to turn the device on.
+     Devise a good way to cleanly indicate these differences.
+
+  5. Strictly speaking, we need memory barriers when writing to
+     different devices.  Add support for checking this.
 
 If you can do all of these you are in great shape to check some
 interesting code.
