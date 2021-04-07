@@ -1,5 +1,16 @@
 We will fill these in as they come up.
 
+To make it easy to compare, just have:
+
+    if(pin >= 32)
+        return;
+
+At the start of `gpio_set_on`, `gpio_set_off`, `gpio_set_input`,
+`gpio_set_output`.  For `gpio_read` it arguably makes sense to return
+something obviously wrong, so:
+
+    if(pin >= 32)
+        return -1;
 
 ### Hints for 1-fake-pi
 

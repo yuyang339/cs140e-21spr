@@ -284,9 +284,8 @@ Put it all together:
    3. Run it on the pi using the bootloader.
    4. Congratulations!  You have removed a big chunk of our code.
 
-
 ----------------------------------------------------------------------
-#### Advanced.
+#### Extensions
 
 Making the code more useful mostly involves expanding it so that
 even when code writes values in different orders, you can still
