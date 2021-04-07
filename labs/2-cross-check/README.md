@@ -218,6 +218,15 @@ You'll see we can write an implementation even without having a way to run it.
 This uses the tracing trick from the `PRELAB`.  You should look at that
 implementation if you haven't already.
 
+Implement the code in:
+
+  - `trace-simple.c`: implement `__wrap_PUT32` and `__wrap_GET32`
+  - `trace-notmainc.c: if you want to get fancy implement this 
+    so you can run raw pi programs in tracing mode.
+
+As with `1-fake-pi` start working through the tests in `2-trace/tests`.
+
+##### Background
 
 We would also like to check that the code running in its native
 environment works as expected: running on your laptop is great, but it
@@ -254,15 +263,6 @@ and safe method of "wrapping".  Assume we want to wrap `GET32`:
      our code can call when (if) it wants to invoke the original code.
   4. The code in `02-trace-pi has an example.
 
-##### What do to
-
-Implement the code in:
-
-  - `trace-simple.c`: implement `__wrap_PUT32` and `__wrap_GET32`
-  - `trace-notmainc.c: if you want to get fancy implement this 
-    so you can run raw pi programs in tracing mode.
-
-As with `1-fake-pi` start working through the tests in `2-trace/tests`.
 
 ##### Extensions:
 
