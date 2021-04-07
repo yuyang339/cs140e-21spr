@@ -1,8 +1,6 @@
 Lab: automatically cross-check your pi code against everyone else's.
 ======================================================================
 
-\*\*\* this is currently being modified, some of the details need to be updated. \*\*\*
-
 ***As usual, start with the [PRELAB](PRELAB.md)!***
 
 A goal of this course is that you will write every single line of
@@ -34,10 +32,13 @@ The basic idea: After completing the lab you will:
 
 #### Sign-off
 
-   1. `1-fake-pi`: You get the same checksum for all the `.out` files produced by 
-      the tests in `1-fake-pi/tests`.
-   2. `2-trace`: You get the same checksum for all the `.out` files produced by 
-      the tests in `2-trace/tests`.
+Pass the tests for both parts of thelab:
+
+   1. `1-fake-pi`: You get the same checksum as everyone else for
+      all the `.out` files produced by the tests in `1-fake-pi/tests`.
+
+   2. `2-trace`: You get the same checksum for all the `.out` files
+      produced by the tests in `2-trace/tests`.
 
 ----------------------------------------------------------------------
 #### PRELAB review: how to make a fake pi emulator
@@ -68,14 +69,15 @@ you'll have to do the following:
      of `get32` and `put32` so that we can override what happens when
      your code writes to GPIO memory.
 
-Essentially, this is all based on the observation that the only real thing we 
-ever _do_ in terms of I/O on the Pi is access memory--and even then, we only 
-ever do that using the functions `put32` and `get32`.  This means, rather than 
-simulating every single thing going on within the Pi, we can simply simulate 
-`put32` and `get32` and still get a simulator that's really similar to the 
-actual behavior on the Pi.  We of course still need to write some logic around 
-those two functions--some of the `put32`s go to RAM, others to GPIO, etc.--but 
-these two primitives can simulate our entire program.
+Essentially, this is all based on the observation that so far the only
+real thing we ever _do_ in terms of I/O on the Pi is access memory--and
+even then, we only ever do that using the functions `put32` and `get32`.
+This means, rather than simulating every single thing going on within the
+Pi, we can simply simulate `put32` and `get32` and still get a simulator
+that's really similar to the actual behavior on the Pi.  We of course
+still need to write some logic around those two functions--some of the
+`put32`s go to RAM, others to GPIO, etc.--but these two primitives can
+simulate our entire program.
 
 Note that there's a tradeoff here--we can simulate things at different levels 
 of complexity, and in return we get different levels of accuracy.  The *most* 
@@ -88,19 +90,36 @@ more things (timers, specific hardware devices like the serial port, etc.), and
 we'll run into the same tradeoff again.
 
 ----------------------------------------------------------------------
-#### 0. make sure your `gpio.c` can compile on Unix.
+#### 0. make sure your `CS140E_2021_PATH` is defined.
 
-If you do:
+From the `PRELAB`, make sure your path is setup:
 
-        % cd 1-fake-pi
+        % cd 2-cross-check/00-hello
+        % make
+        % pi-install hello.bin
+        listening on ttyusb=</dev/ttyUSB0>
+        hello: things worked!
+        DONE!!!
+
+If you get a `make` error, your path is not defined. 
+
+
+If not, make sure you have sourced your shell's config file.  (If you
+have a lot of terminals, logging in and logging out might be easier.)
+
+If you have a pi error, there's a hardware issue to take care of.
+
+Now make sure that the entire lab compiles:
+
+        % cd 2-cross-check
         % make
 
 It should work.
 
-As discussed in the [PRELAB](PRELAB.md), copy your `gpio.c` into libpi and make sure
-it compiles. You'll have to:
 
-  1. Confirm that your GPIO code uses `get32` and `put32`
+Also:
+
+  - Confirm that your GPIO code uses `get32` and `put32`
      instead of a raw read or write of device memory.  So, for example
 
             *gpio_fsel0 &= ~111b;
@@ -109,8 +128,6 @@ it compiles. You'll have to:
 
         put32(gpio_fsel0, get32(gpio_fsel0) & ~111b);
 
-  2. Modify the `put-your-src-here.mk` (the comments describe what to
-     do) and run `make` in `libpi`  and make sure everything compiles.
 
 ----------------------------------------------------------------------
 #### 1. Make a fake implementation of `put32` and `get32`
@@ -122,7 +139,9 @@ intercept all loads and stores and cause them to do interesting things.
 For the moment, we will do things in a much simpler, though manual way.
 
 You'll now build a fake memory so that you can implement `put32` and
-`get32`.  First:
+`get32`.  
+
+First:
   - Look in `1-fake-pi/fake-put-get.c` and read the comments.  
 
 For `put32(addr,v)`: 
@@ -132,7 +151,8 @@ For `put32(addr,v)`:
 
 On `get32(addr)`:
 
-  1. If `addr` does not exist, insert `(addr, random())` (but do not print anything).
+  1. If `addr` does not exist, insert `(addr, random())` (but do not
+     print anything).
   2. Get the value `v` associated with `addr`.
   3. Call `print_read(addr,v)` to print out the address and value.
   4. Return `v`.
@@ -141,13 +161,16 @@ To test it:
 
   0. Read [1-fake-pi/README.md](1-fake-pi/README.md) and 
      [1-fake-pi/tests/README.md](1-fake-pi/tests/README.md)
-  1. Start adding the tests in `1-fake-pi/tests/Makefile`.
-     `make runall` will just run them so you can see the output.
+
+  1. `make runall` should run the first set of simple put/get tests
+     so you can see the output.
      It should run without crashing and, importantly, print out the
      values for each `put32` and `get32` in the exact order they happened.
-     `make cksumall` will chksum their output.  
 
-     Don't be afraid to look in the `Makefile` to see what it is doing!
+     `make emitall` will emit thier output to `.out` files (there
+     are some `.ref` files for reference).  You can checksum these.
+
+     Don't be afraid to look around the `Makefile` to see what it is doing!
 
   2. Compare the cksum to your partner.
   3. If these values match, you know your code worked the same as your partner's.
@@ -157,8 +180,6 @@ To test it:
 
 ----------------------------------------------------------------------
 #### 3. Check your code against everyone else (5 minutes)
-
-**this section is still being updated**
 
 After you checked your fake `put32` and `get32` we now want to check that
 your `gpio` code works the same as everyone else.  Given the `get32` and
@@ -175,44 +196,35 @@ If both checks pass then we know that both implementations are equivalent
 --- at least for the tested inputs.
 
 For this section start with the simplest case:
- 1. Uncomment out the rule for `simple-gpio-test` in `Makefile` and run `make`.
-       This will compile the test harness `simple-gpio-test.c`, which will test a 
-    single invocation of each `gpio` function.
- 2. Check that each function gives the same answer as everyone else.
+ 1. Start adding the rest of the tests to `TEST_SRC` in
+    `1-fake-pi/tests/Makefile`.  Start with the easier ones and go
+    further.    The `prog-*.c` files are the most complicated.
 
-More fancy:
- 1. Uncomment out the rule for `test-gpio` in `Makefile` and run `make`.
-       This will compile and run test harness `test-gpio.c`.
- 2. You can test each function individually by running `test-gpio 0`,
-       `test-gpio 1`, etc.  (Look in the `test-gpio.c` file.)
- 3. For checkoff make sure the your get the same result for `test-gpio 3` which
-    compares all of them.
+ 2. Check that each function gives the same answer as everyone else.
 
 ----------------------------------------------------------------------
 #### 4. Add `gpio_set_func` and cross-check it.
 
 You'll see we can write an implementation even without having a way to run it.
 
-   1.  Implement the `gpio_set_func` function: it already has a prototype 
-       in `src/gpio.h`.
+   1.  Implement the `gpio_set_func` function: it has a prototype 
+       in `libpi/include/gpio.h` at the top-level directory.
    2. Add a test to the test harness.
-   3. Make it so that `test-gpio 4` runs it in isolation and `test-gpio 5` runs
-      all tests.
-   4. Cross-check your results.
-
-----------------------------------------------------------------------
-#### 5. Replace our `gpio.o` entirely!
-
-** We are modifying this currently **
-
-Put it all together:
-   1. Follow the pre-lab instructions on how to swap your `gpio.o` for ours.
-   2. Compile `3-cross-check/hello` 
-   3. Run it on the pi using the bootloader.
-   4. Congratulations!  You have removed a big chunk of our code.
+   3. Cross-check your results.
 
 ----------------------------------------------------------------------
 #### 6. Do similar tracing on the pi 
+
+This uses the tracing trick from the `PRELAB`.  You should look at that
+implementation if you haven't already.
+
+You will implement the code in:
+
+  - `trace-simple.c`: implement `__wrap_PUT32` and `__wrap_GET32`
+  - `trace-notmainc.c: if you want to get fancy implement this 
+    so you can run raw pi programs in tracing mode.
+
+###### More background.
 
 We would also like to check that the code running in its native
 environment works as expected: running on your laptop is great, but it
@@ -250,14 +262,28 @@ and safe method of "wrapping".  Assume we want to wrap `GET32`:
 
   4. The file `pi-trace/trace.c` has an example.
 
-This part of the lab should be fast:
+###### Extensions:
 
   1. Extend the tracing to handle PUT32, put32, and get32.  (both `put32` and
      `PUT32` do the same thing, they just have a different types for their
      address argument, which you can see in `rpi.h`)
+
   2. Extend the tracing to simply capture reads and writes for later printing.
      This allows us to trace `printk` or anything else that uses the UART.
 
+----------------------------------------------------------------------
+#### 5. Replace our `gpio.o` entirely!
+
+** We are modifying this currently **
+
+Put it all together:
+   1. Follow the pre-lab instructions on how to swap your `gpio.o` for ours.
+   2. Compile `3-cross-check/hello` 
+   3. Run it on the pi using the bootloader.
+   4. Congratulations!  You have removed a big chunk of our code.
+
+
+----------------------------------------------------------------------
 #### Advanced.
 
 Making the code more useful mostly involves expanding it so that
