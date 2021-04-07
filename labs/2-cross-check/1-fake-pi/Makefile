@@ -48,7 +48,7 @@ emit:
 	make -C tests  emit
 
 clean:
-	rm -f *.o $(TARGET) *~  *.bak  *.out
+	rm -f *.o $(TARGET) *~  *.bak  *.out  $(OBJS)
 	@make -s -C tests clean
 
 .PHONY: all clean run check emit
