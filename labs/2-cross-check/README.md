@@ -276,13 +276,15 @@ and safe method of "wrapping".  Assume we want to wrap `GET32`:
 ----------------------------------------------------------------------
 #### 5. Replace our `gpio.o` entirely!
 
-** We are modifying this currently **
+Now you'll swap in your `gpio.c` for the one in the `libpi.a`.
 
-Put it all together:
-   1. Follow the pre-lab instructions on how to swap your `gpio.o` for ours.
-   2. Compile `3-cross-check/hello` 
-   3. Run it on the pi using the bootloader.
-   4. Congratulations!  You have removed a big chunk of our code.
+   1. `make emitall` to make sure you have `.out`s for everything.
+   2. copy your `gpio.c` to `2-trace/tests/gpio.c`.
+   3. uncomment `# GPIO_OBJ = ./gpio.o` in `2-trace/tests/Makefile`
+   4. `make clean; make`
+   5. `make checkall` --- this will compare the old output (using our gpio.c)
+      with the new output (using yours).
+   6. Congratulations!  You have removed a big chunk of our code.
 
 ----------------------------------------------------------------------
 #### Extensions

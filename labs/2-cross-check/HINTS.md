@@ -78,3 +78,20 @@ As a sanity on the file size:
         704   704 20654 4-unix-test-gpio.out
         1051  1082 30797 total
 
+
+### For 2-trace
+
+These are what I got (you can get different b/c of hardware issues):
+
+    % cksum *.out
+    2962364034 35 0-gpio-read.bin.out
+    3159539606 56 0-gpio-set-input.bin.out
+    3179942673 56 0-gpio-set-output.bin.out
+    610433833 33 0-gpio-write.bin.out
+    4294967295 0 1-blink.bin.out
+    3754849163 392 1-set-n-input.bin.out
+    2100720877 414 1-set-n-output.bin.out
+    4164008761 928 2-set-stuff.bin.out
+    3731391281 716 prog-1-blink.bin.out
+    486978757 1432 prog-2-blink.bin.out
+
