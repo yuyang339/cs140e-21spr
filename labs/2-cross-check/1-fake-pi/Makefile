@@ -48,7 +48,7 @@ run:
 check:
 	make -C tests  checkall
 emit:
-	make -C tests  emit
+	make -C tests  emitall
 
 clean:
 	rm -f *.o $(TARGET) *~  *.bak  *.out $(OBJS)
