@@ -9,6 +9,8 @@
 # checksum / byte count.  you can post to the newsgroup
 MAKEFLAGS += --no-print-directory
 
+# when you want to swap in, specify the path to your gpio.c implementation
+# GPIO_OBJ = ./gpio.o
 
 # if you want to run a single program:
 TEST_SRC = 0-gpio-read.c
@@ -48,7 +50,7 @@ DEPS := $(MEMMAP) $(LPI) $(wildcard ./*.h) ./Makefile $(TRACE_OBJS)
 
 LIBS = $(LPI)
 
-all: $(TRACE_OBJS) $(TEST_PROGS)
+all: $(TRACE_OBJS) $(GPIO_OBJ) $(TEST_PROGS)
 
 $(TRACE_OBJS):
 	make -C ..
@@ -59,7 +61,7 @@ $(TRACE_OBJS):
 	$(CC) -c $(CPP_ASFLAGS) $< -o $@
 
 %.elf: %.o $(DEPS) 
-	$(LD) $(WRAP) $(START) $< $(TRACE_OBJS) -T $(MEMMAP) -o $@  $(LIBS)
+	$(LD) $(WRAP) $(START) $< $(GPIO_OBJ) $(TRACE_OBJS) -T $(MEMMAP) -o $@  $(LIBS)
 
 %.list: %.elf
 	$(OD) -D   $*.elf > $*.list
@@ -81,7 +83,6 @@ tags:
 
 clean:
 	rm -rf $(NAME) *~ tags *.o *.bin *.elf *.list *.img Makefile.bak  *.d
-
 
 .PHONY: libs all tags clean emitall runall checkall cksumall
 
