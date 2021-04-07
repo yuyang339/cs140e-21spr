@@ -8,8 +8,8 @@ MAKEFLAGS += --no-print-directory
 LPP = $(CS140E_2021_PATH)
 GPIO         := $(LPP)/labs/1-gpio/code/gpio.c
 
-SRC :=  fake-put-get.c $(GPIO) fake-random.c pi-random.c  fake-driver.c
-OBJS := $(patsubst %.c, %.o, $(SRC))
+SRC :=  fake-put-get.c fake-random.c pi-random.c  fake-driver.c
+OBJS := $(patsubst %.c, %.o, $(SRC)) gpio.o
 
 ifndef CS140E_2021_PATH
 $(error CS140E_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
@@ -33,6 +33,9 @@ all: $(TARGET)
 
 $(OBJS): $(DEPS) 
 
+gpio.o: $(GPIO)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -48,7 +51,7 @@ emit:
 	make -C tests  emit
 
 clean:
-	rm -f *.o $(TARGET) *~  *.bak  *.out  $(OBJS)
+	rm -f *.o $(TARGET) *~  *.bak  *.out
 	@make -s -C tests clean
 
 .PHONY: all clean run check emit
