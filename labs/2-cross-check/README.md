@@ -291,7 +291,6 @@ even when code writes values in different orders, you can still
 show equivalance.
 
 Modify your code to:
-
     1. Check that your opposing blink code is identical to your
        partners (you will need to make it loop a finite number of times).
        What should you do about `delay`? 
