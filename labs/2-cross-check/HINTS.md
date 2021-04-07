@@ -53,7 +53,7 @@ If `ls` lists the output in the same order, you can run `cksum` on the
         0-get.out      1-blink.out	     1-gpio-set-on.out	    3-unix-gpio-test.out
         0-put-get.out  1-gpio-set-input.out  1-gpio-set-output.out  3-unix-test-put-get.out
         0-put.out      1-gpio-set-off.out    2-blink.out	    4-unix-test-gpio.out
-        cksum *.out | cksum 
+        cksum *.out | cksum
         439198485 380
 
 
