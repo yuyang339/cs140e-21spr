@@ -43,5 +43,6 @@ int main(int argc, char *argv[]) {
     test_gpio_set_output(N); 
     test_gpio_set_on(N); 
     test_gpio_set_off(N);
+    test_gpio_set_function(N);
     return 0;
 }
