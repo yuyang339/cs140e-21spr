@@ -275,9 +275,11 @@ and safe method of "wrapping".  Assume we want to wrap `GET32`:
 
 ----------------------------------------------------------------------
 #### 5. Replace our `gpio.o` entirely!
+  
+Now you'll swap in your `gpio.c` for the one in the `libpi.a`.  This should
+just take a couple of minutes and then the lab is complete:
 
-Now you'll swap in your `gpio.c` for the one in the `libpi.a`.
-
+   0. `cd 2-trace/tests`
    1. `make emitall` to make sure you have `.out`s for everything.
    2. copy your `gpio.c` to `2-trace/tests/gpio.c`.
    3. uncomment `# GPIO_OBJ = ./gpio.o` in `2-trace/tests/Makefile`
