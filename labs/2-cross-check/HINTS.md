@@ -95,3 +95,6 @@ These are what I got (you can get different b/c of hardware issues):
     3731391281 716 prog-1-blink.bin.out
     486978757 1432 prog-2-blink.bin.out
 
+    % cksum *.out|cksum
+    1435331407 358
+
