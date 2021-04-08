@@ -12,11 +12,11 @@ all : libpi kernel.img # copy
 libpi:
 	make -C libpi.small
 
-start.o : start.S
-	arm-none-eabi-as start.S -o start.o
+staff-start.o : staff-start.S
+	arm-none-eabi-as staff-start.S -o staff-start.o
 
-kernel.img : memmap start.o $(OBJS)  libpi.small/libpi.a
-	arm-none-eabi-ld start.o $(OBJS) libpi.small/libpi.a -T memmap -o bootloader.elf
+kernel.img : staff-memmap staff-start.o $(OBJS)  libpi.small/libpi.a
+	arm-none-eabi-ld staff-start.o $(OBJS) libpi.small/libpi.a -T staff-memmap -o bootloader.elf
 	arm-none-eabi-objdump -D bootloader.elf > bootloader.list
 	arm-none-eabi-objcopy bootloader.elf -O binary kernel.img
 
@@ -35,4 +35,4 @@ depend:
 .PHONY: clean depend copy libpi
 
 # DO NOT DELETE
-bootloader.o: simple-boot.h pi-crc32.h libpi.small/rpi.h
+bootloader.o: simple-boot.h staff-crc32.h libpi.small/rpi.h

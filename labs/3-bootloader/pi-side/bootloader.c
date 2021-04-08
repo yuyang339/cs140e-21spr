@@ -14,19 +14,16 @@
  *      DO NOT MODIFY THE FOLLOWING!!!
  *      DO NOT MODIFY THE FOLLOWING!!!
  */
-#include <stdint.h>
 #include "rpi.h"
-
-#include "pi-crc32.h"       // has the crc32 implementation.
+#include "staff-crc32.h"    // has the crc32 implementation.
 #include "simple-boot.h"    // protocol values.
 
 // blocking calls to send / receive a single byte from the uart.
-void put_uint8(uint8_t uc)  { 
-    uart_putc(uc); 
-}
-uint8_t get_uint8(void) { 
-    return uart_getc(); 
-}
+void put_uint8(uint8_t uc)  { uart_putc(uc); }
+uint8_t get_uint8(void)     { return uart_getc(); }
+
+// note: these will lock up the machine if you lose
+// data or it does not show up.
 uint32_t get_uint32(void) {
 	uint32_t u = get_uint8();
         u |= get_uint8() << 8;
@@ -62,7 +59,7 @@ static void die(int code) {
 //      after you have completely received a message.
 void my_putk(const char *msg) {
     put_uint32(PRINT_STRING);
-    // lame strlen.
+    // lame strlen since we do not have one atm.
     int n;
     for(n = 0; msg[n]; n++)
         ;

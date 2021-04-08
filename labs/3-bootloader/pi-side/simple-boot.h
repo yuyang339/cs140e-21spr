@@ -1,3 +1,6 @@
+#ifndef __SIMPLE_BOOT_H__
+#define __SIMPLE_BOOT_H__
+
 // protocol values shared between the pi and unix side.
 enum {
     ARMBASE=0x8000, // where program gets linked.  we could send this.
@@ -21,3 +24,5 @@ enum {
     BAD_CODE_ADDR   = 0xdeadbeef,
     BAD_CODE_CKSUM  = 0xfeedface,
 };
+
+#endif
