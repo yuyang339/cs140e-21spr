@@ -76,6 +76,7 @@ static void boot_putk(const char *msg) {
 static unsigned 
 has_data_timeout(unsigned timeout) {
     // implement this!
+    return 0;
 }
 
 // send a <GET_PROG_INFO> message every 300ms.
@@ -96,6 +97,7 @@ static inline long get_code(void) {
     /****************************************************************
      * Add your code below: 2,3,4,5,6
      */
+    long addr = 0;
 
 
     // 2. expect: [PUT_PROG_INFO, addr, nbytes, cksum] 

@@ -9,7 +9,7 @@ AS  = $(ARM)-as
 OD  = $(ARM)-objdump
 OCP = $(ARM)-objcopy
 
-CFLAGS = -O -Wall -nostdlib -nostartfiles -ffreestanding  -march=armv6 -std=gnu99  -Wno-unused-variable -Ilibpi.small
+CFLAGS = -O -Wall -nostdlib -nostartfiles -ffreestanding -march=armv6 -std=gnu99  -Wno-unused-variable -Wno-unused-function -Ilibpi.small
 ASFLAGS = --warn --fatal-warnings -mcpu=arm1176jzf-s -march=armv6zk
 
 MEMMAP := ./libpi.small/memmap
