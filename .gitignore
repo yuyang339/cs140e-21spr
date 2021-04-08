@@ -5,3 +5,4 @@
 *.swp
 *.swo
 staff-*.txt
+.gdb_history
