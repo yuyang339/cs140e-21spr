@@ -18,8 +18,11 @@ uint8_t get_uint8(int fd) {
 }
 
 // we do 4 distinct get_uint8's b/c the bytes get dribbled back to 
-// use one at a time --- when we try to read 4 bytes at once it will
-// fail.
+// use one at a time --- when we try to read 4 bytes at once it can
+// (occassionally!) fail.
+//
+// NOTE: a more general approach: we could make a version of 
+// read_exact that will keep trying until a timeout.
 //
 // note: the other way to do is to assign these to a char array b and 
 //  return *(unsigned)b
