@@ -11,16 +11,13 @@
 // You shouldn't have to modify any code in this file.  Though, if you find
 // a bug or improve it, let me know!
 //
-#include <assert.h>
 #include <ctype.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <termios.h>
-#include <unistd.h>
 
 #include "libunix.h"
-#include "unix-boot.h"
-
+#include "simple-boot.h"
 
 // for simplicity support exactly three invocations:
 //      my-install <program.name>
@@ -43,7 +40,6 @@ int main(int argc, char *argv[]) {
             output("exec: <%s>\n", exec_argv[0]);
         }
     }
-
 
     // 1. get the name of the ttyUSB.
     char *dev_name;

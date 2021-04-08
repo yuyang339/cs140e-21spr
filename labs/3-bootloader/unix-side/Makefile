@@ -1,14 +1,19 @@
 CC = gcc
 SRC = my-install.c simple-boot.c 
 OBJS = $(SRC:.c=.o)
+PI_SIDE = ../pi-side
 
 # check that your path is defined.
 ifndef CS140E_2021_PATH
 $(error CS140E_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
 endif
+
 PATH_LIBUNIX = $(CS140E_2021_PATH)/libunix
 LIBUNIX = $(PATH_LIBUNIX)/libunix.a
-CFLAGS = -Wall -Werror -g  -Og -Ilibunix  -I../pi-side -Wno-unused-function  -Wall -I$(PATH_LIBUNIX)
+CFLAGS = -Wall -Werror -g  -Og -I$(PATH_LIBUNIX) -I$(PI_SIDE) -Wno-unused-function
+
+# massively over depend to keep things simple.
+DEPS := $(wildcard ./*.c) $(LIBUNIX) $(wildcard ./*.h $(PI_SIDE)/*.h) ./Makefile 
 
 # uncomment:
 #   - the 'run' target to automatically run the hello.bin code.
@@ -19,9 +24,9 @@ all : libunix my-install # run # tags
 libunix:
 	make -C $(PATH_LIBUNIX)
 
-$(OBJS): ../pi-side/simple-boot.h ../pi-side/staff-crc32.h 
+$(OBJS): $(DEPS)
 
-my-install:  $(OBJS)  $(LIBUNIX)
+my-install:  $(OBJS) $(DEPS)
 	$(CC) $(CFLAGS) $(OBJS) -o my-install -lm $(LIBUNIX)
 
 tags:

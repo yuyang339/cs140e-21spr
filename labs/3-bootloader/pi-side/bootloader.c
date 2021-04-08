@@ -10,54 +10,26 @@
  * recovery with inopportune timeouts.
  */
 #include "rpi.h"
-#include "staff-crc32.h"    // has the crc32 implementation.
-#include "simple-boot.h"    // protocol values.
+#include "staff-crc32.h"        // has the crc32 implementation.
+#include "simple-boot-defs.h"   // protocol values.
 
 /*
  * input output definitions for get_code: this might look a bit
  * weird, but it allows us to repurpose the get_code implementation
- * for other devices later on.
+ * for other devices later on and not pay any overhead (the pi is
+ * slow and the input device might not have much buffering)
  */
-
 // blocking calls to send / receive a single byte from the uart.
 #define boot_put8       uart_putc
 #define boot_get8       uart_getc
 // non-blocking: returns 1 if there is data, 0 otherwise.
 #define boot_has_data   uart_has_data
 
-#if 0
-// note: these will lock up the machine if you lose
-// data or it does not show up.
-uint32_t boot_get32(void) {
-	uint32_t u = boot_get8();
-        u |= boot_get8() << 8;
-        u |= boot_get8() << 16;
-        u |= boot_get8() << 24;
-	return u;
-}
-void boot_put32(uint32_t u) {
-    boot_put8((u >> 0)  & 0xff);
-    boot_put8((u >> 8)  & 0xff);
-    boot_put8((u >> 16) & 0xff);
-    boot_put8((u >> 24) & 0xff);
-}
-
-// returns 1 when there is data, or 0 if there was
-// a timeout.
-unsigned boot_has_data(unsigned timeout) {
-    unsigned s = timer_get_usec();
-    do {
-        if(uart_has_data())
-            return 1;
-    // the funny subtraction is to prevent wrapping.
-    } while((timer_get_usec() - s) < timeout);
-    return 0;
-}
-#endif
-
+// put this after you define <boot_put8>, <boot_get8> 
+// and <boot_has_data>.  a hack, but it lets us keep all
+// the names local (private) to this file.
 #include "get-code.h"
 
-// Simple bootloader: put all of your code here: implement steps 1,2,3,4,5,6
 void notmain(void) {
     uart_init();
 

@@ -44,6 +44,7 @@ kernel.img: $(NAME).bin
 
 clean:
 	rm -rf *.o *.bin *~ tags *.bin *.elf *.list *.img Makefile.bak 
+	@make -s -C ./libpi.small clean
 
 .PHONY: all clean  lib
 
