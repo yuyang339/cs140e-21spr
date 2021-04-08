@@ -227,7 +227,7 @@ What to do:
      Now you can just use yours! 
 
 
-##### Common mistake.
+##### A common unix-side mistake.
 
 A key feature you have that earlier student's did not is the ability
 to use `putk` from your bootloader code.  (Described more in part 2.)
@@ -278,12 +278,15 @@ What you will do:
      just as you did in lab 0.
 
   3. Use the tracing on the unix-side to debug what is going on.
-     Also, note, you do have a simple `putk` you can call on the
+     The traces should be identical to using our bootloader, other
+     than the initial number of `GET_PROG_INFO` messages could
+     be different.
+
+  4. Again, note, you do have a simple `putk` you can call on the
      `pi-side`.  I would use `putk` judiciously as you incrementally
      develop the code so you can see what state the pi believes it is in.
 
-
-#### A common mistake
+#### A common pi-side mistake
 
 A key limit of the pi UART hardware is that it only has space to hold 8
 bytes in its internal hardware buffer:  if your pi code take too long
@@ -295,5 +298,20 @@ If you forget this limitation, and (for example) print using `putk`
 when a message is arriving, you'll almost certainly input lose bytes,
 and also get confused.  Ask me how I know!
 
+--------------------------------------------------------------------
+#### Extensions.
 
-#### Done!
+Many possible extensions.  Since this low level code is used by everything we 
+want to be absolutely sure it is rock-solid in all situations:
+
+  0. Change the pi-side `get_uint8` calls to timeout if they are stuck for "too long"
+     and then reboot.  This is useful for having a stand-alone pi in the field you
+     can update.  If it gets stuck you don't have to walk (or drive) over and
+     hit a button to restart it.
+  1. Set up your tracing (`2-trace`) so you can trace a copy of the bootloader on the pi.
+  2. Setup logging on the unix side so you can record the `PUT/GET` operations from
+     a given run and then replay them later, so you can check that the
+     unix side behaves identically (all output is the same, etc).
+  3. Start mutating the traces in (2) and make sure the unix side behaves sensibly.
+  4. Adapt your `fake-pi` so that it can run the bootloader and use this to do
+     many randomized tests or mutate previous runs.
