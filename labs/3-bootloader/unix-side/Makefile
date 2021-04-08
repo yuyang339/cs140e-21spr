@@ -19,7 +19,7 @@ all : libunix my-install # run # tags
 libunix:
 	make -C $(PATH_LIBUNIX)
 
-$(OBJS): ../pi-side/simple-boot.h ../pi-side/pi-crc32.h 
+$(OBJS): ../pi-side/simple-boot.h ../pi-side/staff-crc32.h 
 
 my-install:  $(OBJS)  $(LIBUNIX)
 	$(CC) $(CFLAGS) $(OBJS) -o my-install -lm $(LIBUNIX)
