@@ -153,6 +153,8 @@ And don't forget: there are a bunch of useful error checking macros in
 `libunix/demand.h` and uses in `libunix/*.c`.
 
 
+
+--------------------------------------------------------------------
 ### Step 0: make sure your pi works before starting!
 
 Do these steps first:
@@ -185,10 +187,10 @@ Do these steps first:
 --------------------------------------------------------------------
 ### Step 1: write the unix side `my-install` first
 
-Debugging the pi code will be painful, since it requires copying files
-to the microSD etc.  So we first start with the much nicer task of
-replacing the Unix side bootler.  If you write it correctly, it should
-work seamlessly with the original pi-side.
+Debugging the pi code will be painful, especially since it requires
+copying files to the microSD etc.  So we first start with the much nicer
+task of replacing the Unix side bootloader.  If you write it correctly,
+it should work seamlessly with the original pi-side.
 
 
 Where is the code:
@@ -221,13 +223,18 @@ What to do:
   3. Once this works, run the other tests we provide (we will add
      these during the lab).
 
+  4. Copy `my-install` to your `~/bin` and resource your shell. 
+     Now you can just use yours! 
+
+
+##### Common mistake.
 
 A key feature you have that earlier student's did not is the ability
-to use `putk` from your bootloader code.   This makes debugging wildly
-easier.  (Embarrassingly, I only realized the trick to allow easy printing
-last year.)  Without output, all bugs lead to: "my pi isn't responding,"
-which is difficult function to invert back to root cause.
-
+to use `putk` from your bootloader code.  (Described more in part 2.)
+This makes debugging wildly easier.  (Embarrassingly, I only realized
+the trick to allow easy printing last year.)  Without output, all bugs
+lead to: "my pi isn't responding," which is difficult function to invert
+back to root cause.
 
 However, this does lead to a common mistake on the unix side:
 
@@ -239,12 +246,8 @@ Common mistaks:
 --------------------------------------------------------------------
 ### Step 2: write the pi side bootloader
 
-
-If you can't reliably send and receive bytes on either side, the bootloader
-can't work, so we verify you can do this by sending a `hello world` from the
-pi to unix.
-
-The key files (as discussed in the PRELAB):
+Now you'll write the pi-side.  It should mirror the unix side code and
+`PUT` values the unix side has done a `GET` on, and vice-versa.
 
 Where is the code:
 
@@ -253,9 +256,10 @@ Where is the code:
      your `get_code` implementation and then jumps and executes it
      (using `BRANCHTO`).
 
-     It also defines the input and output routines and then includes your
-     code.  This odd structure makes it easier to repurpose `get_code`
-     for other devices, which makes it easier to do a couple later labs.
+     It also defines the input and output routines and then includes
+     your code so it can use them.  This odd structure makes it easier
+     to repurpose `get_code` for other devices, which in turn makes it
+     easier to do a couple later labs.
 
 What you will do:
 
