@@ -1,6 +1,4 @@
-#include <assert.h>
 #include <ctype.h>
-#include <unistd.h>
 #include "libunix.h"
 
 // hack-y state machine to indicate when we've seen the special string

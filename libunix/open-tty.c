@@ -1,7 +1,5 @@
 // engler, cs140e.
 #include <fcntl.h>
-#include <unistd.h>
-
 #include "libunix.h"
 
 int open_tty_n(const char *device, int maxattempts) {

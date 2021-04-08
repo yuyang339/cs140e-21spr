@@ -16,6 +16,10 @@
 //
 #include <stdint.h>
 #include <sys/types.h>
+#include <unistd.h>
+
+// roundup <x> to a multiple of <n>: taken from the lcc compiler.
+#define pi_roundup(x,n) (((x)+((n)-1))&(~((n)-1)))
 
 // bunch of useful macros for debugging/error checking.
 #include "demand.h"
@@ -63,8 +67,6 @@ time_usec_t time_get_usec(void);
 // call this to check errors for closing a descriptor:
 #define close_nofail(fd) no_fail(close(fd))
 
-// roundup <x> to a multiple of <n>: taken from the lcc compiler.
-#define roundup(x,n) (((x)+((n)-1))&(~((n)-1)))
 
 uint32_t our_crc32(const void *buf, unsigned size);
 // our_crc32_inc(buf,size,0) is the same as our_crc32 
@@ -76,5 +78,19 @@ char *strcatf(char *dst, const char *fmt, ...);
 // return a strdup's string.
 char *strdupf(const char *fmt, ...);
 char *strcpyf(char *dst, const char *fmt, ...);
+
+// write exactly <n> bytes: panics if short write.
+int write_exact(int fd, const void *data, unsigned n);
+// read exactly <n> bytes: panics if short read.
+int read_exact(int fd, void *data, unsigned n);
+
+void put_uint8(int fd, uint8_t b);
+void put_uint32(int fd, uint32_t u);
+uint8_t get_uint8(int fd);
+uint32_t get_uint32(int fd);
+
+
+// this is used for lab 5 and onward.
+enum { TRACE_FD = 21 };
 
 #endif

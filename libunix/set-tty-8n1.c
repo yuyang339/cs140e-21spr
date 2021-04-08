@@ -1,13 +1,8 @@
-#include <assert.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <termios.h>
 
-#include "demand.h"
 #include "libunix.h"
 
 // XXX: if anyone figures out a cleaner way to do this, lmk.   I don't
