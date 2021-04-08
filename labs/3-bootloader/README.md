@@ -1,106 +1,28 @@
 ## Lab 2: build a bootloader.
 
-***NOTE: the details of how you'll do this are going to change, but the
-   overall description will stay the same.***
-
 ***NOTE: Make sure you start with the [PRELAB](PRELAB.md)!***
 
-The next few labs attempt to remove all magic from your pi setup
+The next few labs will remove to remove all magic from your pi setup
 by going downward and having you write and replace all of our code.
 The only code running when you boot (and the only code you run to boot)
 will either be stuff you wrote, or simple library routines we give you
-(which you can also replace).
+(which you can also replace!).
 
 Today's lab is a big step in that direction.  You will:
 
   - Write your own bootloader (both the Unix and pi side) to replace
      what we used last lab (i.e., `pi-install` and `bootloader.bin`).
 
-In the next two labs you will write your own versions of the low-level
-device code your bootloader needs (some fancier GPIO functions and a
-UART device driver).
+In the next lab you will write your own versions of the low-level device
+code your bootloader needs to control the UART hardware (what talks to
+the TTY-USB device connecting your pi and laptop).  You will then be
+able to drop in your `gpio.o` and your `uart.o` and replace almost all
+of our hardware-level code.
 
-### Sign off.
-  0. Make sure that the `HASH` output from your Unix side (which
-     prints a checksum of the sent code) matches
-     that of  your partner when it sends the same program.
-
-  1. Show you your bootloader works by running run `./my-install hello.bin` in 
-     the `unix-side` directory.
-
-  2. Swap SD cards with your partner and show that (1) still works.
-
-  3. Show us your code so we can check for some common mistakes.
-
-### Step 1: send `hello world` from pi to Unix
-
-If you can't reliably send and receive bytes on either side, the bootloader
-can't work, so we verify you can do this by sending a `hello world` from the
-pi to unix.
-
-The key files (as discussed in the PRELAB):
-
-  1. The sub-directory `pi-side` has the skeleton code
-     that will run on the pi.  In this part and the next, you'll write
-     missing code in `get-code.h:get_code`, compile it, and copy 
-     the resultant `kernel.img` to the SD card just as you did in the
-     previous lab.
-
-  2. The sub-directory `unix-side` has the code that will run on
-     your Unix laptop. You'll implement the code missing in
-     `simple-boot.c:simple_boot`. 
-
-  3. The directory `cs140e-21spr/libunix` has a set of Unix
-     utility routines.  By now you've implemented two of these:
-     `find_ttyusb` and `read_file`.
-
-For this part:
-
-  1. Change `pi-side/bootloader.c:notmain` to use `putk` to
-     send `hello world` to the Unix side and then `get_uint` to wait
-     for a 32-bit magic value (e.g., `0x12345678`) to be sent back.
-     Print whether it matched or not, `delay_ms(500)`, and reboot.
-
-  2. Change the code in `unix-side/simple-boot.c` to wait for a
-     print message and then send the magic value above back.  To run 
-     you'll need to supply a dummy binary, even though you are not 
-     sending it:  `./my-install hello.bin` should work.
-
-At this point you should be in fine shape to complete start implementing
-your bootloader (below).
-
-### Step 2: send `hello.bin` from UNIX to the pi.
-
-Here you'll write implement the code to:
-  1. pi: ask for the program to run;
-  2. unix: send the program code;
-  3. pi: receive the program code, copy it to where it should go, and jump to it.
-
-A key feature you have that last year's students did not is the
-ability to use `putk` from your bootloader code.   This makes debugging
-wildly easier.  (Embarrassingly, I only realized the trick to allow easy
-printing this past week, the surgery that ensued is why the lab is late.)
-Without output, all bugs lead to: "my pi isn't
-responding," which is difficult function to invert back to root cause.
-
-I would use `putk` judiciously as you incrementally develop the code so
-you can see what state the pi believes it is in.
-
-#### A (typical) nasty hardware limitation
-
-A key limit of the pi UART hardware is that it only has space to hold 8
-bytes in its internal hardware buffer:  if your pi code take too long
-between UART reads, the hardware will fill up and then drop bytes.
-Thus, whenever the pi side is expecting to receive data, it has to
-move promptly.
-
-If you forget this limitation, and (for example) print using `putk`
-when a message is arriving, you'll almost certainly input lose bytes,
-and also get confused.  Ask me how I know!
 
 #### A strong coding hint (PLEASE DO THIS!)
 
-For this part you're writing two pieces of code that talk to each other
+For this lab you're writing two pieces of code that talk to each other
 through messages.  If at all possible I would strongly suggest you figure
 out how to have two code windows side-by-side, one holding the pi code,
 the other holding the unix code.  This allows you to easily check that
@@ -110,7 +32,41 @@ With two coding windows, if you have a good grasp of the protocol below
 and of the helper functions, you may be able to type all this out in
 about 10-20 minutes.  If not, it could take hours.
 
+#### Sign off.
+
+The checkoff for this lab is pretty simple: bootload some programs
+and check they work the same.  More specifically:
+
+  0. When using your `my-install` and `bootloader` make sure the
+     `TRACE` calls printed from the unix side remain the same when
+     using both our pi bootloader and yours.  They should also match
+     other people.
+
+     These include the `PUT` and `GET` calls the unix side does to send
+     to the pi and the `HASH` output it computes (which prints a checksum
+     of the sent code).
+
+  1. Also, the output of the program should match, irrespective of the
+     bootloader.  So, for example, you should be able to run all the
+     `2-trace` tests with our bootloader and `my-install` and the old
+     bootloader and `pi-install`.
+
+  2. Start by running `./my-install hello.bin` in the `unix-side` directory.
+     We will add additional tests.
+
+  3. Show us your code so we can check for some common mistakes.
+
+----------------------------------------------------------------------
 #### The bootloader protocol.
+
+At a high level, the protocol works as follows: Here you'll write
+implement the code to:
+  1. pi: spin in a loop, periodically asking for the program to run;
+  2. unix: send the program code;
+  3. pi: receive the program code, copy it to where it should go, and
+     jump to it.
+  4. To detect corruption, we use a checksum (a hash) that we can
+     compare the received data too.
 
 This is a stripped down version (explained more below):
 
@@ -142,8 +98,9 @@ This is a stripped down version (explained more below):
 
 More descriptively:
 
-  1. The pi will repeatedly signal it is ready to receive the program by 
-     sending `GET_PROG_INFO` requests.  (This is given in the starter code.)
+  1. The pi will repeatedly signal it is ready to receive the program by
+     sending `GET_PROG_INFO` requests.  (This is given in the starter
+     code.)
 
      (Q: Why can't the pi simply send a single `GET_PROG_INFO` request?)
 
@@ -156,7 +113,7 @@ More descriptively:
      with this step?)
 
      Since the pi could have sent many `GET_PROG_INFO` requests before
-     we serviced it,  the Unix code will attempt to drain these out.
+     we serviced it, the Unix code will attempt to drain these out.
      Also, when the Unix code starts, it discards any garbage left in
      the tty until it hits a `GET_PROG_INFO`.
 
@@ -183,8 +140,8 @@ More descriptively:
      message it simply exits with an error.
 
 The use of send-response in the protocol is intended to prevent the
-Unix-side from overrunning the pi sides finite-sized UART queue.
-The CRC and other checks guard against corruption.
+Unix-side from overrunning the pi sides finite-sized UART queue.  The CRC
+and other checks guard against corruption.
 
 I would start small: do each message, check that it works, then do
 the next.  If you go in small, verifiable steps and check at each point,
@@ -194,5 +151,145 @@ of mistakes, this will take awhile.
 
 And don't forget: there are a bunch of useful error checking macros in
 `libunix/demand.h` and uses in `libunix/*.c`.
+
+
+### Step 0: make sure your pi works before starting!
+
+Do these steps first:
+
+  1. Before you make any changes, make sure your pi is working: 
+
+        `pi-install unix-side/hello.bin`
+
+  2. Set aside the working microSD card from step 1 and do not modify it
+     during this lab.
+
+  3. Make a second working micro-SD card by copying the firmware over it.
+     Run `hello.bin` to make sure it works.
+
+     You will only ever modify this second microSD.  Leave the first one
+     alone.  
+
+     If your pi stops working during the lab, this gives you an easy,
+     quick way to check during the lab if a hardware problem has come up
+     (e.g., a loose wire) or if it's just a bug in your bootloader code: just
+     swap them and run `hello.bin`.
+
+     Several people last year wasted hours trying to fix their software
+     when in fact it was a hardware problem.  You always want a quick
+     way to delta debug, especially since we are all remote.
+
+     Ideally you have a second pi.
+
+
+--------------------------------------------------------------------
+### Step 1: write the unix side `my-install` first
+
+Debugging the pi code will be painful, since it requires copying files
+to the microSD etc.  So we first start with the much nicer task of
+replacing the Unix side bootler.  If you write it correctly, it should
+work seamlessly with the original pi-side.
+
+
+Where is the code:
+
+  1. The sub-directory `unix-side` has the code that will run on
+     your Unix laptop. You'll implement the code missing in
+     `simple-boot.c:simple_boot`. 
+ 
+  2. The header file `unix-side/simple-boot.h` has a bunch of useful
+     utility routines you should use.     In particular, it has tracing
+     versions of `PUT` and `GET` that you can use to print the bytes
+     going back and forth.
+
+  3. The header file `pi-side/simple-boot-defs.h` has the enums
+     you should use when sending protocol messages. 
+
+  4. The directory `cs140e-21spr/libunix` has a set of Unix
+     utility routines.  By now you've implemented two of these:
+     `find_ttyusb` and `read_file`.
+
+What to do:
+
+  0. Start working on getting `my-install unix-side/hello.bin` to 
+     boot correctly.
+  1. You should enable tracing for everything besides sending the
+     raw code over so you can compare what you do to other people.
+  2. Make sure you check that the `TRACE:HASH` output matches
+     other people: if not, there is a bug in your `read_file`.
+
+  3. Once this works, run the other tests we provide (we will add
+     these during the lab).
+
+
+A key feature you have that earlier student's did not is the ability
+to use `putk` from your bootloader code.   This makes debugging wildly
+easier.  (Embarrassingly, I only realized the trick to allow easy printing
+last year.)  Without output, all bugs lead to: "my pi isn't responding,"
+which is difficult function to invert back to root cause.
+
+
+However, this does lead to a common mistake on the unix side:
+
+Common mistaks:
+  1. Make sure you use the `get_op` routine for any word that could
+     be a protocol opcode.  Otherwise you won't correctly handle when
+     the pi-side sends a `putk` message (see below).
+
+--------------------------------------------------------------------
+### Step 2: write the pi side bootloader
+
+
+If you can't reliably send and receive bytes on either side, the bootloader
+can't work, so we verify you can do this by sending a `hello world` from the
+pi to unix.
+
+The key files (as discussed in the PRELAB):
+
+Where is the code:
+
+  1. `pi-side/get-code.h`: all the code you write will go in here.
+  2. `pi-side/bootloader.c`: this has the `notmain` code that calls
+     your `get_code` implementation and then jumps and executes it
+     (using `BRANCHTO`).
+
+     It also defines the input and output routines and then includes your
+     code.  This odd structure makes it easier to repurpose `get_code`
+     for other devices, which makes it easier to do a couple later labs.
+
+What you will do:
+
+  0. You'll write the missing code in `get-code.h:has_data_timeout`,
+     which returns 1 if there is data (using `boot_has_data`) or 0 if
+     it timed-out after a given number of micro-seconds (you can check
+     this using `timer_get_usec` in `pi-side/libpi.small/timer.c`.
+
+     The bootloader uses this to send a `GET_PROG_INFO` message 
+     every 300ms.
+
+  1. You'll write missing code in `get-code.h:get_code` to get the 
+     code and copy it where it should go.
+
+  2. After you compile, copy the resultant `kernel.img` to the SD card
+     just as you did in lab 0.
+
+  3. Use the tracing on the unix-side to debug what is going on.
+     Also, note, you do have a simple `putk` you can call on the
+     `pi-side`.  I would use `putk` judiciously as you incrementally
+     develop the code so you can see what state the pi believes it is in.
+
+
+#### A common mistake
+
+A key limit of the pi UART hardware is that it only has space to hold 8
+bytes in its internal hardware buffer:  if your pi code take too long
+between UART reads, the hardware will fill up and then drop bytes.
+Thus, whenever the pi side is expecting to receive data, it has to
+move promptly.
+
+If you forget this limitation, and (for example) print using `putk`
+when a message is arriving, you'll almost certainly input lose bytes,
+and also get confused.  Ask me how I know!
+
 
 #### Done!

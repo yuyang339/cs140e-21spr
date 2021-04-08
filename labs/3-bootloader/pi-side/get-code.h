@@ -120,9 +120,8 @@ static inline long get_code(void) {
 
     // 6. verify the cksum of the copied code.
 
-
     // 7. send back a BOOT_SUCCESS!
-    boot_putk("Success: Received the program!\n");
+    boot_putk("<YOUR NAME HERE>: success: Received the program!\n");
     boot_put32(BOOT_SUCCESS);
 
     return addr;
