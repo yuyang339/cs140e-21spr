@@ -69,9 +69,13 @@ And, look but DO NOT MODIFY:
 
 ### 3. Implement two Unix support routines.
 
-To get you used to dealing with `man` pages and their ilk, you'll write
-two routines needed by your bootloader.  Neither is very hard; hopefully
-you can do these before lab:
+To get you used to dealing with `man` pages and their ilk, you'll
+write four routines needed by your bootloader.  Their prototypes are in
+`libunix/libunix.h` and two simple C files that can serve as starter
+code are in `0-prelab-code` (you should copy these into `libunix` at
+the top level).
+
+None of them should be very hard; hopefully you can do these before lab:
 
   1. `read_file(size,name)`: read the file `name` into a buffer you
      allocate in its entirety and return it, writing the size of the
@@ -102,6 +106,10 @@ you can do these before lab:
      You should give an error if there zero or more than one matching
      tty-serial devices.  There is a `strcatf` helper function that makes
      it easier to create a malloced name.
+
+  3. `find_tty_last`: does the same and finds the most recent TTY-USB.
+  4.  `find_tty_first`: does the same and finds the oldest TTY-USB.
+
 
 ### 4. Nice haves to make coding faster, better.
 
