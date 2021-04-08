@@ -25,7 +25,9 @@ dmb:
  * No instruction after the DSB can run until
  * all instructions before it have completed
  */
+.globl dev_barrier
 .globl dsb
+dev_barrier:
 dsb:
         mcr p15, 0, r0, c7, c10, 4
         bx lr

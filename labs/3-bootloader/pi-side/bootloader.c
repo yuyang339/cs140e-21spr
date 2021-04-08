@@ -1,133 +1,77 @@
-/* engler, cs140e: very simple "network" bootloader.  
+/*                  DO NOT MODIFY THIS CODE.
+ *                  DO NOT MODIFY THIS CODE.
+ *                  DO NOT MODIFY THIS CODE.
+ *                  DO NOT MODIFY THIS CODE.
+ *
+ * engler, cs140e: simple driver for your get_code implementation,
+ * which does the actual getting and loading of the code.
  *
  * much more robust than xmodem, which seems to have bugs in terms of 
  * recovery with inopportune timeouts.
- */
-
-/**********************************************************************
- * the code below is starter code provided by us.    the code you
- * should modify follows it (`notmain`).
- *
- *      DO NOT MODIFY THE FOLLOWING!!!
- *      DO NOT MODIFY THE FOLLOWING!!!
- *      DO NOT MODIFY THE FOLLOWING!!!
- *      DO NOT MODIFY THE FOLLOWING!!!
- *      DO NOT MODIFY THE FOLLOWING!!!
  */
 #include "rpi.h"
 #include "staff-crc32.h"    // has the crc32 implementation.
 #include "simple-boot.h"    // protocol values.
 
-// blocking calls to send / receive a single byte from the uart.
-void put_uint8(uint8_t uc)  { uart_putc(uc); }
-uint8_t get_uint8(void)     { return uart_getc(); }
-
-// note: these will lock up the machine if you lose
-// data or it does not show up.
-uint32_t get_uint32(void) {
-	uint32_t u = get_uint8();
-        u |= get_uint8() << 8;
-        u |= get_uint8() << 16;
-        u |= get_uint8() << 24;
-	return u;
-}
-void put_uint32(uint32_t u) {
-    put_uint8((u >> 0)  & 0xff);
-    put_uint8((u >> 8)  & 0xff);
-    put_uint8((u >> 16) & 0xff);
-    put_uint8((u >> 24) & 0xff);
-}
-
-// send the unix side an error code and reboot.
-static void die(int code) {
-    put_uint32(code);
-    rpi_reboot();
-}
-
-// send a string <msg> to the unix side to print.  
-// message format:
-//  [PRINT_STRING, strlen(msg), <msg>]
-//
-// DANGER DANGER DANGER!!!  Be careful WHEN you call this!
-// DANGER DANGER DANGER!!!  Be careful WHEN you call this!
-// DANGER DANGER DANGER!!!  Be careful WHEN you call this!
-// Why:
-//      We do not have interrupts and the UART can only hold 8 bytes
-//      before it starts dropping them.   so if you print at the same
-//      time the UNIX end can send you data, you will likely lose some,
-//      leading to weird bugs.  If you print, safest is to do right
-//      after you have completely received a message.
-void my_putk(const char *msg) {
-    put_uint32(PRINT_STRING);
-    // lame strlen since we do not have one atm.
-    int n;
-    for(n = 0; msg[n]; n++)
-        ;
-    put_uint32(n);
-    for(n = 0; msg[n]; n++)
-        put_uint8(msg[n]);
-}
-
-/*****************************************************************
- * All the code you write goes below.
+/*
+ * input output definitions for get_code: this might look a bit
+ * weird, but it allows us to repurpose the get_code implementation
+ * for other devices later on.
  */
 
+// blocking calls to send / receive a single byte from the uart.
+#define boot_put8       uart_putc
+#define boot_get8       uart_getc
+// non-blocking: returns 1 if there is data, 0 otherwise.
+#define boot_has_data   uart_has_data
 
-// keep sending a <GET_PROG_INFO> message every 300ms,
-// until <uart_has_data> returns non-zero, indicating 
-// the UNIX side replied.
-//
-// NOTE: 
-//    - look at libpi.small/timer.c for how to correctly compare to 
-//      the current micro-second count.
-
-void wait_for_data(void) {
-    // implement this!
+#if 0
+// note: these will lock up the machine if you lose
+// data or it does not show up.
+uint32_t boot_get32(void) {
+	uint32_t u = boot_get8();
+        u |= boot_get8() << 8;
+        u |= boot_get8() << 16;
+        u |= boot_get8() << 24;
+	return u;
 }
+void boot_put32(uint32_t u) {
+    boot_put8((u >> 0)  & 0xff);
+    boot_put8((u >> 8)  & 0xff);
+    boot_put8((u >> 16) & 0xff);
+    boot_put8((u >> 24) & 0xff);
+}
+
+// returns 1 when there is data, or 0 if there was
+// a timeout.
+unsigned boot_has_data(unsigned timeout) {
+    unsigned s = timer_get_usec();
+    do {
+        if(uart_has_data())
+            return 1;
+    // the funny subtraction is to prevent wrapping.
+    } while((timer_get_usec() - s) < timeout);
+    return 0;
+}
+#endif
+
+#include "get-code.h"
 
 // Simple bootloader: put all of your code here: implement steps 1,2,3,4,5,6
 void notmain(void) {
     uart_init();
 
-    // 1. keep sending GET_PROG_INFO until there is data.
-    wait_for_data();
+    long addr;
+    if((addr = get_code()) < 0)
+        rpi_reboot();
 
-    /****************************************************************
-     * Add your code below: 2,3,4,5,6
-     */
-    uint32_t addr = ARMBASE;  // initially check that we sent this.
-
-    // 2. expect: [PUT_PROG_INFO, addr, nbytes, cksum] 
-    //    we echo cksum back in step 4 to help debugging.
-
-
-    // 3. If the binary will collide with us, abort. 
-    //    You can assume that code must be below where the booloader code
-    //    gap starts.
-
-
-    // 4. send [GET_CODE, cksum] back.
-
-    // 5. expect: [PUT_CODE, <code>]
-    //  read each sent byte and write it starting at <ARMBASE> using <PUT8>
-
-    // 6. verify the cksum of the copied code.
-
-
-    /****************************************************************
-     * add your code above: don't modify below unless you want to 
-     * experiment.
-     */
-
-    // 7. no previous failures: send back a BOOT_SUCCESS!
-    put_uint32(BOOT_SUCCESS);
-
-	// XXX: appears we need these delays or the unix side gets confused.
-	// I believe it's b/c the code we call re-initializes the uart; could
-	// disable that to make it a bit more clean.
-	//
-    // XXX: I think we can remove this now; should test.
-    delay_ms(500);
+	// We used to have these delays to stop the unix side from getting 
+    // confused.  I believe it's b/c the code we call re-initializes the 
+    // uart.  Instead we now flush the hardware tx buffer.   If this
+    // isn't working, put the delay back.  However, it makes it much faster
+    // to test multiple programs without it.
+    // delay_ms(500);
+    uart_flush_tx();
 
     // run what we got.
     BRANCHTO(addr);

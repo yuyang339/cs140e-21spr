@@ -60,4 +60,8 @@ int uart_has_data(void);
 // null routine you can call to defeat compiler.
 void dummy(unsigned);
 
+// flush out the tx fifo
+void uart_flush_tx(void);
+
+
 #endif

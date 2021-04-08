@@ -1,38 +1,51 @@
-CC= arm-none-eabi-gcc
+NAME = bootloader
+OBJS = $(NAME).o
+LPI = libpi.small/libpi.a
 
-LIBPI = libpi.small
-CFLAGS = -I$(LIBPI) -I. -Wall  -Wno-unused-function -Og -nostdlib -nostartfiles -ffreestanding 
+ARM = arm-none-eabi
+CC = $(ARM)-gcc
+LD  = $(ARM)-ld
+AS  = $(ARM)-as
+OD  = $(ARM)-objdump
+OCP = $(ARM)-objcopy
 
-SRC = bootloader.c 
-OBJS = $(SRC:.c=.o)
+CFLAGS = -O -Wall -nostdlib -nostartfiles -ffreestanding  -march=armv6 -std=gnu99  -Wno-unused-variable -Ilibpi.small
+ASFLAGS = --warn --fatal-warnings -mcpu=arm1176jzf-s -march=armv6zk
 
-# Uncomment copy and fix up where your SD card is.
-all : libpi kernel.img # copy
+MEMMAP := ./libpi.small/memmap
+START := ./staff-start.o
 
-libpi:
-	make -C libpi.small
+# overkill: add all the .h's as dependencies, memmap and the makefile.
+DEPS := $(MEMMAP) $(wildcard ./*.h) ./Makefile 
 
-staff-start.o : staff-start.S
-	arm-none-eabi-as staff-start.S -o staff-start.o
+all: lib $(START) $(OBJS) kernel.img
 
-kernel.img : staff-memmap staff-start.o $(OBJS)  libpi.small/libpi.a
-	arm-none-eabi-ld staff-start.o $(OBJS) libpi.small/libpi.a -T staff-memmap -o bootloader.elf
-	arm-none-eabi-objdump -D bootloader.elf > bootloader.list
-	arm-none-eabi-objcopy bootloader.elf -O binary kernel.img
+lib:
+	@make -s -C libpi.small
 
-# change this to copy whereever your sd is mounted.
-copy:
-	cp kernel.img /media/engler/0403-0201/
-	sync
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.S $(DEPS)
+	$(CC) -c $(CPP_ASFLAGS) $< -o $@
 
-clean :
-	rm -f *.o *.bin *.elf *.list *.img *~ Makefile.bak
-	make -C libpi.small clean
+# rules to generate .elf->.list->.bin
+%.elf: $(OBJS) $(MEMMAP) $(DEPS)  $(LPI)
+	$(CC) $(CFLAGS) $(START) $(OBJS) -T $(MEMMAP) -o $@   $(LPI)
 
-depend:
-	makedepend -I$(LIBPI) *.[ch] 
+%.list: %.elf
+	$(OD) -D  $< > $@
 
-.PHONY: clean depend copy libpi
+%.bin: %.list
+	$(OCP) $*.elf -O binary $*.bin
 
-# DO NOT DELETE
-bootloader.o: simple-boot.h staff-crc32.h libpi.small/rpi.h
+# to reduce the chance of error.
+kernel.img: $(NAME).bin
+	mv $(NAME).bin kernel.img
+
+clean:
+	rm -rf *.o *.bin *~ tags *.bin *.elf *.list *.img Makefile.bak 
+
+.PHONY: all clean  lib
+
+# stop make from deleting these suffix'd files.
+.PRECIOUS: %.list %.elf
