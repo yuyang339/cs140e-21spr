@@ -13,8 +13,8 @@
  * You do not need to modify this first chunk of code.
  */
 
-// note: these will lock up the machine if you lose
-// data or it does not show up.
+// note: these <boot_get8> calls will lock up 
+// the machine if you lose data or it does not show up.
 uint32_t boot_get32(void) {
     uint32_t u = boot_get8();
         u |= boot_get8() << 8;
@@ -53,7 +53,6 @@ static void boot_putk(const char *msg) {
         boot_put8(msg[n]);
 }
 
-
 #define die(code) do {      \
     boot_put32(code);       \
     return -code;           \
@@ -86,6 +85,8 @@ static void wait_for_data(unsigned usec_timeout) {
     } while(!has_data_timeout(usec_timeout));
 }
 
+// IMPLEMENT this routine.
+//
 // Simple bootloader: put all of your code here.
 static inline long get_code(void) {
     // 1. keep sending GET_PROG_INFO every 300ms until 
