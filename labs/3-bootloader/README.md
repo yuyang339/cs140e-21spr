@@ -42,7 +42,7 @@ The key files (as discussed in the PRELAB):
 
   1. The sub-directory `pi-side` has the skeleton code
      that will run on the pi.  In this part and the next, you'll write
-     missing code in `bootloader.c:notmain`, compile it, and copy 
+     missing code in `get-code.h:get_code`, compile it, and copy 
      the resultant `kernel.img` to the SD card just as you did in the
      previous lab.
 
@@ -50,7 +50,7 @@ The key files (as discussed in the PRELAB):
      your Unix laptop. You'll implement the code missing in
      `simple-boot.c:simple_boot`. 
 
-  3. The directory `cs140e-21win-dev/libunix` has a set of Unix
+  3. The directory `cs140e-21spr/libunix` has a set of Unix
      utility routines.  By now you've implemented two of these:
      `find_ttyusb` and `read_file`.
 

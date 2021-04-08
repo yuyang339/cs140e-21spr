@@ -27,17 +27,19 @@ will replace the `.o` files with your own implementation.
 
 Make sure you look through:
 
-  1. `pi-side/bootloader.c` this holds the starter code that you will extend out
+  1. `pi-side/get-code.h` this holds the starter code that you will extend out
        into a full implementation that receives code from the UNIX side.  
 
-  2. `libpi.small/rpi.h` contains the prototypes and descriptions of pi routines
+  2. `pi-side/bootloader.c` has the driver that calls `get-code.h`.
+
+  3. `libpi.small/rpi.h` contains the prototypes and descriptions of pi routines
       you (or our starter code) can call.  Each has a comment describing them:
       please post to the newsgroup if these (or any other function descriptions)
       are confusing!   These include routines to read and write memory (do not
       do it directly!), reboot the pi, and send/receive bytes from the UART
       (the hardware on the pi that talks to your TTY-serial device).
 
-It's worth looking at the other files to.  In particular, compare the `start.s` 
+It's worth looking at the other files to.  In particular, compare the `staff-start.s` 
 here to the `start.s` in your `1-gpio` lab:
    1. What do they even do?
    2. Why are they different?
