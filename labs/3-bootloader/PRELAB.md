@@ -30,7 +30,7 @@ Make sure you look through:
   1. `pi-side/bootloader.c` this holds the starter code that you will extend out
        into a full implementation that receives code from the UNIX side.  
 
-  2. `libpi.small/rpi.h` contains the protypes and descriptions of pi routines
+  2. `libpi.small/rpi.h` contains the prototypes and descriptions of pi routines
       you (or our starter code) can call.  Each has a comment describing them:
       please post to the newsgroup if these (or any other function descriptions)
       are confusing!   These include routines to read and write memory (do not
@@ -120,13 +120,18 @@ your screen, the less you have to keep in your head and the less time
 you have to spend hunting around.  There are a variety of different
 terminal programs that make it easy to do split-screen and use hotkeys
 to jump between them.  I use `terminator` and am happy with it; there
-are many others.
+are many others.  Editors like Vim and Emacs let you create "splits" to see 
+different files at once, and programs like `tmux` let you split one terminal 
+window into many.
 
 `git` conflicts:  you may wind up having a `git` conflict at some point.
-The a stupid-simple way if you don't care about your local modifications:
+A stupid-simple way if you don't care about your local modifications:
 
     git checkout -- <file>
 
 See [here](https://docs.gitlab.com/ee/topics/git/numerous_undo_possibilities_in_git/) for
 more general variants.
 
+The `guides` directory in this repo contains:
+- [a ctags setup guide](../../../guides/ctags.md)
+- [a git guide](../../../guides/git.md)
