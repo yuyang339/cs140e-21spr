@@ -10,7 +10,7 @@ endif
 
 PATH_LIBUNIX = $(CS140E_2021_PATH)/libunix
 LIBUNIX = $(PATH_LIBUNIX)/libunix.a
-CFLAGS = -Wall -Werror -g  -Og -I$(PATH_LIBUNIX) -I$(PI_SIDE) -Wno-unused-function
+CFLAGS = -Wall -Werror -g  -Og -I$(PATH_LIBUNIX) -I$(PI_SIDE) -Wno-unused-function -I.
 
 # massively over depend to keep things simple.
 DEPS := $(wildcard ./*.c) $(LIBUNIX) $(wildcard ./*.h $(PI_SIDE)/*.h) ./Makefile 
