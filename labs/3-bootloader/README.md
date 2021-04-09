@@ -37,6 +37,10 @@ about 10-20 minutes.  If not, it could take hours.
 The checkoff for this lab is pretty simple: bootload some programs
 and check they work the same.  More specifically:
 
+  - `make check` in `tests/output-boot-trace` should pass.
+
+More detailed:
+
   0. When using your `my-install` and `bootloader` make sure the
      `TRACE` calls printed from the unix side remain the same when
      using both our pi bootloader and yours.  They should also match
