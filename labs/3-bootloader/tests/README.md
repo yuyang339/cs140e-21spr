@@ -1,17 +1,22 @@
+
 Copy:
 
    1. Your tracing `my-install` as `~bin/my-install.trace`
    2. Your not-tracing `my-install` as `~bin/my-install`
 
-Note:
-  - Don't trace `put_put8`.
+Then:
+  1.  Check that tracing `hello.bin` gives the right output (below).
+  2. Note: Don't trace `put_put8`.
 
-If trace_p in my-install = 1 (these will run slow):  
+
+Finally, for checkff run the tests below:
+
+  1. If `trace_p=1` in `my-install` (these will run slow):  
 
         % cd output-boot-trace  
         % make check
 
-If trace_p in my-install = 0:
+  2. If `trace_p=0` in `my-install`:
 
         % cd output-no-boot-trace
         % make check
