@@ -83,6 +83,7 @@ get_op(int fd) {
     uint8_t c = get_uint8(fd);
     if(c != '\n')
         output("%c", c);
+    output(">\n");
 
     // attempt to get a non <PRINT_STRING> op.
     return get_op(fd);
