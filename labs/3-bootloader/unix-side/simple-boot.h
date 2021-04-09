@@ -70,13 +70,19 @@ get_op(int fd) {
         return op;
     }
 
+
     // never trace this code.
+    output("PRINT_STRING:");
     unsigned nbytes = get_uint32(fd);
     demand(nbytes < 512, pi sent a suspiciously long string);
     output("pi sent print: <");
-    for(int i = 0; i < nbytes; i++)
+    for(int i = 0; i < nbytes-1; i++)
         output("%c", get_uint8(fd));
-    output(">\n");
+
+    // eat the trailing newline to make it easier to compare output.
+    uint8_t c = get_uint8(fd);
+    if(c != '\n')
+        output("%c", c);
 
     // attempt to get a non <PRINT_STRING> op.
     return get_op(fd);
