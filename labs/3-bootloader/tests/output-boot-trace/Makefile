@@ -10,7 +10,7 @@
 #   - "make cksum" it will compute checksums for all programs in TESTS
 
 # you can add a device path if you need it
-BOOTLOAD = my-install
+BOOTLOAD = my-install.trace
 
 # list out the tests you want.
 TESTS := $(wildcard ./[0123]-*.bin) $(wildcard ./prog-*.bin)
@@ -53,7 +53,7 @@ all: run
 
 # not sure if there is a better way: use these fake target to run our
 # checks for everything.
-# emit: $(TEST_EMIT) 
+emit: $(TEST_EMIT) 
 check: $(TEST_CHECK) 
 run: $(TEST_RUN) 
 cksum:  $(TEST_CKSUM)

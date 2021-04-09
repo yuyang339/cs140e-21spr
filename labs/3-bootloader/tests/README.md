@@ -1,4 +1,7 @@
-Recall: You need to copy `my-install` into your `~bin`.
+Copy:
+
+   1. Your tracing `my-install` as `~bin/my-install.trace`
+   2. Your not-tracing `my-install` as `~bin/my-install`
 
 If trace_p in my-install = 1 (these will run slow):  
 
