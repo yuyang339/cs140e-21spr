@@ -53,7 +53,7 @@ all: run
 
 # not sure if there is a better way: use these fake target to run our
 # checks for everything.
-# emit: $(TEST_EMIT) 
+emit: $(TEST_EMIT) 
 check: $(TEST_CHECK) 
 run: $(TEST_RUN) 
 cksum:  $(TEST_CKSUM)
