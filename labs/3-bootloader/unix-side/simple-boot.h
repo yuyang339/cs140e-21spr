@@ -65,7 +65,7 @@ get_op(int fd) {
     uint32_t op = get_uint32(fd);
     if(op != PRINT_STRING) {
         if(trace_p)
-            trace("PUT32:%x\n", op);
+            trace("GET32:%x\n", op);
         return op;
     }
 
