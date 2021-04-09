@@ -3,6 +3,9 @@ Copy:
    1. Your tracing `my-install` as `~bin/my-install.trace`
    2. Your not-tracing `my-install` as `~bin/my-install`
 
+Note:
+  - Don't trace `put_put8`.
+
 If trace_p in my-install = 1 (these will run slow):  
 
         % cd output-boot-trace  

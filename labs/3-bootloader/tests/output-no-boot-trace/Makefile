@@ -38,11 +38,11 @@ all: run
 # note: this will fail if output does not contain a trace.
 # we pull everything into .out so that it's easier to debug.
 %.emit: %
-	$(BOOTLOAD) ./$* 2>&1 > /dev/null | grep $(GREP_STR) | uniq > ./$<.out
+	$(BOOTLOAD) ./$* 2>&1 > /dev/null | grep $(GREP_STR) | grep -v 20200034 | uniq > ./$<.out
 
 %.check: % 
 	@echo -n "checking <$*>: ";
-	@$(BOOTLOAD) ./$* 2>&1 > /dev/null | grep  $(GREP_STR) | uniq > ./$<.test
+	@$(BOOTLOAD) ./$* 2>&1 > /dev/null | grep  $(GREP_STR) | grep -v 20200034 | uniq > ./$<.test
 	@diff ./$<.out ./$<.test
 	@echo " Success: <$*>!";
 	@rm ./$*.test
