@@ -2,6 +2,7 @@
 #define __UNIX_BOOT_H__
 // helper routines; you should not have to modify this file.
 // make sure you look at <get_op> and understand what it is doing.
+#include "libunix.h"
 #include "staff-crc32.h"
 #include "simple-boot-defs.h"
 
