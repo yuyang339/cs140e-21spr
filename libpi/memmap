@@ -9,16 +9,29 @@ SECTIONS
      *
      * XXX: I cannot make text.boot work if we link start into libpi.a 
      */
-    .text 0x8000 :  { KEEP(*(.text.boot))  *(.text*) }
-    .data : { *(.data*) } 
+    .text 0x8000 :  { 
+        __code_start__ = .;
+        KEEP(*(.text.boot))  
+        *(.text*) 
+        __code_end__ = .;
+        . = ALIGN(8);
+    }
     .rodata : { *(.rodata*) }
+    .data : { 
+            __data_start__ = .;
+            *(.data*) 
+            __data_end__ = .;
+            . = ALIGN(4);
+    } 
     .bss : {
+        . = ALIGN(4);
         __bss_start__ = .;
         *(.bss*)
         *(COMMON)
         . = ALIGN(8);
         __bss_end__ = .;
         . = ALIGN(8);
+        __prog_end__ = .;
         __heap_start__ = .;
     }
 }

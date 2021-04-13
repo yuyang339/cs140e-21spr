@@ -20,7 +20,11 @@ endif
 
 INC = -I$(LPP)/include -I$(LPP)/ -I.
 
-CFLAGS = -Og -Wall -nostdlib -nostartfiles -ffreestanding -mcpu=arm1176jzf-s -mtune=arm1176jzf-s  -std=gnu99 $(INC) -ggdb -Wno-pointer-sign 
+ifndef OPT_LEVEL
+OPT_LEVEL = -Og
+endif
+
+CFLAGS = $(OPT_LEVEL) -Wall -nostdlib -nostartfiles -ffreestanding -mcpu=arm1176jzf-s -mtune=arm1176jzf-s  -std=gnu99 $(INC) -ggdb -Wno-pointer-sign 
 
 ASFLAGS = --warn --fatal-warnings  -mcpu=arm1176jzf-s -march=armv6zk $(INC)
 
