@@ -208,14 +208,16 @@ uint32_t load_code(struct vdev *v);
 #include "gpio.h"
 
 // extra student-defined libc prototypes.
-#include "libc/libc-extra.h"
+#include "../libc/libc-extra.h"
 #ifndef RPI_UNIX
 #   include "libc/assert.h"
 #else
+#if 0
 #   define PUT32(addr,val) put32((void*)(unsigned long)addr, val)
 #   define GET32(addr) get32((void*)(unsigned long)addr)
 #   include "demand.h"
 #   include <assert.h>
+#endif
 #endif
 
 // entry point definition
