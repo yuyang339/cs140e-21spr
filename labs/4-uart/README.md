@@ -188,6 +188,7 @@ A possibly-nasty issue:
   3. The final test, is to recompile your `bootloader` to use your uart
      and see that it boots the `hello` you used above.
 
+  4. And then run the tests from lab 3.
 
 ##### `libpi-fake`
 

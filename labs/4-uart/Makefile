@@ -1,4 +1,4 @@
-SUBDIRS= 0-prelab code pi-cat
+SUBDIRS= 0-prelab code pi-cat sw-uart
 
 .PHONY: all check clean
 all check clean: $(SUBDIRS)
