@@ -171,6 +171,8 @@ If you run `make` in `4-uart/code` it will build:
   - A simple `hello` you can use to test. I'd suggest shipping it over with your
     bootloader.  
 
+
+
 A possibly-nasty issue: 
 
   1. If you test using the bootloader (recommended!), that code obviously
@@ -185,6 +187,18 @@ A possibly-nasty issue:
 
   3. The final test, is to recompile your `bootloader` to use your uart
      and see that it boots the `hello` you used above.
+
+
+##### `libpi-fake`
+
+Your top level directory now has a `libpi-fake` directory.  To make
+it work you should (hopefully) just need to:
+  1. Copy your `gpio.c` and `uart.c` into `libpi/src` (not `libpi-fake`).
+  2. Copy your `fake-put-get.c` into there and add your fake memory
+     prototypes (if any) to `fake-mem.h`.
+  3. Check that the old code works by running the tests in `tests-gpio`.
+  4. Check that the uart code works by running the tests in `tests-uart`.
+     You'll have to compare your `.out` files with other people.
 
 -----------------------------------------------------------------------
 ### Part 2. implement a software UART.
