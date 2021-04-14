@@ -11,6 +11,8 @@ In general:
      control.
   6. Enable tx/rx.  It should be working!
 
+Note: 
+  - For `uart_tx_is_empty` you want it to be both empty and idle.
 
 Page numbers:
 
