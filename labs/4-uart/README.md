@@ -1,7 +1,5 @@
 ## Lab: write your own UART implementation.
 
-***MAKE SURE YOU DO THE [PRELAB](PRELAB.md) FIRST!***
-
 By the end of this lab, you'll have written your own device driver for
 the pi's mini-UART hardware, which is what communicates with the TTY-USB
 device you plug into your laptop.  This driver is the last "major" piece
@@ -48,13 +46,16 @@ Show that:
    1. `uart/hello` works using your `uart`.
    2. Your bootloader works just using your `uart.o` and the libpi (see
       `bootloader/`).
-   3.  `hello.fake` using your `uart.c` gives the same hash as everyone
+
+   3. ***THIS WILL CHANGE*** `hello.fake` using your `uart.c` gives the
+      same hash as everyone
       else.  Note, there are multiple ways to do same thing, so maybe
       do the first one as a way to resolve ambiguity.
 
-   4. Check that after you put your `uart.c` in `libpi` that your
+   4. ***NOTE YOU WILL HAVE TO BUFFER TRACES***: Check that after you
+      put your `uart.c` in `libpi` that your
       tracing lab from last time gives the same hash as everyone.
-      Note: you should be able just compie and run!  To get the cksum:
+      Note: you should be able just compile and run!  To get the cksum:
       `pi-install hello.bin |& grep TRACE | cksum`.
 
    5. Your software UART can reliably print and echo text between the pi
@@ -151,7 +152,7 @@ else, test or (better) equivalence check it, and then, migrate it into
 your main `libpi` library so it can be used by subsequent programs.
 
 Concretely, you will implement three routines (skeletons given in
-`4-lab/uart/uart.c`):
+`4-lab/code/uart.c`):
 
   1. `void uart_init(void)`: called to setup the miniUART.  It should
      set the baud rate to `115,200` and leave the miniUART in its default
@@ -166,11 +167,9 @@ Concretely, you will implement three routines (skeletons given in
   3. `void uart_putc(unsigned c)`: puts the byte `c` onto the UART transmit
      queue.  If necessary, it blocks until there is space.
 
-If you run `make` in `4-uart/uart` it will build:
+If you run `make` in `4-uart/code` it will build:
   - A simple `hello` you can use to test. I'd suggest shipping it over with your
     bootloader.  
-
-  - A `hello.fake` you can run on your laptop to compare against other people.
 
 A possibly-nasty issue: 
 
@@ -190,6 +189,8 @@ A possibly-nasty issue:
 -----------------------------------------------------------------------
 ### Part 2. implement a software UART.
 
+***WILL add this***
+
 This part of the lab is from a cute hack Jonathan Kula did in last year's
 class as part of his final project.  
 
@@ -202,7 +203,6 @@ word for setting pins high or low for some amount of time for output,
 and reading them similarly for input.  So, of course, we can do this
 just using GPIO.  (You can do the same for other protocols as well,
 such as I2C, that are built-in to the pi's hardware.)
-
 
 Wiring up the software UART is fairly simple: 
 
@@ -326,4 +326,3 @@ become the problem.)
 
   ***NOTE: that if you switch baud rates on the pi, you'll need to change
     it in the `pi-cat` code too.***
-
