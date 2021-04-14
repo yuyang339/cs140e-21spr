@@ -18,8 +18,7 @@
 // locale).  
 #include <stddef.h>
 #include <stdint.h>
-// XXX: probably should not do this --- alot of random code in <string.h>
-#include <string.h>
+
 
 /*****************************************************************************
  * standard libc like functions for the pi.
@@ -211,7 +210,16 @@ uint32_t load_code(struct vdev *v);
 #include "../libc/libc-extra.h"
 #ifndef RPI_UNIX
 #   include "libc/assert.h"
+int strcmp(const char *a, const char *b);
+int strncmp(const char* _s1, const char* _s2, size_t n);
+size_t strlen(const char *p);
+char *strcpy(char * s1, const char * s2);
+char *strcat (char *dest, const char *src);
+
+
+
 #else
+#include <string.h>
 #if 0
 #   define PUT32(addr,val) put32((void*)(unsigned long)addr, val)
 #   define GET32(addr) get32((void*)(unsigned long)addr)
