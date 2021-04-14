@@ -1,4 +1,4 @@
-#include <string.h>
+#include "rpi.h"
 
 // https://clc-wiki.net/wiki/strncmp#Implementation
 int strncmp(const char* _s1, const char* _s2, size_t n) {

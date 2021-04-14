@@ -1,4 +1,4 @@
-#include <string.h>
+#include "rpi.h"
 
 #define aligned(ptr, n)  ((unsigned)ptr % n == 0)
 #define aligned4(ptr)  aligned(ptr,4)

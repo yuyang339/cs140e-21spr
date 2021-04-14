@@ -1,4 +1,4 @@
-#include <string.h>
+#include "rpi.h"
 
 /* uclibc: Append SRC on the end of DEST.  */
 char *strcat (char *dest, const char *src) {

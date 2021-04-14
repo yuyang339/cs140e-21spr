@@ -1,4 +1,4 @@
-#include <string.h>
+#include "rpi.h"
 
 // from uclibc
 char *strchr(register const char *s, int c) {

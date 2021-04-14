@@ -1,4 +1,5 @@
-#include <string.h>
+#include "rpi.h"
+
 
 void *memset(void *_p, int c, size_t n) {
     char *p = _p, *e = p + n;

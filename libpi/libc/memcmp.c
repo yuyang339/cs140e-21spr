@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include "rpi.h"
 
 int memcmp(const void *_s1, const void *_s2, size_t nbytes) {
     const unsigned char *s1 = _s1, *s2 = _s2;

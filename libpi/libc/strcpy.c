@@ -1,4 +1,4 @@
-#include <string.h>
+#include "rpi.h"
 
 char *strcpy(char * s1, const char * s2) {
     register char *s = s1;

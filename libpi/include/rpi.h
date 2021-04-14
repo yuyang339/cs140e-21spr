@@ -215,11 +215,13 @@ int strncmp(const char* _s1, const char* _s2, size_t n);
 size_t strlen(const char *p);
 char *strcpy(char * s1, const char * s2);
 char *strcat (char *dest, const char *src);
-
-
+void *memcpy(void *dst, const void *src, size_t nbytes);
+int memcmp(const void *_s1, const void *_s2, size_t nbytes);
+void *memset(void *_p, int c, size_t n);
 
 #else
 #include <string.h>
+#include <stdlib.h>
 #if 0
 #   define PUT32(addr,val) put32((void*)(unsigned long)addr, val)
 #   define GET32(addr) get32((void*)(unsigned long)addr)
