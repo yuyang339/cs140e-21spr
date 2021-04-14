@@ -201,9 +201,7 @@ it work you should (hopefully) just need to:
      You'll have to compare your `.out` files with other people.
 
 -----------------------------------------------------------------------
-### Part 2. implement a software UART.
-
-***WILL add this***
+### Extension: Part 2. implement a software UART.
 
 This part of the lab is from a cute hack Jonathan Kula did in last year's
 class as part of his final project.  
