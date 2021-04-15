@@ -23,6 +23,7 @@ Assembly background:
      seemed reasonable; there may be better ones, so don't be shy about
      searching around and reporting back.
 
+     [Official gcc inline assembly](http://199.104.150.52/computers/gcc_inline.html).
 
 Do these measurements:
 
