@@ -6,16 +6,6 @@ Physical setup:
      and  that you can attach both pi's at once to your laptop.
   2. Make sure you have female-to-female wires to hook both pi's together.
 
-Do these measurements:
-
-  1. We will be measuring cycles, so (1) figure out how many cycles per
-     second our A+ pi's can execute and (2) how many nanoseconds per
-     cycle.  Write some code to verify this using `timer_get_usec()` and 
-     `cycles_cnt_read()`.
-
-  2. Measure the cycle cost of various operations such as: (1) the cost
-     of a GPIO load, (2) the cost of a GPIO store, and (3) the cost of
-     getting the current cycle.
 
 Assembly background:
 
@@ -33,3 +23,14 @@ Assembly background:
      seemed reasonable; there may be better ones, so don't be shy about
      searching around and reporting back.
 
+
+Do these measurements:
+
+  1. We will be measuring cycles, so (1) figure out how many cycles per
+     second our A+ pi's can execute and (2) how many nanoseconds per
+     cycle.  Write some code to verify this using `timer_get_usec()` and 
+     `cycles_cnt_read()`.
+
+  2. Measure the cycle cost of various operations such as: (1) the cost
+     of a GPIO load, (2) the cost of a GPIO store, and (3) the cost of
+     getting the current cycle.
