@@ -194,11 +194,15 @@ A possibly-nasty issue:
 
 Your top level directory now has a `libpi-fake` directory.  To make
 it work you should (hopefully) just need to:
+  0. Read the `libpi-fake/README.md`.
   1. Copy your `gpio.c` and `uart.c` into `libpi/src` (not `libpi-fake`).
   2. Copy your `fake-put-get.c` into there and add your fake memory
      prototypes (if any) to `fake-mem.h`.
-  3. Check that the old code works by running the tests in `tests-gpio`.
-  4. Check that the uart code works by running the tests in `tests-uart`.
+  3. As the `README` discusses: when `GET32` reads the `stat` register, 
+     you need to change the code to return a new value 
+     (since it could change), just as we did with `gpio_lev01`.
+  4. Check that the old code works by running the tests in `tests-gpio`.
+  5. Check that the uart code works by running the tests in `tests-uart`.
      You'll have to compare your `.out` files with other people.
 
 -----------------------------------------------------------------------
