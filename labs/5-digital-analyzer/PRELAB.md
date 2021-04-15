@@ -7,12 +7,13 @@ Physical setup:
   2. Make sure you have female-to-female wires to hook both pi's together.
 
 
-Useful documents, in increasing detail:
-   1. Quick refernce: `../../docs/arm-asm-quick-ref.pdf`
-   2. Instruction set summary: `../../docs/armv6-inst.pdf`.
-   3. Instruction set full list: `../../docs/armv6-inst-full.pdf`.
-   4. The full manual for the ARMV6 family: `../../armv6.annot.pdf`
-   5. The full manual for our chip: `../../docs/arm1176.pdf`.
+Useful documents, all in the `docs` directory, ordered
+by increasing detail:
+   1. [Quick reference](../../docs/arm-asm-quick-ref.pdf).
+   2. [Instruction set summary](../../docs/armv6-inst.pdf).
+   3. [Instruction set full list: `../../docs/armv6-inst-full.pdf).
+   4. [The full manual for the ARMV6 family](../../armv6.annot.pdf).
+   5. [The full manual for our chip] (../../docs/arm1176.pdf).
 
 Assembly background:
 
