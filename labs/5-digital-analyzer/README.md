@@ -1,5 +1,8 @@
 ## Lab: building your own logic analyzer
 
+***NOTE: the [PRELAB.md](PRELAB.md) has a bunch of links to instruction
+   set documents.***
+
 This lab you will use your second pi to build a logic analyzer that
 records when the output from a pi  or sensor transitions from 1-to-0
 or 0-to-1.
