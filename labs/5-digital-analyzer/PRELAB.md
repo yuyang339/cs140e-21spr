@@ -7,6 +7,11 @@ Physical setup:
   2. Make sure you have female-to-female wires to hook both pi's together.
 
 
+Useful documents (in the `docs` directory):
+   - [armv6 assembly quick reference](../../docs/arm-asm-quick-ref.pdf)
+   - [armv6 instruction set summary]((../../docs/armv6-inst.pdf).
+   - [armv instruction set full list](../../docs/armv6-inst-full.pdf).
+
 Assembly background:
 
   1. Make sure you feel ok disassembling the `.bin` executables and
