@@ -3,7 +3,7 @@
 // utilities: you don't have to use these.
 
 static inline unsigned usec_to_cycle(unsigned us) {
-    return CYCLE_PER_SEC * us;
+    return 700 * us;
 }
 static inline unsigned msec_to_cycle(unsigned ms) {
     return 1000 * usec_to_cycle(ms);
