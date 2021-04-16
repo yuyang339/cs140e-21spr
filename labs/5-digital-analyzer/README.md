@@ -273,7 +273,7 @@ introducing variance.  On big common issue:
 
 
 -----------------------------------------------------------------
-### extensions
+### Extensions
 
 Hypothetical approaches: Once you improve the code to the point there's
 nothing left to fix, some potential additional tricks:
@@ -290,4 +290,5 @@ nothing left to fix, some potential additional tricks:
      using simple learning or statistical estimation.  I did not do this.
      But it's an interesting approach to squeeze out the last bit
      of error.
+  3. Re-purpose your code so it can send messages back and forth :).
 
