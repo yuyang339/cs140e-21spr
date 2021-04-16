@@ -12,7 +12,7 @@ we will spend a fair amount of time making it as accurate as possible.
 Accuracy will require looking at the machine code `gcc` generates from
 your C code, diagnosing what is messing up your accuracy, understanding
 why `gcc` is doing what it is doing, and devising ways to work around it.
-(Or, alternatively, simply writing code in assembly.)  
+(Or, alternatively, simply writing code in assembly.)
 
 If you do things right, you'll be able to reliably measure transitions
 down to the 10ns of nanoseconds.  The result of this process will be
