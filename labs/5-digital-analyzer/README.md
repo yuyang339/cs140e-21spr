@@ -99,8 +99,8 @@ confidence because the checks will be influenced by the system they monitor.
 
 Today's checkoff:
   1. Have an analyzer that works.  (Part 1 below.)
-  2. Show you've improved `scope` by a reasonable amount. (Part 2 below.)
-  2. Show you've improved `test-gen` by a reasonable amount. (Part 3 below.)
+  2. Show you've improved `scope` and `test-gen` by a reasonable amount. 
+     (Part 2 below.)
 
 Since we're all about fun, I propose a contest, (winner declared in a
 week?) where we award a "cs140e Alpha hacker" badge to whomever improves
@@ -140,8 +140,7 @@ Our first step is to get a simple, "correct" but not super accurate tool.
 This gives you something to compare against as you make it better.
 
 To make things simple, I've put in some skeleton code in the `code/scope`
-directory.  
-However, as always, you're adults, so you're more than
+directory.  However, as always, you're adults, so you're more than
 welcome to ignore our code and write everything from scratch.
 
 The `scope` implementation records when the transitions occurs and, after
@@ -183,7 +182,14 @@ We'll next make it faster (so you can get signals that are closer
 together) and reduce the error.
 
 -----------------------------------------------------------------
-### Part 2: make `scope` accurate.
+### Part 2: make `scope` and `test-gen` accurate.
+
+***NOTE: once you have a working version, do not speed it up!  
+   1. Make a copy and speed up the copy.  
+   2. Once you hit a milestone make a copy and speed that up.
+   3. Speed hacks often break correctness.  You don't want to 
+      wind up with something broken and no way to get back 
+      to a correct checkpoint.***
 
 We want to make our analyzer as fast as possible with as low-variance
 as possible.   
@@ -264,11 +270,6 @@ introducing variance.  On big common issue:
      inline assembly (or write everything
      in assembly).  However, this has downsides.
 
------------------------------------------------------------------
-### Part 3: make `time-gen` accurate.
-
-You can apply the same tricks to `test-gen`.   Hopefully you can
-beat the one we checked in.
 
 
 -----------------------------------------------------------------
