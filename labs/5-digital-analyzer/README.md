@@ -99,12 +99,12 @@ confidence because the checks will be influenced by the system they monitor.
 
 Today's checkoff:
   1. Have an analyzer that works.  (Part 1 below.)
-  2. Show you've improved by a reasonable amount. (Part 2 below.)
+  2. Show you've improved `scope` by a reasonable amount. (Part 2 below.)
+  2. Show you've improved `test-gen` by a reasonable amount. (Part 3 below.)
 
-Since we're all about fun, I propose a contest, (winner declared in a 
-week?) where we award a "cs140e Alpha hacker" badge to whomever:
-
-  - Improves accuracy to the highest absolute level.
+Since we're all about fun, I propose a contest, (winner declared in a
+week?) where we award a "cs140e Alpha hacker" badge to whomever improves
+accuracy to the highest absolute level.  I'll also send a $100 bill.
 
 Extension from last lab:
   1. Writing a software UART implementation.
