@@ -97,47 +97,57 @@ confidence because the checks will be influenced by the system they monitor.
 -----------------------------------------------------------------
 ## Checkoff
 
-Tuesday's (today's) checkoff:
+Today's checkoff:
   1. Have an analyzer that works.  (Part 1 below.)
   2. Show you've improved by a reasonable amount. (Part 2 below.)
 
-Thursday's checkoff:
+Since we're all about fun, I propose a contest, (winner declared in a 
+week?) where we award a "cs140e Alpha hacker" badge to whomever:
+
+  - Improves accuracy to the highest absolute level.
+
+Extension from last lab:
   1. Writing a software UART implementation.
   2. Checking this protocol with your analyzer.
   3. Using the protocol to send logged data from the analyzer-pi and your checked-pi.
 
 
-Since we're all about fun, I propose a contest, (winner declared next
-Tuesday?) where we award a "cs240lx` Alpha hacker" badge to whomever:
+-----------------------------------------------------------------
+### Organization
 
-  - Improves accuracy to the highest absolute level.
-  - Similarly: for whoever can write the fastest UART protocol.
+If you look in the `code` directory:
+ - `test-gen/`: a complete, simple test generator with ok error.  You
+   should improve it.
+ - `scope`: incomplete starter code for a digital analyzer.  You should
+    finish this and then improve its accuracy.
+ - `staff-binaries` hold example binaries you can use for comparison.
+
+What to do:
+  0. You'll need to hook two pi's using pin 21 and make sure they work.
+  1. Run our code to make sure you understand what is going on.  The
+     [code/staff-binaries/README.md](code/staff-binaries/README.md)
+     has a decription of how, but briefly: first start `scope.bin` in one
+     window and then run `test-gen.bin` in another.  You'll need
+     to give the TTY-USB device.
+  2. Finish implementing `scope/scope.c` --- you can run ours to see
+     what the output should be like and compare using our `test-gen.bin`.
+  3. Tune both it and `test-gen`.
 
 -----------------------------------------------------------------
-### Part 1: make it simple.
+### Part 1: make it simple: `scope.c`
 
 Our first step is to get a simple, "correct" but not super accurate tool.
 This gives you something to compare against as you make it better.
 
-To make things simple, I've put in some skeleton code in the `code`
-directory.  However, as always, you're adults, so you're more than
+To make things simple, I've put in some skeleton code in the `code/scope`
+directory.  
+However, as always, you're adults, so you're more than
 welcome to ignore our code and write everything from scratch.
 
-Basics:
-   1. If you look in `code/1-simple` there are two directories,
-      `timing-gen` and `scope`.
-
-   2. Implement a simple test signal generator in `timing-gen`.
-      That switches between 1-and-0 and 0-and-1 every `CYCLE_PER_FLIP` cycles
-      (defined in `code/scope-constants.h`).   You'll want to start pretty
-      large, and as you get more efficient / accurate, see how far you can 
-      reduce this value.
-
-   3. Implement your first logic analyzer in `scope` which
-      will record when the transitions occurs and, after no 
-      transition for 1 second, print out the ones that happened.
-      It "cheats" and also uses `CYCLE_PER_FLIP` (which it won't know
-      in practice) so it can compute the error in its calculations.
+The `scope` implementation records when the transitions occurs and, after
+no transition for a timeout period, print out the ones that happened.
+It "cheats" and also uses `CYCLE_PER_FLIP` (which it won't know in
+practice) so it can compute the error in its calculations.
 
 To check that your system works you'll have to hook both pi's up and be able to
 bootload two different programs to them.
@@ -173,7 +183,7 @@ We'll next make it faster (so you can get signals that are closer
 together) and reduce the error.
 
 -----------------------------------------------------------------
-### Part 2: make it accurate.
+### Part 2: make `scope` accurate.
 
 We want to make our analyzer as fast as possible with as low-variance
 as possible.   
@@ -225,7 +235,6 @@ For this part I strongly suggest:
      that simply does not work, and have no way to go back to the last
      working state.
 
-
 Various tricks:
   1. Always: look at the machine code to see what is happening.  This
      is the final determinant.
@@ -255,6 +264,15 @@ introducing variance.  On big common issue:
      inline assembly (or write everything
      in assembly).  However, this has downsides.
 
+-----------------------------------------------------------------
+### Part 3: make `time-gen` accurate.
+
+You can apply the same tricks to `test-gen`.   Hopefully you can
+beat the one we checked in.
+
+
+-----------------------------------------------------------------
+### extensions
 
 Hypothetical approaches: Once you improve the code to the point there's
 nothing left to fix, some potential additional tricks:
