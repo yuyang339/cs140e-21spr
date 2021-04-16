@@ -1,4 +1,6 @@
-# if you want to replace our .o with yours do as follows:
+# if you want to replace our .o with yours do as follows.
+# for example
+
 #   1. add yours to YOUR_SRC
 #   2. remove the corresponding from from STAFF_OBJS
 
