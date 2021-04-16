@@ -1,8 +1,7 @@
-# if you want to replace our .o with yours do as follows.
-# for example
-
-#   1. add yours to YOUR_SRC
-#   2. remove the corresponding from from STAFF_OBJS
+# if you want to replace our foo.o with yours do as follows.
+#   0. copy foo.c to libpi/src
+#   1. add src/foo.c to YOUR_SRC
+#   2. remove foo.o from STAFF_OBJS
 
 # put the path to any .S files.
 YOUR_ASM = 
