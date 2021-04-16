@@ -184,12 +184,12 @@ together) and reduce the error.
 -----------------------------------------------------------------
 ### Part 2: make `scope` and `test-gen` accurate.
 
-***NOTE: once you have a working version, do not speed it up!  
+***NOTE: once you have a working version, do not speed it up!***
    1. Make a copy and speed up the copy.  
    2. Once you hit a milestone make a copy and speed that up.
    3. Speed hacks often break correctness.  You don't want to 
       wind up with something broken and no way to get back 
-      to a correct checkpoint.***
+      to a correct checkpoint.
 
 We want to make our analyzer as fast as possible with as low-variance
 as possible.   
