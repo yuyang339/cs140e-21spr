@@ -175,12 +175,12 @@ I get the following using `pi-cat`:
         hello world: 9
 
 ----------------------------------------------------------------
-### Part 2:  implement `sw_uart_get8`
+### Part 2:  implement `sw_uart_get8_timeout`
 
 You'll implement the other side now:
 
         // libpi/include/sw-uart.h
-        int sw_uart_get8(my_sw_uart_t *uart);
+        int sw_uart_get8_timeout(my_sw_uart_t *uart);
 
 As described in the [PRELAB](PRELAB.md): Make sure you implement it using 
 `write_cyc_until` or an equivalant so that your code is accurate.
