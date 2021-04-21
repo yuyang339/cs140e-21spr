@@ -59,4 +59,18 @@ wait_until_cyc(unsigned pin, unsigned v, unsigned s, unsigned ncycles) {
             return 0;
     }
 }
+
+// usec: does not have to be that accurate since the time is just for timeout.
+static inline int wait_until_usec(int pin, int v, unsigned timeout_usec) {
+    if(GPIO_READ_RAW(pin) == v)
+        return 1;
+    unsigned start = timer_get_usec_raw();
+    while(1) {
+        // use GPIO_READ_RAW
+        if(GPIO_READ_RAW(pin) == v)
+            return 1;
+        if((timer_get_usec_raw() - start) > timeout_usec)
+            return 0;
+    }
+}
 #endif
