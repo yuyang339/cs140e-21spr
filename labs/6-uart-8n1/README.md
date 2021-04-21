@@ -102,13 +102,6 @@ to keep the code clean.
 
 #### step 3: Test the results.
 
-<p float="left">
-  <img src="images/sw-uart1.jpg" width="450" />
-  <img src="images/sw-uart2.jpg" width="450" />
-  <img src="images/sw-uart3.jpg" width="450" />
-</p>
-
-
 Congratulations!  You now how an implementation of `sw_uart_put8`.
    1. Drop this into `code/sw-uart.c` 
    2. Hook up the CP2102 tty-usb device as follows:
@@ -121,13 +114,24 @@ Congratulations!  You now how an implementation of `sw_uart_put8`.
    3. When you plug it in to your laptop, the tty-usb should have a
       light on it and nothing should get hot!
 
-Now, work through the tests `0-putc-test.c` and `0-printk-test.c` the
-`code/` directory.  
+   4. The pi should look something like this:
 
-Since your softare UART is printing through a second UART device, you'll
-need to run the `pi-cat` program in a seperate terminal.  As with the
-last lab, you'll need to specify which tty-USB device to connect to.
-You can see the output using `pi-cat`.
+<p float="left">
+  <img src="images/sw-uart1.jpg" width="350" />
+  <img src="images/sw-uart2.jpg" width="350" />
+  <img src="images/sw-uart3.jpg" width="350" />
+</p>
+
+
+
+Now, work through the tests `0-putc-test.c` and `0-printk-test.c` the
+`code/` directory.  Since your softare UART is printing through a second
+UART device, you'll need to run the `pi-cat` program in a seperate
+terminal.  (Make sure you've compiled it and copied it to your bin
+(and also resourced your shell if it cannot find it.)
+
+As with the last lab, you'll need to specify which tty-USB device to
+connect to.  You can see the output using `pi-cat`.
 
    1. In one terminal:
 
