@@ -45,9 +45,9 @@ There are many extensions (listed at the end).  A few key ones:
 
 
 ----------------------------------------------------------------
-### Part 1: implement `sw_uart_putc`
+### Part 1: implement `sw_uart_put8`
 
-In this part you'll write your own `sw_uart_putc` and see that it is able
+In this part you'll write your own `sw_uart_put8` and see that it is able
 to print `hello world` using a second TTY-USB device to your laptop.
 
         // libpi/include/sw-uart.h: make a sw_uart_t structure
@@ -102,7 +102,7 @@ to keep the code clean.
 
 #### step 3: Test the results.
 
-Congratulations!  You now how an implementation of `sw_uart_putc`.
+Congratulations!  You now how an implementation of `sw_uart_put8`.
    1. Drop this into `code/sw-uart.c` 
    2. Hook up the CP2102 tty-usb device as follows:
 
@@ -175,6 +175,10 @@ You'll implement the other side now:
 As described in the [PRELAB](PRELAB.md): Make sure you implement it using 
 `write_cyc_until` or an equivalant so that your code is accurate.
 
+There are two tests:
+  - `1-getc-test.c`: get a single character (enter using `pi-cat`).
+  - `1-gets-test.c`: get a single character (enter using `pi-cat`).
+
 Reception mirrors the above transmit steps:
  1. Wait for a start bit (0).
  2. Delay for another `T+T/2` cycles so that we are in the center of
@@ -220,8 +224,8 @@ Wiring up the software UART as a network is fairly simple and will look
 similar to the previous lab, except you conect the pi's using two wires,
 not one.
 
-    - Run the ping-pong test in `code/2-ping-pong.c`
-    - This sends an integer back and forth as a pin pong and that the
+ - Run the ping-pong test in `code/2-ping-pong.c`
+ - This sends an integer back and forth as a pin pong and that the
       value increases from 0 to 4098 with no errors.
 
 ----------------------------------------------------------------
