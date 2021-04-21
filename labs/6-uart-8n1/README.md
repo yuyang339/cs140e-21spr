@@ -102,6 +102,13 @@ to keep the code clean.
 
 #### step 3: Test the results.
 
+<p float="left">
+  <img src="images/sw-uart1.jpg" width="450" />
+  <img src="images/sw-uart2.jpg" width="450" />
+  <img src="images/sw-uart3.jpg" width="450" />
+</p>
+
+
 Congratulations!  You now how an implementation of `sw_uart_put8`.
    1. Drop this into `code/sw-uart.c` 
    2. Hook up the CP2102 tty-usb device as follows:
