@@ -50,12 +50,11 @@ There are many extensions (listed at the end).  A few key ones:
 In this part you'll write your own `sw_uart_putc` and see that it is able
 to print `hello world` using a second TTY-USB device to your laptop.
 
-        // sw-uart.h: make a sw_uart_t structure
-        sw_uart_t sw_uart_mk(unsigned tx_pin, unsigned rx_pin, unsigned baud);
+        // libpi/include/sw-uart.h: make a sw_uart_t structure
+        sw_uart_t sw_uart_mk_helper(unsigned tx_pin, unsigned rx_pin, unsigned baud);
 
-        // sw-uart.h: transmit <b>: 
+        // libpi/include/sw-uart.h: transmit <b>: 
         int sw_uart_put8(sw_uart_t *uart, uint8_t b);
-
 
 
 Short version of the description below:
@@ -64,14 +63,16 @@ Short version of the description below:
       at 115200 baud using the 8n1 UART protocol.  See the explanation
       in the [PRELAB](PRELAB.md).
    
-   2. Use your scope to validate that the bits are being output with
+      Use your scope to validate that the bits are being output with
       reasonable timing accuracy.
+
+   2. Adapt the code from (1) to implement `sw_uart_put8`.
 
    3. Then hook up a hardware uart to pin 20 and 21 and make sure you pass
       the tests `code/tests/1-*.c`.
 
 
-##### Repurpose `test-gen`
+##### step 1: Repurpose `test-gen`
 
 Make a copy of your `test_gen` routine and customize it to transmit the
 10 bits needed for the 8n1 UART protocol:
@@ -86,16 +87,23 @@ Test it by:
   2. Recompile it and `scope` and use the `scope` implementation 
      to see the timing  is roughly 6076 cycles per transition.  
 
-##### Use `test_gen` to build `sw_uart_putc`
+##### step 2: Use `test_gen` to build `sw_uart_put8`
 
 Now that it works, change the implementation to take a byte in to control
 what bit is sent.  Make sure your `scope` shows the timing still works.
 
+I would use the routine:
 
-#### Test the results.
+            //  libpi/include/cycle-util.h
+            // write value <v> on GPIO <pin> until <ncycles> have passed since <start>
+            write_cyc_until(unsigned pin, unsigned v, unsigned start, unsigned ncycles);
+
+to keep the code clean.
+
+#### step 3: Test the results.
 
 Congratulations!  You now how an implementation of `sw_uart_putc`.
-   1. Drop this into the `sw-uart.c` file in `code`.
+   1. Drop this into `code/sw-uart.c` 
    2. Hook up the CP2102 tty-usb device as follows:
 
        1. Hook up the output pin (21) to the rx on the tty-USB.
@@ -106,12 +114,13 @@ Congratulations!  You now how an implementation of `sw_uart_putc`.
    3. When you plug it in to your laptop, the tty-usb should have a
       light on it and nothing should get hot!
 
+Now, work through the tests `0-putc-test.c` and `0-printk-test.c` the
+`code/` directory.  
 
-Now, work through the tests in the `code/tests` directory.  You should
-see a "hello world".
-
-As with the last lab, you'll need to specify which tty-USB device to
-connect to.  You can see the output using `pi-cat`.
+Since your softare UART is printing through a second UART device, you'll
+need to run the `pi-cat` program in a seperate terminal.  As with the
+last lab, you'll need to specify which tty-USB device to connect to.
+You can see the output using `pi-cat`.
 
    1. In one terminal:
 
@@ -124,14 +133,47 @@ connect to.  You can see the output using `pi-cat`.
             % my-install /dev/ttyUSB0 1-sw-uart-hello.bin
 
 
+When I run:
+
+        % my-install /dev/ttyUSB0 0-printk-test.bin 
+        opened tty port </dev/ttyUSB0>.
+        0: going to print hello world
+        1: going to print hello world
+        2: going to print hello world
+        3: going to print hello world
+        4: going to print hello world
+        5: going to print hello world
+        6: going to print hello world
+        7: going to print hello world
+        8: going to print hello world
+        9: going to print hello world
+        DONE!!!
+
+I get the following using `pi-cat`:
+
+        % pi-cat /dev/ttyUSB1
+        opened tty port </dev/ttyUSB1>.
+        hello world: 0
+        hello world: 1
+        hello world: 2
+        hello world: 3
+        hello world: 4
+        hello world: 5
+        hello world: 6
+        hello world: 7
+        hello world: 8
+        hello world: 9
+
 ----------------------------------------------------------------
 ### Part 2:  implement `sw_uart_get8`
 
 You'll implement the other side now:
 
+        // libpi/include/sw-uart.h
         int sw_uart_get8(my_sw_uart_t *uart);
 
-As described in the [PRELAB](PRELAB.md):
+As described in the [PRELAB](PRELAB.md): Make sure you implement it using 
+`write_cyc_until` or an equivalant so that your code is accurate.
 
 Reception mirrors the above transmit steps:
  1. Wait for a start bit (0).
@@ -178,7 +220,7 @@ Wiring up the software UART as a network is fairly simple and will look
 similar to the previous lab, except you conect the pi's using two wires,
 not one.
 
-    - Run the ping-pong test in `code/tests/3-ping-pong.c`
+    - Run the ping-pong test in `code/2-ping-pong.c`
     - This sends an integer back and forth as a pin pong and that the
       value increases from 0 to 4098 with no errors.
 
