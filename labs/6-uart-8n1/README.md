@@ -117,11 +117,10 @@ Congratulations!  You now how an implementation of `sw_uart_put8`.
    4. The pi should look something like this:
 
 <p float="left">
-  <img src="images/sw-uart1.jpg" width="350" />
-  <img src="images/sw-uart2.jpg" width="350" />
-  <img src="images/sw-uart3.jpg" width="350" />
+  <img src="images/sw-uart1.jpg" width="250" />
+  <img src="images/sw-uart2.jpg" width="250" />
+  <img src="images/sw-uart3.jpg" width="250" />
 </p>
-
 
 
 Now, work through the tests `0-putc-test.c` and `0-printk-test.c` the
