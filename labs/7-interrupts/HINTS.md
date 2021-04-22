@@ -1,7 +1,15 @@
-### ARM Chapter A2: 
+## Incomplete cheat sheet notes on the readings.
+
+These are not complete.  I'm typing them out before lab, so they hopefully
+are not incorrect!
+
+---------------------------------------------------------------------
+### ARM Chapter A2:   Programmer's model
+
+Taken from `7-interrupts/docs/armv6-interrupts.annot.pdf`, which is just
+a chapter from `armv6.annot.pdf` in the main `docs` directory.
 
 Registers and instructions:
-
   - Instructions are 4 bytes and also aligned to 4 bytes.
 
   - For the most part: you have to load values into one of the fifteen
@@ -9,15 +17,16 @@ Registers and instructions:
     I.e., ARM is a "load-store" architecture.
 
   - Most registers are general-purpose registers in that they can be
-    used for most things.  The exceptions: (1) the program counter (pc)
-    register `r15` cannot be used for other purposes and (2), the branch
-    and link instructions (`bl` and `blx`) are hard-coded to write the
-    return address to `r14`.  By convention the stack pointer is in
-    `r13`, but you could write your own compiler to use a different one.
+    used for most things.  The two exceptions: (1) the program counter
+    (pc) register `r15` cannot be used for other purposes and (2),
+    the branch and link instructions (`bl` and `blx`) are hard-coded to
+    write the return address to `r14`. (See: A2-9.)  By convention the
+    stack pointer is in `r13`, but you could write your own compiler to
+    use a different one.
 
   - Like many other architectures, ARM general-purpose registers are
     divided into two categories: "caller-saved" or "callee-saved"
-    indicating who has to save them.  
+    indicating who has to save them.
 
     Caller-saved are not preserved across procedure calls; you must
     explicitly save (store to the stack) or restore (load from the stack)
@@ -26,24 +35,34 @@ Registers and instructions:
     Callee-saved are preserved across procedure calls.  Thus, you must
     save them save before you use them).
 
-Like other architectures, ARM has multiple execution modes, though it 
+Like other architectures, ARM has multiple execution modes, though it
 has more than many:
+
   - The seven modes are listed on A2-3.
 
-  - Like everyone else, it has an unprivileged used mode 
-    (which cannot issue
-    privileged instructions) and a variety of privileged modes.  
-  - You can see the current mode in the `cpsr` registers.  For example,
-    User mode (`usr`) will have mode bits `0b10000` in the `cpsr`. 
-  - For the most part the privileged modes are entered from an exception:
+  - Like everyone else, it has an unprivileged used mode
+    (which cannot issue privileged instructions) and a variety of
+    privileged modes.
+  - You can see the current mode in the `cpsr` registers.
+    (See: A2-11.) For example, User mode (`usr`) will have mode bits
+    `0b10000` in bits 0-4 in `cpsr`,
+
+    Note: the `cpsr` is caller-saved, in that the upper-bits can (almost
+    certainly: will) be used by any routine you call.  This matters for
+    threading: when we build a non-pre-emptive thread package, you won't
+    have to save the `cspr`; you will for pre-emptive.
+
+  - For the most part the privileged modes are entered from an exceptions:
     such as memory faults, data aborts, interrupt (IRQ)  or system calls.
 
-  - A2-5: Each exception level has its own copy of at least: (1) the
-    `spsr` (which holds the original `cpsr`), (2) the stack pointer
-    register, `r13`, (3) the `lr` (link regiser, `r14).  The "fast
-    interrupt" also has shadow copies of `r8-r14`.
+  - A2-5: Each exception level has its own private copy of at least:
+    (1) the `spsr` (which holds the original `cpsr`), (2) the stack
+    pointer register, `r13`, (3) the `lr` (link regiser, `r14).  These are
+    referred to as "banked" registers, though often people call them
+    "shadow" copies.  The "fast interrupt" also has shadow copies of
+    `r8-r14`.
 
-  - These shadow copies trip people up initially, but the intution is
+  - These shadow registers trip people up initially, but the intuition is
     pretty simple: When you take an exception, you need several pieces
     of state.
 
@@ -54,7 +73,7 @@ has more than many:
     jumping back to that location.  An alternative equivalant view:
     you need to set the program counter to a piece of exception code,
     but the pc is already in use by the original program, so somehow
-    you need to save it before overwriting it.
+    you need to save it before overwriting it.  (See: page A2-8.)
 
     Second, you need some way to use registers (since load-store
     architecture), but all of them are live.  We could push them onto the
@@ -89,6 +108,7 @@ has more than many:
     simultaenously restoring the `spsr` to the `cspr`.  There are a
     variety of instructions that do this.  They typically have a caret
     `^` in them.
+
 
 
     You also need some way to start running the exeption code.  The 
