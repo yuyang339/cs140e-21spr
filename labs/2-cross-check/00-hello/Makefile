@@ -16,7 +16,7 @@ LIBS = $(LPI)
 
 all: $(OBJS) $(NAME).bin
 
-#libs: 
+# libs: 
 #	make -C $(LPP)
 
 $(OBJS): $(DEPS)

@@ -1,3 +1,6 @@
+# this is the put-your-src-here.mk that should be in libpi to
+# get checked off.
+#
 # if you want to replace our foo.o with yours do as follows.
 #   0. copy foo.c to libpi/src
 #   1. add src/foo.c to YOUR_SRC

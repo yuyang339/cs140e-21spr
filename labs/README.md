@@ -50,27 +50,61 @@ on both the pi and unix side will be written by you:
      Doing so gives you a second source of output, which will turn out
      to be very useful later when we do networking.
 
-  - [5-replay](5-replay/): in a twist on lab3, you will use Unix
-     system calls to interpose between your Unix and pi bootloader code,
-     record all reads and writes, and test your bootloader implementation
-     by replaying these back, both as seen and with systematic
-     corruption.
+  - [5-digital-analyzer](5-digital-analyzer/): you build a fast, accurate
+    digital analyzer and test signal generator that have timing error
+    in the tens of nanoseconds.  This will teach you more about how the
+    machine works, and get you more comfortable looking at machine code.
+    At the end you'll have software that appears more accurate than a
+    $400 Saleae (at least the ones made in 2020).
 
-     This approach comes from the model-checking community, and I believe
-     after you implement this lab and test (and fix) your bootloader you
-     will be surprised if it breaks later.  (In general, the approach
-     we follow here applies well to other network protocols which have
-     multi-step protocols and many potential failure modes, difficult
-     to test in practice.)
+    The lab is a great example of how writing all the code yourself, and
+    having a simple system makes it very easy to do things in-practice
+    impossible on a traditional OS such as Linux or MacOS. 
+
+  - [6-sw-uart](6-sw-uart/): our final low level lab you'll build a software
+    "bit-banging" version of the UART protocol used in lab 4.  
+
+    This will open your eyes to all a hardware protocol is (a signal that
+    goes to 1 or 0, with some timining constraints), in sharp contrast
+    to the complexity of the datasheets that describe the hardware that
+    implement them.
+
+    In addition, you'll have the startling surprise of seeing first hand
+    that --- despite the wildly different domain --- your test generating
+    code from last lab is basically identical to how you transmit bytes
+    using the UART protocol and your scope code is basically how you
+    receive bytes.
 
 At this point you have written low-level device driver code, a bootloader,
 and pretty much replaced all of our code.  You've learned how to crush
-it under a barrage of automatic checks based on read-write equivalance
-and simple systematic exploration  so that you will be surprised if the
-code ever breaks.
+it under a barrage of automatic checks and done a simple impleementation
+of a fake pi environment that allows you to check correctness of pi code
+using your laptop.
+
+If you are interested in taking this further, there is a lab from last
+year we skipped (zoom makes some things hard), that you might find worth
+doing:
+
+  - [optional lab: replay](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/5-replay).   
+    This is a lab from the previous class: in a twist on lab3, you
+    will use Unix system calls to interpose between your Unix and
+    pi bootloader code, record all reads and writes, and test your
+    bootloader implementation by replaying these back, both as seen and
+    with systematic corruption.
+
+    This approach comes from the model-checking community, and I believe
+    after you implement this lab and test (and fix) your bootloader you
+    will be surprised if it breaks later.  (In general, the approach
+    we follow here applies well to other network protocols which have
+    multi-step protocols and many potential failure modes, difficult to
+    test in practice.)
+
+    Using read-write equivalance and simple systematic exploration will
+    let you check the code thoroughly enough that you will be surprised
+    if the code ever breaks.
 
 We are now going to switch gears to intensively implementing core OS
-functionality: threads, interrupts, virtual memory and file systems.
+functionality: interrupts, threads, virtual memory and file systems.
 
 -------------------------------------------------------------------------
 ### Part 2: Threads and Interrupts, with Tricks:
@@ -80,12 +114,7 @@ with an I2C network device instead (the NRF24L01).  I think we'll pull
 a simple virtual memory setup earlier so you can have simple memory
 protection.
 
-  - [6-threads](6-threads/): we build a simple, but functional
-    threads package.  You will write the code for non-preemptive context
-    switching:  Most people don't understand such things so, once again,
-    you'll leave lab knowing something many do not.
-
-  - [7-interrupts](7-interrupts/): you will walk through a simple,
+  - [6-interrupts](6-interrupts/): you will walk through a simple,
     self-contained implementation of pi interrupts (for timer-interrupts),
     kicking each line until you understand what, how, why.  You will
     use these to then implement a version of `gprof` (Unix statistical
@@ -99,6 +128,16 @@ protection.
     If we did on Unix could spend weeks or more fighting various corner
     cases and have a result that is much much much slower and, worse,
     in terms of insight.
+
+
+***We are currently here.***
+
+
+  - [6-threads](6-threads/): we build a simple, but functional
+    threads package.  You will write the code for non-preemptive context
+    switching:  Most people don't understand such things so, once again,
+    you'll leave lab knowing something many do not.
+
 
   - [8-device-interrupts](8-device-interrupts): we setup GPIO interrupts,
     then use this to build networking on the esp8266 wireless device.
@@ -174,16 +213,18 @@ protection.
 
 ### Optional labs:
 
-  - [virtualization](virtualization/): this lab will show how
-  to virtualize hardware.  We will use simple tricks to transparently flip
-  how your pi code is compiled so you can run it on Unix, only shipping
-  the GPIO reads and writes to a small stub on the pi.  As a result,
-  you have full Unix debugging for pi code (address space protection,
-  valgrind, etc) while getting complete fidelity in how the pi will behave
-  (since we ship the reads and writes to it directly).
 
-  - [sonar-int](sonar-int/): we take a bit of a fun break,
-  and bang out a quick device driver for a simple sonar device. You
-  will then get a feel for how interrupts can be used to simplify code
-  structure (counter-intuitive!)  by adapting the interrupt code from
-  the previous lab to make this code better.
+  - virtualization: this lab will show how
+    to virtualize hardware.  We will use simple tricks to transparently flip
+    how your pi code is compiled so you can run it on Unix, only shipping
+    the GPIO reads and writes to a small stub on the pi.  As a result,
+    you have full Unix debugging for pi code (address space protection,
+    valgrind, etc) while getting complete fidelity in how the pi will behave
+    (since we ship the reads and writes to it directly).
+
+  - sonar-int: we take a bit of a fun break,
+    and bang out a quick device driver for a simple sonar device. You
+    will then get a feel for how interrupts can be used to simplify code
+    structure (counter-intuitive!)  by adapting the interrupt code from
+    the previous lab to make this code better.
+
