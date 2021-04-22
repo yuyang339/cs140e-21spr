@@ -47,18 +47,22 @@ static inline unsigned roundup(unsigned x, unsigned n) {
  *    you put an assertion in.  
  */
 void *kmalloc(unsigned nbytes) {
+    assert(nbytes);
     demand(init_p, calling before initialized);
     unimplemented();
 }
 
-// address of returned pointer should be a multiple of
-// alignment.
+/*
+ * address of returned pointer should be a multiple of
+ * alignment. 
+ */
 void *kmalloc_aligned(unsigned nbytes, unsigned alignment) {
+    assert(nbytes);
     demand(init_p, calling before initialized);
+    demand(is_pow2(alignment), assuming power of two);
 
     if(alignment <= 4)
         return kmalloc(nbytes);
-    demand(alignment % 4 == 0, weird alignment: not a multiple of 4!);
     unimplemented();
 }
 

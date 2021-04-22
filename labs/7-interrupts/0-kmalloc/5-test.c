@@ -18,20 +18,18 @@ void notmain() {
         unsigned *u = kmalloc(1);
 
         trace("u=%p\n", u);
-        assert(last + 2 == u);
-        last = u;
 
         unsigned v = (i << 24 | i << 16 | i << 8 | i);
         *u = v;
 
     }
 
-    unsigned *u = start+2;
+    unsigned *u = start+1;
     for(unsigned i = 0; i < 20; i++) {
         unsigned v = (i << 24 | i << 16 | i << 8 | i);
         
         demand(*u == v, "*u =%x, should be %x\n", *u,v);
-        u += 2;
+        u += 1;
     }
 
     void *p = kmalloc_aligned(1,64);
@@ -44,7 +42,7 @@ void notmain() {
     assert(heap1 == (void*)(1024*1024));
 
     demand(heap0 == heap1, did not reset the heap correctly!);
-    demand(start+2 == kmalloc(1), did not reset the heap correctly!);
+    demand(start+1 == kmalloc(1), did not reset the heap correctly!);
 
     trace("successful test\n");
 	clean_reboot();

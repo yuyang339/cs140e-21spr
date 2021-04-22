@@ -21,7 +21,7 @@ static void do_allocs(void) {
         trace("kmalloc(%d)= %x\n", i, p);
 
         // check alignment.
-        assert(is_aligned((unsigned)p,8));
+        assert(is_aligned((unsigned)p,4));
         // check that is zero filled
         assert(memzeroed(p, i));
     }
