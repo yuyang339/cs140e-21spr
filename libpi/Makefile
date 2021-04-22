@@ -27,6 +27,10 @@ VPATH := .:libc/:staff-src/:src:
 # this is where your code is.
 include put-your-src-here.mk
 
+ifdef YOUR_OBJS
+$(error YOUR_OBJS is not used: use YOUR_SRC)
+endif
+
 # grab everything in libc and staff-src
 SOURCES     := $(wildcard ./libc/*.c  ./staff-src/*.c ) $(YOUR_SRC)
 ASM_SOURCES := $(wildcard ./libc/*.S  ./staff-src/*.S ) $(YOUR_ASM)
