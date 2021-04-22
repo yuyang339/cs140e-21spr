@@ -3,11 +3,26 @@
 These are not complete.  I'm typing them out before lab, so they hopefully
 are not incorrect!
 
+
 ---------------------------------------------------------------------
 ### ARM Chapter A2:   Programmer's model
 
 Taken from `7-interrupts/docs/armv6-interrupts.annot.pdf`, which is just
 a chapter from `armv6.annot.pdf` in the main `docs` directory.
+
+Useful pages in A2:
+  - modes: A2-3.
+  - what registers are banked per mode: A2-5.
+  - `cpsr`: A2-11.
+  - address of exception vectors: A2-16.
+
+PC after each exception (everything is "pc+4" except for data abort):
+  - `reset` (A2-18): not recoverable.
+  - `data abort` (A2-21): 8 bytes past.  The sole +8.
+  - `undefined` (A2-19): 4 bytes past the undefined instruction.
+  - `swi` (system call,, A2-20): 4 bytes past the `swi` instruction.
+  - `prefetch` (A2-20): 4 bytes past.
+  - `IRQ` (A2-24) : 4 bytes past.
 
 Registers and instructions:
   - Instructions are 4 bytes and also aligned to 4 bytes.
@@ -47,10 +62,21 @@ has more than many:
     (See: A2-11.) For example, User mode (`usr`) will have mode bits
     `0b10000` in bits 0-4 in `cpsr`,
 
-    Note: the `cpsr` is caller-saved, in that the upper-bits can (almost
-    certainly: will) be used by any routine you call.  This matters for
-    threading: when we build a non-pre-emptive thread package, you won't
-    have to save the `cspr`; you will for pre-emptive.
+  - You can turn-off/turn-on (disable/enable) interrupts by writing bit
+    `I` (7) in the `cpsr`.
+
+  - Note: the condition code flags (bits 28-31) in the `cpsr` are
+    caller-saved, in that the upper-bits can (almost certainly: will)
+    be used by any routine you call.  This matters for threading: when
+    we build a non-pre-emptive thread package, you won't have to save the
+    `cspr`; you will for pre-emptive.
+
+  - Note: the rest of the bits in the `cpsr` are callee-saved in that
+    you need to preserve them by doing read-modify-write operations on the
+    `cpsr`.   For example: you wouldn't want to overwrite the interrupt
+    enabled value (bit 7) when you were modifying something else.  Easy,
+    bad mistake: will work on small test code, then blow up when you 
+    plug into a big system.
 
   - For the most part the privileged modes are entered from an exceptions:
     such as memory faults, data aborts, interrupt (IRQ)  or system calls.
@@ -107,13 +133,25 @@ has more than many:
     the address in the `lr` (typically, subtracting a constant) and
     simultaenously restoring the `spsr` to the `cspr`.  There are a
     variety of instructions that do this.  They typically have a caret
-    `^` in them.
+    `^` in them.  (See: A2-17.)
 
+Exception handlers:
 
+  - When an exception occurs, where does the machine jump to?   The
+    default method on ARMv6 (like many other architectures) is to jump
+    to a fixed address.   You will need to copy your handler code to
+    this address.
 
-    You also need some way to start running the exeption code.  The 
-    challange for both of these is that unlike a procedure call, an
-    exception (or interrupt) cannot occur anywhere, with all registers
-    live.   Thus: you have no registers available for youself, even the 
-    mere fact of setting the `pc` to the excpetion handler would destroy
-    
+  - A2-16: gives the addresses. If you notice, the reset exception is
+    at address `0x0`: i.e., `NULL`!   Very odd :)
+
+  - If you look at the other addresses you notide that for the most
+    part they are 4 bytes from each other.  Since ARM instructions are
+    4 bytes, that means we can run a single instruction before falling
+    through to the next address.  The typical method is to have a single
+    word "trampoline" that simply jumps to the location of the real 
+    exception vector.  (Which is usually a trampoline that saves some
+    registers in assembly, jumps to C code, and then jumps back to 
+    the original location).
+
+  - A2-19: 
