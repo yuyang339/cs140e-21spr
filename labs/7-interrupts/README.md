@@ -1,5 +1,11 @@
 ### Interrupts.
 
+***Make sure you read***: 
+  - The [PRELAB](PRELAB.md), which has the readings and sketches
+    the `kmalloc` implementation.
+  - [HINTS](HINTS.md): I've added some notes on how the ARMv6 does
+    exceptions.
+
 Big picture for today's lab:
 
    0. We'll show how to setup interrupts / exceptions on the r/pi.
@@ -16,12 +22,26 @@ Big picture for today's lab:
 
 The good thing about the lab is that interrupts are often made very
 complicated or just discussed so abstractly it's hard to understand them.
-Hopefully by the end of today you'll have a reasonable grasp of at least
-one concrete implementation.  If you start kicking its tires and replacing
-different pieces with equivalant methods you should get a pretty firm
-grasp.
+Hopefully by the end of today you'll have a reasonable grasp of at
+least one concrete implementation.  If you start kicking its tires and
+replacing different pieces with equivalant methods you should get a
+pretty firm grasp.
 
-#### Why interrupts
+### Deliverables:
+
+Turn-in:
+
+  1. `timer-int`: give the shortest time between timer interrupts you can
+     make, and two ways to make the code crash.
+
+  2. Build a simple system call: show your `1-syscall` works.
+
+  3. Implement `gprof` (in the `2-gprof` subdirectory).   You should
+     run it and show that the results are reasonable.  Explain why it
+     spends all the time in the uart code.
+
+-----------------------------------------------------------------
+#### Background: Why interrupts
 
 As you'll see over the rest of the quarter, managing multiple devices
 can be difficult.  Either you check constantly (poll), which means most
@@ -62,31 +82,22 @@ and so eliminates variable reads b/c it doesn't see anyone changing them
 (partial solution: mark shared variables as `volatile`).  We'll implement
 different ways to mitigate these problems over the next couple of weeks.
 
-### Deliverables:
-
-Turn-in:
-
-  1.  `timer-int`: give the shortest time between timer interrupts you can 
-      make, and two ways to make the code crash.
-
-  2. Build a simple system call: show your `1-syscall` works.
-
-  3. Implement `gprof` (in the `2-gprof` subdirectory).   You should run it
-  and show that the results are reasonable.
-
+----------------------------------------------------------------------------
 ### Part 0: timer interrupts.
 
 Look through the code in `timer-int`, compile it, run it.  Make sure
 you can answer the questions in the comments.  We'll walk through it
 in class.
 
+----------------------------------------------------------------------------
 ### Part 1: make a simple system call.
 
-One we can get timer exceptions, we (perhaps surprisingly) have enough infrastructure
-to make trivial system calls.   Since we are already running in supervisor mode,
-these are not that useful as-is, but making them now will show how trivial 
-they actually are.  In particular, look in `1-syscall` and write the needed code
-in:
+One we can get timer exceptions, we (perhaps surprisingly) have enough
+infrastructure to make trivial system calls.   Since we are already
+running in supervisor mode, these are not that useful as-is, but making
+them now will show how trivial they actually are.  In particular, look in
+`1-syscall` and write the needed code in:
+
   1. `interrupts-asm.S`: you should be able to largely rip off the timer interrupt
      code to forward system call.  NOTE: a huge difference is that we are
      already running at supervisor level, so all registers are live.  You need
@@ -94,11 +105,11 @@ in:
 
   2. `syscall.c`: finish the system call vector code (should just be a few lines).
      You want to act on system call 1 and reject all other calls with a `-1`.
-   
 
 This doesn't take much code, but you will have to think carefully about which
 registers need to be saved, etc.
 
+-----------------------------------------------------------------------------
 ### Part 2: Using interrupts to build a profiler.
 
 The nice thing about doing everything from scratch is that simple things are simple
@@ -125,6 +136,7 @@ The implementation will take about 30-40 lines of code in total.  You'll build t
 Congratulations!  You've built something that not many people in the Gates building
 know how to do.
 
+-----------------------------------------------------------------------------
 ### lab extensions:
 
 There's lots of other things to do:
@@ -145,6 +157,7 @@ There's lots of other things to do:
 
             cpsid if @ ...and disable them
 
+-----------------------------------------------------------------------------
 ### Supplemental documents
 
 There's plenty to read, all put in the `docs` directory in this lab:
