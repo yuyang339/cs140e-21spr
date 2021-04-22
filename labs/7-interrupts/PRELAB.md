@@ -1,6 +1,10 @@
-For this lab, we're going to do interrupts and use them to build a
-statistical profiler. 
+## Prelab for interrupts
 
+For this lab, we're going to do interrupts and use them to build a
+statistical profiler.   You'll need to implement a simple `kmalloc`
+to do so.
+
+---------------------------------------------------------------------------
 ### Readings
 
 You should definitely make sure to read the two pdf's in the `7-interrupts/docs`:
@@ -40,15 +44,21 @@ just make sure every returned block is at least 4-byte aligned (i.e.,
 the lower two bits should be 0).
 
 Your implementation should do the following:
-
    1. In `kmalloc_init` set the heap to be the address `__heap_start__`
       is located at.  Make sure it is 4-byte aligned.  Print it to make
       sure the address makes sense.
 
-   2. In `kmalloc(nbytes)` roundup `nbytes` to be a
-      multiple of four (use the `roundup` macro) and increment the heap
-      pointer by the result so that the next allocation occurs afterwards.
-      Assert that the result makes sense.
+   2. `kmalloc_init_set_start(unsigned addr)` should work the same as
+      `kmalloc_init`, but set the heap to start at `addr`.
+
+   3. In `kmalloc(nbytes)` roundup `nbytes` to be a
+      multiple of four (use the `roundup` macro) and increment
+      the heap pointer by the result so that the next allocation
+      occurs afterwards.  Assert that the result makes sense.
+
+   4. `kmalloc_aligned`: make sure the returned pointer is aligned to
+      `alignment` and is of size `nbytes`.
+
 
 When you are done:
   1. Make sure all the tests pass by running `make check`.
