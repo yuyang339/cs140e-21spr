@@ -1,4 +1,4 @@
-SUBDIRS=  code
+SUBDIRS=  0-kmalloc timer-int 1-syscall 2-gprof 
 
 .PHONY: all check clean
 all check clean: $(SUBDIRS)
