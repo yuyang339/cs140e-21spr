@@ -25,7 +25,13 @@ VPATH := .:libc/:staff-src/:src:
 # ASM_SOURCES := $(wildcard ./libc/*.S  ./staff-src/*.S  ./src/*.S)
 
 # this is where your code is.
-include put-your-src-here.mk
+ifdef CS140E_STAFF
+include ./staff-put-your-src-here.mk
+SRC_SPEC = ./staff-put-your-src-here.mk
+else
+include ./put-your-src-here.mk
+SRC_SPEC = ./put-your-src-here.mk
+endif
 
 ifdef YOUR_OBJS
 $(error YOUR_OBJS is not used: use YOUR_SRC)
@@ -56,7 +62,7 @@ OBJS := $(foreach o, $(OBJS), $(BUILD_DIR)/$(notdir $o)) $(STAFF_OBJS)
 # Get all depend files by replacing extensions.  we over dep on all headers.
 DEPS := $(OBJS:.o=.d)  $(BUILD_DIR)/$(START).d 
 
-EXTRA_DEPS = ./Makefile ./put-your-src-here.mk ./includes.mk
+EXTRA_DEPS = ./Makefile $(SRC_SPEC) ./includes.mk
 HDRS := $(wildcard ./*.h ./*/*.h) $(EXTRA_DEPS)
 
 all: $(TARGET) $(START).o  # $(LIBM)
