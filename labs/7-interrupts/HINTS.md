@@ -155,3 +155,28 @@ Exception handlers:
     the original location).
 
   - A2-19: 
+
+---------------------------------------------------------------------
+### Broadcom ch 7
+
+Interrupts are similar to a device in that have to figure out how to:
+  0. Disable all during setup.
+  1. Set all interrupt state to known values.
+  2. Configure interrupt sources (can have multiple).
+  3. Enable.  
+  4. When get one: figure out which it was and then clear it.
+
+Interrupts:
+   - Must clear them, or when you jump back, will get it immediately again.
+   - Interrupts are disabled in the interrupt handler.
+   - You can get synchronous exceptions in the exception handler (e.g., 
+     division by zero, page fault) so make sure you don't!   It will
+     destroy your state unless you took steps to allow nested interrupts.
+
+
+Broadcom:
+  - Check "basic bending register" to see source.
+  - Basic interrupt enalbe (p 117): not read modify write!  Just write it,
+    similar to GPIO set.
+  - Basic interrupt disable (p 118): write a 1 to disable source.  Just
+    like GPIO clear.
