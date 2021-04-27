@@ -34,13 +34,19 @@ enum {
 // bit-wise AND this with IRQ_basic_pending to see if it's a timer interrupt.
 #define RPI_BASIC_ARM_TIMER_IRQ         (1 << 0)
 
+
 // get the status register.
-static inline unsigned cpsr_get(void) {
-    unsigned cpsr;
+static inline uint32_t cpsr_get(void) {
+    uint32_t cpsr;
     asm volatile("mrs %0,cpsr" : "=r"(cpsr));
     return cpsr;
 }
+// set the status register
+static inline void cpsr_set(uint32_t cpsr) {
+    asm volatile("msr cpsr, %0" :: "r"(cpsr));
+}
 
+// check if interrupts are enabled.
 static inline int int_is_enabled(void) {
     // 7ths bit = 1 ===> disabled.
     return ((cpsr_get() >> 7) & 1) == 0;

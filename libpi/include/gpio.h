@@ -65,7 +65,17 @@ int gpio_get_pud(unsigned pin);
 // lose their configuration).  you also need to enable the right IRQ.   make
 // sure to use device barriers!!
 enum { GPIO_INT0 = 49, GPIO_INT1, GPIO_INT2, GPIO_INT3 };
+
+
+
+// gpio_int_rising_edge and gpio_int_falling_edge (and any other) should
+// call this routine (you must implement) to setup the right GPIO event.
+// as with setting up functions, you should bitwise-or in the value for the 
+// pin you are setting with the existing pin values.  (otherwise you will
+// lose their configuration).  you also need to enable the right IRQ.   make
+// sure to use device barriers!!
 int is_gpio_int(unsigned gpio_int);
+
 
 // p97 set to detect rising edge (0->1) on <pin>.
 // as the broadcom doc states, it  detects by sampling based on the clock.
@@ -88,7 +98,5 @@ int gpio_event_detected(unsigned pin);
 
 // p96: have to write a 1 to the pin to clear the event.
 void gpio_event_clear(unsigned pin);
-
-
 
 #endif

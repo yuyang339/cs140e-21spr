@@ -4,6 +4,7 @@
 // simple lock-free circular queue.
 #ifndef RPI_UNIX
 #   include "rpi.h"
+#   include "rpi-interrupts.h"
 #else
 #   define printk printf
 #   include <assert.h>
@@ -60,7 +61,7 @@ static inline int cq_empty(cq_t *q) { return q->head == q->tail; }
 static inline int cq_full(cq_t *q) { return (q->head+1) % (CQ_N) == q->tail; }
 
 static inline unsigned cq_nelem(cq_t *q) { return (q->head - q->tail) % (CQ_N); }
-static inline unsigned cq_nspace(cq_t *q) { return (CQ_N) - cq_nelem(q); }
+static inline unsigned cq_nspace(cq_t *q) { return (CQ_N-1) - cq_nelem(q); }
 
 // not blocking: requires interrupts.
 static inline int cq_pop_nonblock(cq_t *c, cqe_t *e) {
@@ -77,8 +78,10 @@ static inline cqe_t cq_pop(cq_t *c) {
 
 	// wait til interrupt puts something here: if interrupts not enabled,
     // this will deadlock: need to yield.
-    while(!cq_pop_nonblock(c,&e))
-        panic("will deadlock: interrupts not enabled [FIXME]\n");
+    while(!cq_pop_nonblock(c,&e)) {
+        if(!int_is_enabled())
+            panic("will deadlock: interrupts not enabled [FIXME]\n"); 
+    }
     return e;
 }
 
@@ -87,6 +90,7 @@ static inline int cq_push(cq_t *c, cqe_t x) {
     unsigned head = c->head;
     if(cq_full(c)) 
         return 0;
+    assert(cq_nspace(c) > 0);
     c->c_buf[head] = x;
     c->head = (head + 1) % (CQ_N);
     return 1;
@@ -127,16 +131,36 @@ static inline int cq_peek_n(cq_t *c, cqe_t *v, unsigned n) {
 
 
 static inline int cq_push_n(cq_t *c, void *data, unsigned n) {
+    assert(n);
+
     cqe_t *p = data;
 
     if(cq_nspace(c) < n)
         return 0;
     for(int i = 0; i < n; i++)
         if(!cq_push(c, p[i]))
-            panic("not handling this\n");
-    if(n)
-        assert(!cq_empty(c));
+            panic("impossible: buffer should have space\n");
+
+    // assert(!cq_empty(c));
     return 1;
+}
+
+// example of how to wrap up so you can easily push larger
+// things.
+
+// returns 0 if failed, 1 otherwise.
+static inline int cq_push32(cq_t *c, uint32_t x) {
+    return cq_push_n(c, &x, sizeof x);
+}
+// returns 0 if failed, 1 otherwise
+static inline int cq_pop32_noblk(cq_t *c, uint32_t *x) {
+    return cq_pop_n_noblk(c, x, sizeof *x);
+}
+// returns a uint32: blocks until one is available.
+static inline uint32_t cq_pop32(cq_t *c) {
+    uint32_t x = 0;
+    cq_pop_n(c,&x, sizeof x);
+    return x;
 }
 
 /**********************************************************************
