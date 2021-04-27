@@ -36,12 +36,21 @@ For example:
   2. What register are the first four arguments passed in?
 
             % cat args.c
-                unsigned 
-                foo(unsigned a0, unsigned a1, 
-                            unsigned a2, unsigned a3) { 
-                    // so compiler does not ignore arguments
-                    return a0+a1+a2+a3;
-                }
+            typedef unsigned u32;
+            
+            u32 args1(u32 arg1) {
+                return arg1;
+            }
+            u32 args2(u32 arg1, u32 arg2) {
+                return arg2;
+            }
+            u32 args3(u32 arg1, u32 arg2, u32 arg3) {
+                return arg3;
+            }
+            u32 args4(u32 arg1, u32 arg2, u32 arg3, u32 arg4) {
+                return arg4;
+            }
+
 
             % arm-none-eabi-gcc -O2 -march=armv6 -c args.c
             % arm-none-eabi-objdump -d args.o
