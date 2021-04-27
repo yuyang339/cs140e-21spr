@@ -1,21 +1,25 @@
 ## Lab 8: device interrupts
 
-We're going to make your UART and software UART implementations more
-robust.
+We're going to setup the pi so you can get GPIO interrupts and make your
+software UART implementations more robust.
 
 ----------------------------------------------------------------------
-###### Reading background
+### Background reading for assembly / interrupts
+
 For reading:
   1. `../../docs/hohl-book-interrupts.annot.pdf`: if you were confused
      about the interrupts, this is a good book chapter to read.
-  2. `../../docs/[subroutines.hohl-arm-asm.pdf`: this is a good review
-     of ARM assembly.
+  2. `../../docs/subroutines.hohl-arm-asm.pdf`: this is a good review
+     of ARM assembly as used by procedure calls: stack allocation, 
+     caller and callee saved registers, parameter passing, etc.
   3. `../../docs/IHI0042F_aapcs.pdf`: this gives you a detailed view
-     of the procedure call standard for the ARM.
+     of the procedure call standard for the ARM.  
 
+----------------------------------------------------------------------
+### Using C to figure out useful things.
 
-Alternatively, you can also use C code to figure some of this stuff
-out.
+In addition, you can often simply use C code to figure some of this
+stuff out.
 
 For example: 
 
@@ -73,9 +77,12 @@ For example:
      As you can see: the first argument is in `r0`, the second in `r1`,
      the third in `r2` and the fourth in `r3`.
 
+  3. The fanciest, very cute hack is using inline assembly to figure
+     out what is a caller or callee saved register.  See
+     `prelab/caller-callee.c` and `prelab/caller-callee.list`.
 
 ----------------------------------------------------------------------
-###### GPIO Interface background
+### GPIO Interface background
 
 If you keep hacking on embedded stuff, the single most common activities
 your code will do is (1) setup a hardware device and (2) then configure
