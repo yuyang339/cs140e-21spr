@@ -31,6 +31,10 @@ If you can, write (in assembly):
      base to `base`.
    - `void *arm_vector_get(void)`: get the exception vector base.
 
+To get you started doing inline assembly:
+  - [simple introduction](http://199.104.150.52/computers/gcc_inline.html)
+  - [gcc arm inline assembly cookbook](../../docs/ARM-GCC-Inline-Assembler-Cookbook.pdf)
+
 I'll have some test cases checked in tuesday.
 
 ----------------------------------------------------------------------
