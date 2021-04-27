@@ -4,6 +4,36 @@ We're going to setup the pi so you can get GPIO interrupts and make your
 software UART implementations more robust.
 
 ----------------------------------------------------------------------
+### ARM exception handler relocation.
+
+Having exceptions starting at address 0 causes all sorts of problems.
+The general ARMv6 documents talk about how you can relocate the handlers
+to a fixed address in high memory, but this requires using virtual memory
+(since we don't have enough physical to reach that high).  
+
+However, it turns out that the `arm1176` provides a coprocessor
+instruction to move these anywhere in memory.  I wish I had known about
+this years ago!  Among other things it would make it easy to mark the
+0 page as no-access, trapping null pointer reads and writes.  
+
+We're going to implement this approach today.   
+
+Read:
+  - 3-121 in `../../docs/arm1176.pdf`: this let's us control where the
+    exception jump table is!
+  - In fact, whenever you get some time and inclination, I'd read this
+    whole chapter (ideally print it out and use a pen) --- there are
+    all sorts of interesting tricks you can play using the special
+    instructions in it.
+
+If you can, write (in assembly):
+   - `void arm_vector_set(void *base)`: set the exception vector
+     base to `base`.
+   - `void *arm_vector_get(void)`: get the exception vector base.
+
+I'll have some test cases checked in tuesday.
+
+----------------------------------------------------------------------
 ### Background reading for assembly / interrupts
 
 For reading:
