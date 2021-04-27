@@ -78,6 +78,7 @@ interrupt_asm:
   pop   {r0-r12,lr} 	    @ pop integer registers
 
   @ return from interrupt handler: will re-enable general ints.
+  @ Q: what happens if you do "mov" instead?
   movs    pc, lr        @ moves the link register into the pc and implicitly
                         @ loads the PC with the result, then copies the 
                         @ SPSR to the CPSR.

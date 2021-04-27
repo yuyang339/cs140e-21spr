@@ -48,7 +48,7 @@ run: $(NAME).bin
 	my-install $(TTYUSB) timer.bin
 
 tags: 
-	ctags *.[chSs] $(LPP)/*.[ch] $(LPP)/*.[chSs]
+	ctags *.[chSs] $(LPP)/*/*.[Sch] $(LPP)/*.[chSs]
 
 clean:
 	rm -rf $(NAME) *~ tags *.o *.bin *.elf *.list *.img Makefile.bak  *.d 

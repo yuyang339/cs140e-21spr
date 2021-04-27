@@ -4,7 +4,7 @@
 // initialize global interrupt state.
 void int_init(void) {
     // put interrupt flags in known state. 
-    //  BCM2835 manual, section 7.5
+    //  BCM2835 manual, section 7.5 , 112
     PUT32(Disable_IRQs_1, 0xffffffff);
     PUT32(Disable_IRQs_2, 0xffffffff);
     dev_barrier();

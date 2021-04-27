@@ -31,9 +31,25 @@ int syscall_vector(unsigned pc, uint32_t r0) {
     }
 }
 
+
 void notmain() {
     uart_init();
 	
+    unsigned sp;
+    asm volatile ("mov %0, sp" : "=r"(sp)); 
+    printk("current stackptr = %x\n", sp);
+
+    asm volatile ("push {r0,r1}");
+    asm volatile ("mov %0, sp" : "=r"(sp)); 
+    printk("current stackptr = %x\n", sp);
+
+    asm volatile ("pop {r0,r1}");
+    asm volatile ("mov %0, sp" : "=r"(sp)); 
+    printk("current stackptr = %x\n", sp);
+
+    clean_reboot();
+
+
     printk("about to install handlers\n");
     int_init();
 

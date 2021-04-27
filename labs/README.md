@@ -114,7 +114,7 @@ with an I2C network device instead (the NRF24L01).  I think we'll pull
 a simple virtual memory setup earlier so you can have simple memory
 protection.
 
-  - [6-interrupts](6-interrupts/): you will walk through a simple,
+  - [7-interrupts](7-interrupts/): you will walk through a simple,
     self-contained implementation of pi interrupts (for timer-interrupts),
     kicking each line until you understand what, how, why.  You will
     use these to then implement a version of `gprof` (Unix statistical
@@ -128,7 +128,6 @@ protection.
     If we did on Unix could spend weeks or more fighting various corner
     cases and have a result that is much much much slower and, worse,
     in terms of insight.
-
 
 ***We are currently here.***
 
