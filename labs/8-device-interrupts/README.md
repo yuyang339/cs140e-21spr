@@ -61,12 +61,31 @@ that you received the  expected event.  In `part1-gpio-int`:
       Print the time it took both to receive the interrupt (you can
       modify your assmebly) and to completely handle it and return.
 
+
+#### Testing
+
+If you do a pull, there are more tests in `lipi-fake/tests-gpio-int`.
+I put the `.out` files to make checking easier.  I did `dev_barriers`
+perhaps more `dev_barriers` than needed in the routines used by the
+interrupt handlers.
+
+For what it's worth, here are my checksums:
+
+        libpi-fake/tests-gpio-int % cksum *.out
+        3619577664 88 6-gpio-event-clear.out
+        325921212 90 6-gpio-event-detected.out
+        920984819 198 6-gpio-set-falling.out
+        869056559 198 6-gpio-set-rising.out
+        2919222009 2024 7-gpio-event-clear-n.out
+        1966508437 2136 7-gpio-event-detected-n.out
+        2310831047 5592 7-gpio-set-falling-n.out
+        137501872 5592 7-gpio-set-rising-n.out
+
 Extension:  
   1. If you have a touch touch sensor use it to trigger interrupts and
      use this to trigger an LED.
   2. To make it fanciery, use two sensors, one to make the LED brighter,
      one to make it darker.
-
 
 ------------------------------------------------------------------------
 ### Part 2: a simple digital analyzer 
