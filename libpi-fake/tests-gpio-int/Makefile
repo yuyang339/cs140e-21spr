@@ -56,11 +56,13 @@ libs:
 #emit: $(DEPS) $(TEST_PROGS)
 #	@make -f ./Makefile.test emitall "TESTS=$(TEST_PROGS)"
 run: $(DEPS) $(TEST_PROGS)
-	@make -f ./Makefile.test runall "TESTS=$(TEST_PROGS)"
+	@make -f ./Makefile.test run "TESTS=$(TEST_PROGS)"
 check: $(DEPS) $(TEST_PROGS)
-	@make -f ./Makefile.test checkall "TESTS=$(TEST_PROGS)"
+	@make -f ./Makefile.test check "TESTS=$(TEST_PROGS)"
+check.nodev: $(DEPS) $(TEST_PROGS)
+	@make -f ./Makefile.test check.nodev "TESTS=$(TEST_PROGS)"
 cksum: $(DEPS) $(TEST_PROGS)
-	@make -f ./Makefile.test cksumall "TESTS=$(TEST_PROGS)"
+	@make -f ./Makefile.test cksum "TESTS=$(TEST_PROGS)"
 
 .PHONY: clean
 

@@ -60,12 +60,13 @@ all: $(TEST_RUN) # $(TEST_CHECK)
 
 # not sure if there is a better way: use these fake target to run our
 # checks for everything.
-emitall: $(TEST_EMIT) 
-checkall: $(TEST_CHECK) 
-runall: $(TEST_RUN) 
-cksumall:  $(TEST_CKSUM)
+emit: $(TEST_EMIT) 
+check: $(TEST_CHECK) 
+run: $(TEST_RUN) 
+cksum:  $(TEST_CKSUM)
+
 
 cleanall:
 	rm -f *.out
 
-.PHONY: all clean runall emitall checkall cksumall 
+.PHONY: all clean run emit check cksum
