@@ -53,8 +53,8 @@ libs:
 
 
 # i'm not sure this actually makes things better.
-emit: $(DEPS) $(TEST_PROGS)
-	@make -f ./Makefile.test emitall "TESTS=$(TEST_PROGS)"
+#emit: $(DEPS) $(TEST_PROGS)
+#	@make -f ./Makefile.test emitall "TESTS=$(TEST_PROGS)"
 run: $(DEPS) $(TEST_PROGS)
 	@make -f ./Makefile.test runall "TESTS=$(TEST_PROGS)"
 check: $(DEPS) $(TEST_PROGS)
