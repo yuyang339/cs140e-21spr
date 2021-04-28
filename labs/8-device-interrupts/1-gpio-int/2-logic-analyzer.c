@@ -26,7 +26,6 @@ void interrupt_vector(unsigned pc) {
     //  - make sure you clear the GPIO event!
     //  - using the circular buffer is pretty slow. should tune this.
     unsigned s = cycle_cnt_read();
-    gcc_mb();
 
     dev_barrier();
     unimplemented();
@@ -56,7 +55,7 @@ void notmain() {
     // make sure this works first, then try to measure the overheads.
     delay_ms(100);
 
-    // this will cause transitions every time, so you can compared times.
+    // this will cause transitions every time, so you can compare times.
     for(int l = 0; l < 2; l++) {
         unsigned b = 0b01010101;
         sw_uart_put8(&u, b);
