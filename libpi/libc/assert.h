@@ -1,4 +1,3 @@
-#undef assert
 
 #ifndef __RPI_ASSERT_H__
 #define __RPI_ASSERT_H__
@@ -32,7 +31,9 @@
 } while(0)
 #define trace_clean_exit(args...) do { trace(args); clean_reboot(); } while(0)
 
+#ifndef assert
 #define assert(bool) do { if((bool) == 0) panic("%s", #bool); } while(0)
+#endif
 
 #define _XSTRING(x) #x
 

@@ -225,9 +225,10 @@ void *memset(void *_p, int c, size_t n);
 #if 0
 #   define PUT32(addr,val) put32((void*)(unsigned long)addr, val)
 #   define GET32(addr) get32((void*)(unsigned long)addr)
-#   include "demand.h"
-#   include <assert.h>
 #endif
+// #   include <demand.h>
+#   undef output
+#   include <assert.h>
 #endif
 
 // entry point definition
