@@ -17,6 +17,8 @@
 #define random  "do not call directly"
 
 // macro tricks to make error reporting easier.
+#undef output
+#undef trace
 #define output(msg, args...) printf(msg, ##args )
 #define trace(msg, args...) fprintf(stderr, "TRACE:" msg, ##args )
 

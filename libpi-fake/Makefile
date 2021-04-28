@@ -1,14 +1,15 @@
 TARGET = libpi-fake.a
 
 # define where gpio.c is, and the programs you want to run.
-GPIO := ../libpi/src/gpio.c 
+GPIO := ../libpi/src/gpio.c ../libpi/src/gpio-int.c 
+
 
 # if you want to compile everything in a directory, do something like this.
 # SOURCES := $(wildcard ./*.c)
 
 # include uart, include gpio.
 
-SRC :=  fake-put-get.c $(GPIO) fake-random.c pi-random.c  fake-driver.c fake-delay.c fake-dev-barrier.c
+SRC :=  fake-put-get.c $(GPIO) fake-random.c pi-random.c  fake-driver.c fake-delay.c fake-dev-barrier.c fake-printk.c
 OBJS := $(patsubst %.c, %.o, $(SRC))
 OBJS := $(foreach obj, $(OBJS), ./$(notdir $(obj)))
 
