@@ -111,16 +111,30 @@ rather than writing them.  As a simple hack, you can just have it write
 to the loopback pin as well and then measure when these occur.
 
 ------------------------------------------------------------------------
-### Part 3: change the code to use the vector register.
-
-Look at the prelab and implement:
-
-   - `void arm_vector_set(void *base)`: set the exception vector
-     base to `base`.
-   - `void *arm_vector_get(void)`: get the exception vector base.
+### Part 3: use the vector register: 3-vector-base
 
 
-Change the code in Part 2 and Part 3 and make sure it still works.
+For this you'll do some simple tricks to speed up your interrupt
+code and make it more flexble:
+
+  1. Implement the routines in `3-vector-base/vector-base.h`.  The driver in
+     that directory should show a speedup and complete correctly.
+
+  2. Make a copy of your `1-gpio-int` directory and convert it over to
+     use the vector base method.  You'll have to make your own:
+
+        // put this in a separate file in src/
+        `gpio_int_init_reg(void *int_vector_addr)`
+    
+     to supercede the code in `staff-src/interrupts-c.c:int_init`
+
+  3. Use the prelab code to check which registers you can remove
+     from your save-restore in the interrupt handler.  You should write
+     a runtime routine that verifies that the routine that contains the
+     inline assembly that clobbers the registers you want to skip only
+     consists of a single `bx lr`.
+
+Measure the performance improvement.
 
 ------------------------------------------------------------------------
 ### Part 4: a interrupt-based software uart
