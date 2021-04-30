@@ -55,6 +55,8 @@ static inline int int_is_enabled(void) {
 void system_enable_interrupts(void);
 void system_disable_interrupts(void);
 void int_init(void);
+void int_init_reg(void *int_vector_addr);
+
 
 #if 0
 /*
