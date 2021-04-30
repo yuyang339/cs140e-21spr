@@ -18,7 +18,7 @@ ifndef CS140E_2021_PATH
 $(error CS140E_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
 endif
 
-INC = -I$(LPP)/include -I$(LPP)/ -I.
+INC = -I$(LPP)/include -I$(LPP)/ -I$(LPP)/src -I.
 
 ifndef OPT_LEVEL
 OPT_LEVEL = -Og

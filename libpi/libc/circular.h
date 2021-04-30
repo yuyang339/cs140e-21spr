@@ -186,4 +186,6 @@ static inline void cq_init(cq_t *c, unsigned errors_fatal_p) {
     cqe_t e = 0x12;
     assert(cq_pop_nonblock(c,&e) == 0 && e == 0x12);
 }
+static inline unsigned cq_ckpt(cq_t *c) { return c->tail; }
+static inline void cq_restore(cq_t *c, unsigned ckpt) { c->tail = ckpt; }
 #endif
