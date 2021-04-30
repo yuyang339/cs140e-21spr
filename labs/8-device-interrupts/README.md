@@ -81,6 +81,12 @@ For what it's worth, here are my checksums:
         2310831047 5592 7-gpio-set-falling-n.out
         137501872 5592 7-gpio-set-rising-n.out
 
+These have a bunch of `dev_barriers` so probably checking without them
+first.  For ordering, I enabled the GPIO address first and then the IRQ
+address (both are read-modify-write).  The `.out` files are checked in
+so you can see what the actual differences are.
+
+
 Extension:  
   1. If you have a touch touch sensor use it to trigger interrupts and
      use this to trigger an LED.
@@ -120,21 +126,24 @@ code and make it more flexble:
   1. Implement the routines in `3-vector-base/vector-base.h`.  The driver in
      that directory should show a speedup and complete correctly.
 
-  2. Make a copy of your `1-gpio-int` directory and convert it over to
-     use the vector base method.  You'll have to make your own:
+  2. Make your own: `libpi/src/int-init-reg.c` that implements the 
+     routine:
 
-        // put this in a separate file in src/
-        `gpio_int_init_reg(void *int_vector_addr)`
-    
-     to supercede the code in `staff-src/interrupts-c.c:int_init`
+        void int_init_reg(void *int_vector_addr)
 
-  3. Use the prelab code to check which registers you can remove
-     from your save-restore in the interrupt handler.  You should write
-     a runtime routine that verifies that the routine that contains the
-     inline assembly that clobbers the registers you want to skip only
-     consists of a single `bx lr`.
+     Which should be a re-implementation of `int_init` using the vector
+     base register file (which you will have to include) instead of
+     copying the table itself.
 
-Measure the performance improvement.
+     As usual: Make sure to add that file to `put-your-src-here.mk`.
+
+  3. Make a copy of your `1-gpio-int` directory and convert it over to
+     use the vector base method.  
+
+  4. Use the prelab code to check which registers you can remove
+     from your save-restore in the interrupt handler.   If should be 
+     the case that if you "clobber" a callee-saved register you do
+     not want to skip, `gcc` will not save it.
 
 ------------------------------------------------------------------------
 ### Part 4: a interrupt-based software uart
