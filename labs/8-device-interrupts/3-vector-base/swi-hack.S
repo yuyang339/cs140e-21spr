@@ -5,13 +5,13 @@
 .globl _interrupt_table
 .globl _interrupt_table_end
 _interrupt_table:
-  ldr pc, _reset_asm
-  ldr pc, _undefined_instruction_asm
-  ldr pc, _software_interrupt_asm
-  ldr pc, _prefetch_abort_asm
-  ldr pc, _data_abort_asm
-  ldr pc, _reset_asm
-  ldr pc, _interrupt_asm
+  ldr pc, _reset_asm                    @ 0
+  ldr pc, _undefined_instruction_asm    @ 1
+  ldr pc, _software_interrupt_asm       @ 2
+  ldr pc, _prefetch_abort_asm   @ 3
+  ldr pc, _data_abort_asm   @4
+  ldr pc, _reset_asm   @5
+  ldr pc, _interrupt_asm @6
 fast_interrupt_asm:
   mov sp, #INT_STACK_ADDR 
   sub   lr, lr, #4

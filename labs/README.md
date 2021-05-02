@@ -1,92 +1,75 @@
-# The labs
+## The labs
 
-This is only a rough guide ---- we are currently doing significant
-lab rewrites.  The first chunk of labs should remain roughly the
-same, just with more photos (and maybe video if I can figure out OBS).
-The subsequent labs will likely get modified with some new ideas we have
-from teaching cs240lx and cs340lx last year.
+Below describes where we're going and why.   The labs themselves have a
+lot more prose on each topic.  There is a pointer to where we currently
+are: the labs after this point can still see significant revisions.
+
+I would strongly recommend reading the labs carefully before starting.
+And then, once you finish, going back and reading them for things you
+missed the first time, and also looking closely at your code --- for 
+every line, you should understand why we needed it or what it does.
+And on second reading, you'll likely find some lines that we could have
+cut out!
 
 ---------------------------------------------------------------------
 ### Part 1: Going down.
 
 The first chunk of the class will be writing all the low-level code needed
-to run the pi and using modern techniques to validate it.  Doing so will
+to run the r/pi and using modern techniques to validate it.  Doing so will
 remove all magic from what is going on since all of the interesting code
-on both the pi and unix side will be written by you:
+on both the pi and Unix side will be written by you:
 
   - [0-blink](0-blink/): get everyone up to speed and all
-      necessary software installed.  This should be a fast lab.
+    necessary software installed.  This should be a fast lab.
 
   - [1-gpio](1-gpio/): start getting used to understanding hardware
-     datasheets by writing your own code to control the r/pi `GPIO` pins
-     using the Broadcom document GPIO description.  You will use this
-     to implement your own blink and simple network between your r/pi's.
+    datasheets by writing your own code to control the r/pi `GPIO` pins
+    using the Broadcom document GPIO description.  You will use this to
+    implement your own blink and a simple network between your r/pi's.
 
   - [2-cross-check](2-cross-check/): you will use read-write logging
-     to verify that your GPIO code is equivalent to everyone else's.
-     If one person got the code right, everyone will have it right.
+    of all loads and stores to device memory to verify that your GPIO
+    code is equivalent to everyone else's.  If one person got the code
+    right, everyone will have it right.
 
-     A key part of this class is having you write all the low-level,
-     fundamental code your OS will need.  The good thing about this
-     approach is that there is no magic.  A bad thing is that a single
-     mistake makes more a miserable quarter.  Thus, we show you modern
-     tricks for ensuring your code is correct.
+    A key part of this class is having you write all the low-level,
+    fundamental code your OS will need.  The good thing about this
+    approach is that there is no magic.  A bad thing is that a single
+    mistake can make a miserable quarter.  Thus, we show you modern
+    (or new) tricks for checking code correctness.
 
-  - [3-bootloader](3-bootloader/): you will implement your own
-     bootloader to transfer the code from your laptop to the pi.  The
-     most common r/pi bootloader out there uses the `xmodem` protocol.
-     This approach is overly complicated.  You will do a much simpler,
-     more likely to be correct protocol.  It has the advantage that it
-     will later make it easier to do a network boot.
+  - [3-bootloader](3-bootloader/): two of the biggest pieces of code
+    we've given you have been the Unix-side and pi-side bootloader code
+    (`pi-install` and `bootloader.bin` respectively).  So this lab has
+    you implement your own and get rid of ours.
 
-  - [4-uart](4-uart/): you write your first real device driver,
-     for the UART, using only the Broadcom document.  At this point,
-     all key code on the pi is written by you.  You will use the cross
-     checking code from lab3 to verify your implementation matches
-     everyone else's.
+    The most common r/pi bootloader out there uses the `xmodem` protocol.
+    This approach is overly complicated.  You will do a much simpler,
+    more-likely-to-be-correct protocol.  It has the advantage that it
+    will later make it easier to boot over the network.
 
-     A great way to understand the UART hardware is to write your own
-     software version of it and use this to communicate with your laptop.
-     Doing so gives you a second source of output, which will turn out
-     to be very useful later when we do networking.
+  - [4-uart](4-uart/): the last key bit of code we've given you is for
+    controlling the UART (`uart.o`); so this has you write your own
+    and remove ours.
 
-  - [5-digital-analyzer](5-digital-analyzer/): you build a fast, accurate
-    digital analyzer and test signal generator that have timing error
-    in the tens of nanoseconds.  This will teach you more about how the
-    machine works, and get you more comfortable looking at machine code.
-    At the end you'll have software that appears more accurate than a
-    $400 Saleae (at least the ones made in 2020).
-
-    The lab is a great example of how writing all the code yourself, and
-    having a simple system makes it very easy to do things in-practice
-    impossible on a traditional OS such as Linux or MacOS. 
-
-  - [6-sw-uart](6-sw-uart/): our final low level lab you'll build a software
-    "bit-banging" version of the UART protocol used in lab 4.  
-
-    This will open your eyes to all a hardware protocol is (a signal that
-    goes to 1 or 0, with some timining constraints), in sharp contrast
-    to the complexity of the datasheets that describe the hardware that
-    implement them.
-
-    In addition, you'll have the startling surprise of seeing first hand
-    that --- despite the wildly different domain --- your test generating
-    code from last lab is basically identical to how you transmit bytes
-    using the UART protocol and your scope code is basically how you
-    receive bytes.
+    To do so you'll write your first real device driver (at least in
+    the context of this class), for the UART, using only the Broadcom
+    document.  At this point, all key code on the pi is written by you.
+    You will use the cross checking code from lab 2 to verify your
+    implementation matches everyone else's.
 
 At this point you have written low-level device driver code, a bootloader,
 and pretty much replaced all of our code.  You've learned how to crush
-it under a barrage of automatic checks and done a simple impleementation
+it under a barrage of automatic checks and done a simple implementation
 of a fake pi environment that allows you to check correctness of pi code
 using your laptop.
 
 If you are interested in taking this further, there is a lab from last
-year we skipped (zoom makes some things hard), that you might find worth
-doing:
+year we skipped (zoom makes some things hard), that you might find
+worth doing:
 
   - [optional lab: replay](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/5-replay).   
-    This is a lab from the previous class: in a twist on lab3, you
+    This is a lab from the previous class: in a twist on lab-3, you
     will use Unix system calls to interpose between your Unix and
     pi bootloader code, record all reads and writes, and test your
     bootloader implementation by replaying these back, both as seen and
@@ -99,20 +82,72 @@ doing:
     multi-step protocols and many potential failure modes, difficult to
     test in practice.)
 
-    Using read-write equivalance and simple systematic exploration will
+    Using read-write equivalence and simple systematic exploration will
     let you check the code thoroughly enough that you will be surprised
     if the code ever breaks.
+
+---------------------------------------------------------------------
+### Part 2: Understanding the machine
+
+This set of labs intends to get you more comfortable writing low-level
+code, understanding the machine code it gets translated to, and also
+how the machine works (including its hardware devices).
+
+  - [5-digital-analyzer](5-digital-analyzer/): the goal of this lab
+    is getting you comfortable with machine code and starting to build
+    an intuition for how the hardware actually works.
+
+    As a motivating application you'll build a fast, accurate digital
+    analyzer and test signal generator that have timing error in the
+    tens of nanoseconds.  At the end you'll have software that appears
+    more accurate than a $400 Saleae (at least the ones made in 2020).
+
+    The lab is a great example of how writing all the code yourself, and
+    having a simple system makes it very easy to do things in-practice
+    impossible on a traditional OS such as Linux or MacOS.
+
+  - [6-sw-uart](6-sw-uart/):  so far we've treated the internals
+    of hardware as a black box that you configure by writing strange
+    addresses with odd values.  In this lab, you'll start to see what
+    device hardware actually does by writing a software "bit-banging"
+    version of the UART protocol used in lab 4.
+
+    Writing your own software UART is a great way to see what the hardware
+    UART is doing --- and, as you will, see, it's actually not much!
+    For the most part, all hardware protocols are simply a signal that
+    goes to 1 or 0, with some timing constraints.  The mechanical
+    simplicity of device communication protocols stands in sharp contrast
+    to the complexity of the datasheets that describe the hardware that
+    implement them.  
+
+    After this lab, you'll start to understand that if a data sheet sucks,
+    you can frequently build your own software version.  This can be
+    helpful when starting a new machine, or doing thing the hardware
+    cannot (e.g., supporting many devices concurrently).
+
+    At a practical level, a software UART gives you a second source of
+    output for communicating with your laptop, which will turn out to
+    be very useful later when we do networking.
+
+    In addition, you'll have the startling surprise of seeing first hand
+    that --- despite the wildly different domain --- your test generating
+    code from last lab is basically identical to how you transmit bytes
+    using the UART protocol and your scope code is basically how you
+    receive bytes.
+
+
+At this point you should be much more comfortable understanding how the
+hardware works, what the machine code means, and how to reason about low
+level code.  And, perhaps even better, know how to figure such things
+out when you do not know them by, for example, writing some C code,
+compiling it, and examining the machine code or by measuring how long
+it takes to run.
 
 We are now going to switch gears to intensively implementing core OS
 functionality: interrupts, threads, virtual memory and file systems.
 
 -------------------------------------------------------------------------
-### Part 2: Threads and Interrupts, with Tricks:
-
-These are going to change alot. We are getting rid of the ESP and going
-with an I2C network device instead (the NRF24L01).  I think we'll pull
-a simple virtual memory setup earlier so you can have simple memory
-protection.
+### Part 2: Execution: interrupts, threads, user-level processes.
 
   - [7-interrupts](7-interrupts/): you will walk through a simple,
     self-contained implementation of pi interrupts (for timer-interrupts),
@@ -129,32 +164,33 @@ protection.
     cases and have a result that is much much much slower and, worse,
     in terms of insight.
 
-***We are currently here.***
 
-
-  - [6-threads](6-threads/): we build a simple, but functional
-    threads package.  You will write the code for non-preemptive context
-    switching:  Most people don't understand such things so, once again,
-    you'll leave lab knowing something many do not.
-
-
-  - [8-device-interrupts](8-device-interrupts): we setup GPIO interrupts,
-    then use this to build networking on the esp8266 wireless device.
-    You will modify your previous labs so that you have an interrupt-based
-    software UART implementation.  You will then use this to connect
-    and control the ESP8266 that we give out in class and ping other pi's.
+  - [8-device-interrupts](8-device-interrupts): if you keep doing this 
+    kind of work the single most common
+    fancy "OS" type thing you'll likely do in the future is to setup
+    GPIO pin interrupts so that you can get notified when a hardware
+    device has data.  So, in this lab we'll setup GPIO interrupts
+    and tune how we do general interrupts.
 
     Without interrupts, it's difficult to get networking working, since
     our GPIO pins (and our UART options) have limited space and, thus,
     unless our code checks them at exactly the right time, incoming
     messages will vaporize.
 
-  - [10-ESP](10-esp8266/): (note: do not do `9-esp8266` the code is not
-   useful.)  You use the $2 esp8266 to add networking.   The initial lab
-   just makes the esp work on your laptop using the provided library.
-   The homework has you migrate it to your pi so you can communicate /
-   control other pi's.  The code depends on having an interrupt-based 
-   UART channel.
+  - [9-threads](9-threads/): we build a simple, but functional
+    threads package.  You will write the code for non-preemptive context
+    switching:  Most people don't understand such things so, once again,
+    you'll leave lab knowing something many do not.
+
+***We are currently here.***
+
+Tentative:
+   - I think we'll do user-level processes and/or dynamically
+     linked tasks so that it's easy to add different types of features
+     (such as interrupts or memory protection) without modifying the
+     application.
+
+   - The following labs are going to see some major surgery.
 
 -------------------------------------------------------------------------
 ### Part 3: file systems.
@@ -167,7 +203,7 @@ protection.
     echoing a program to `/pi/run` to run it.
 
     This lab is a great example of the power of Unix's simple, powerful
-    OO-interface that lets you package a variety of disparete things as
+    OO-interface that lets you package a variety of disparate things as
     files, directories, links and interact with them using a uniform set
     of verbs (e.g., `open()-read()-write()-close()`).
 
