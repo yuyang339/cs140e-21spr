@@ -193,12 +193,11 @@ functionality: interrupts, threads, virtual memory and file systems.
     switching:  Most people don't understand such things so, once again,
     you'll leave lab knowing something many do not.
 
-
 Tentative:
-   - I think we'll do user-level processes and/or dynamically
-     linked tasks so that it's easy to add different types of features
-     (such as interrupts or memory protection) without modifying the
-     application.
+   - For lab 10: Akshay and I are debating, but it seems likely we'll
+     do user-level processes and/or dynamically linked tasks so that
+     it's easy to add different types of features (such as interrupts
+     or memory protection) without modifying the application.
 
    - The following labs are going to see some major surgery.
 
