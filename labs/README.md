@@ -128,11 +128,13 @@ how the machine works (including its hardware devices).
     output for communicating with your laptop, which will turn out to
     be very useful later when we do networking.
 
-    In addition, you'll have the startling surprise of seeing first hand
-    that --- despite the wildly different domain --- your test generating
-    code from last lab is basically identical to how you transmit bytes
-    using the UART protocol and your scope code is basically how you
-    receive bytes.
+    Finally, you'll have the startling surprise of seeing first-hand that
+    --- despite the wildly different domain --- your test generating
+    code from last lab is basically identical to how you transmit
+    bytes using the UART protocol and your scope code is basically how
+    you receive bytes.  It's *interesting* when methods used to solve
+    apparently different problems in very different domains turn out to
+    be almost equivalant.
 
 At this point you should be much more comfortable understanding how the
 hardware works, what the machine code means, and how to reason about low
