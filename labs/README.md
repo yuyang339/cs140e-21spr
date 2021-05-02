@@ -111,12 +111,13 @@ how the machine works (including its hardware devices).
     of the UART protocol used in lab 4.
 
     Writing your own software UART is a great way to see what the hardware
-    UART is doing --- and, as you will, see, it's actually not much!  For
-    the most part, all hardware protocols are simply one or two signals
-    that flip between 1 and 0, possibly with some timing constraints.
-    The mechanical simplicity of device communication protocols stands
-    in sharp contrast to the complexity of the datasheets that describe
-    the hardware that implement them.
+    UART is doing --- and, as you will, see, it's actually not much!
+    For the most part, all hardware bus/communication protocols (such as
+    SPI, I2C, UART, etc) are simply one or two signals that flip between
+    1 and 0, possibly with some timing constraints.  The mechanical
+    simplicity of device communication protocols stands in sharp contrast
+    to the complexity of the datasheets that describe the hardware that
+    implements them.
 
     After this lab, you'll start to understand that if a data sheet sucks,
     you can frequently build your own software version.  This can be
