@@ -95,7 +95,6 @@ how the machine works (including its hardware devices).
   - [5-digital-analyzer](5-digital-analyzer/): the goal of this lab
     is getting you comfortable with machine code and starting to build
     an intuition for how the hardware actually works.
-
     As a motivating application you'll build a fast, accurate digital
     analyzer and test signal generator that have timing error in the
     tens of nanoseconds.  At the end you'll have software that appears
