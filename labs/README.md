@@ -79,10 +79,10 @@ worth doing:
     let you check the code thoroughly enough that you will be surprised
     if the code ever breaks.
 
-At this point (especially if you do the optional lab) you have written
-low-level device driver code, a bootloader, and pretty much replaced all
-of our code.  You've learned how to crush it under a barrage of automatic
-checks and done a simple implementation of a fake pi environment that
+At this point you have written low-level device driver code, a bootloader,
+and pretty much replaced all of our code.  You've learned how to crush it
+under a barrage of automatic checks (especially if you do the optional
+lab) and done a simple implementation of a fake pi environment that
 allows you to check correctness of pi code using your laptop.
 
 ---------------------------------------------------------------------
@@ -133,7 +133,6 @@ how the machine works (including its hardware devices).
     code from last lab is basically identical to how you transmit bytes
     using the UART protocol and your scope code is basically how you
     receive bytes.
-
 
 At this point you should be much more comfortable understanding how the
 hardware works, what the machine code means, and how to reason about low
