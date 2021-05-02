@@ -1,4 +1,4 @@
-SUBDIRS=  code
+SUBDIRS=  code pi-cat
 
 .PHONY: all check clean
 all check clean: $(SUBDIRS)
