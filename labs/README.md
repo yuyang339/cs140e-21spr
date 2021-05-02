@@ -95,7 +95,7 @@ how the machine works (including its hardware devices).
   - [5-digital-analyzer](5-digital-analyzer/): the goal of this lab
     is getting you comfortable with machine code and starting to build
     an intuition for how the hardware actually works.
-    As a motivating application you'll build a fast, accurate digital
+    As a driving application you'll build a fast, accurate digital
     analyzer and test signal generator that have timing error in the
     tens of nanoseconds.  At the end you'll have software that appears
     more accurate than a $400 Saleae (at least the ones made in 2020).
@@ -105,18 +105,18 @@ how the machine works (including its hardware devices).
     impossible on a traditional OS such as Linux or MacOS.
 
   - [6-sw-uart](6-sw-uart/):  so far we've treated the internals
-    of hardware as a black box that you configure by writing strange
-    addresses with odd values.  In this lab, you'll start to see what
-    device hardware actually does by writing a software "bit-banging"
-    version of the UART protocol used in lab 4.
+    of hardware as a black box that you configure by writing odd values
+    to strange addresses.  In this lab, you'll start to see what device
+    hardware actually does by writing a software "bit-banging" version
+    of the UART protocol used in lab 4.
 
     Writing your own software UART is a great way to see what the hardware
     UART is doing --- and, as you will, see, it's actually not much!
-    For the most part, all hardware protocols are simply a signal that
-    goes to 1 or 0, with some timing constraints.  The mechanical
+    For the most part, all hardware protocols are simply a signal
+    that goes to 1 or 0, with some timing constraints.  The mechanical
     simplicity of device communication protocols stands in sharp contrast
     to the complexity of the datasheets that describe the hardware that
-    implement them.  
+    implement them.
 
     After this lab, you'll start to understand that if a data sheet sucks,
     you can frequently build your own software version.  This can be
