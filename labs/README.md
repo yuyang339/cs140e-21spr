@@ -131,9 +131,9 @@ how the machine works (including its hardware devices).
     Finally, you'll have the startling surprise of seeing first-hand that
     --- despite the wildly different domains --- your code from last lab
     (digital analyzer) and this lab is almost identical.  In particular,
-    your test generating code from last lab is basically identical to
-    how you transmit bytes using the UART protocol and your scope code
-    is basically how you receive bytes.  It's *interesting* when methods
+    your test generating code from last lab is essentially the same as
+    how your UART code transmits bytes and your scope code is basically
+    how your UART code receives bytes.  It's *interesting* when methods
     used to solve apparently different problems in very different domains
     turn out to be almost equivalant.  As one actionable, semi-meta twist:
     you'll be using your scope code to verify your software UART.
