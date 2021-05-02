@@ -138,7 +138,6 @@ how the machine works (including its hardware devices).
     turn out to be almost equivalant.  As one actionable, semi-meta twist:
     you'll be using your scope code to verify your software UART.
 
-
 At this point you should be much more comfortable understanding how the
 hardware works, what the machine code means, and how to reason about low
 level code.  And, perhaps even better, know how to figure such things
@@ -180,12 +179,20 @@ functionality: interrupts, threads, virtual memory and file systems.
     unless our code checks them at exactly the right time, incoming
     messages will vaporize.
 
+    We've spent two labs on interrupts, but this can be a tricky topic --
+    both because of correctness issues and because you have to get used
+    to understanding architecture manuals.   This understanding will
+    help you in the next two labs.  The fact that you have become much
+    more comfortable saving and restoring registers will save you many
+    debugging headaches in the next week.
+
+***We are currently here.***
+
   - [9-threads](9-threads/): we build a simple, but functional
     threads package.  You will write the code for non-preemptive context
     switching:  Most people don't understand such things so, once again,
     you'll leave lab knowing something many do not.
 
-***We are currently here.***
 
 Tentative:
    - I think we'll do user-level processes and/or dynamically
