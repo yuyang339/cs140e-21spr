@@ -4,7 +4,8 @@
 # ah: for test, doesn't work for us b/c we don't have the code...
 #
 # also it is tricky if they swap with our code and their code.
-SUBDIRS= 0-blink 1-gpio  2-cross-check  3-bootloader
+SUBDIRS= 0-blink 1-gpio  2-cross-check  3-bootloader 4-uart	 \
+        5-digital-analyzer 6-uart-8n1	7-interrupts 8-device-interrupts	
 
 .PHONY: all check clean
 all check clean: $(SUBDIRS)

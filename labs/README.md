@@ -49,28 +49,21 @@ on both the pi and Unix side will be written by you:
     will later make it easier to boot over the network.
 
   - [4-uart](4-uart/): the last key bit of code we've given you is for
-    controlling the UART (`uart.o`); so this has you write your own
+    controlling the UART (`uart.o`); so this lab has you write your own
     and remove ours.
 
-    To do so you'll write your first real device driver (at least in
-    the context of this class), for the UART, using only the Broadcom
-    document.  At this point, all key code on the pi is written by you.
-    You will use the cross checking code from lab 2 to verify your
-    implementation matches everyone else's.
+    To do so you'll write your first real device driver --- for the UART
+    --- using only the Broadcom document.  At this point, all key code
+    on the pi is written by you.  You will use the cross checking code
+    from lab 2 to verify your implementation matches everyone else's.
 
-At this point you have written low-level device driver code, a bootloader,
-and pretty much replaced all of our code.  You've learned how to crush
-it under a barrage of automatic checks and done a simple implementation
-of a fake pi environment that allows you to check correctness of pi code
-using your laptop.
 
 If you are interested in taking this further, there is a lab from last
 year we skipped (zoom makes some things hard), that you might find
 worth doing:
 
-  - [optional lab: replay](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/5-replay).   
-    This is a lab from the previous class: in a twist on lab-3, you
-    will use Unix system calls to interpose between your Unix and
+  - [optional lab: replay](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/5-replay).   This is a lab from the previous class: in a twist on lab-3, 
+    you will use Unix system calls to interpose between your Unix and
     pi bootloader code, record all reads and writes, and test your
     bootloader implementation by replaying these back, both as seen and
     with systematic corruption.
@@ -85,6 +78,12 @@ worth doing:
     Using read-write equivalence and simple systematic exploration will
     let you check the code thoroughly enough that you will be surprised
     if the code ever breaks.
+
+At this point (especially if you do the optional lab) you have written
+low-level device driver code, a bootloader, and pretty much replaced all
+of our code.  You've learned how to crush it under a barrage of automatic
+checks and done a simple implementation of a fake pi environment that
+allows you to check correctness of pi code using your laptop.
 
 ---------------------------------------------------------------------
 ### Part 2: Understanding the machine
