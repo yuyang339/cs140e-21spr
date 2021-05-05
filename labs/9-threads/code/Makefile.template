@@ -18,7 +18,7 @@ CFLAGS += -Wno-unused-function -Wno-unused-variable
 # add the memmap file, libpi and the makefile as dependencies
 DEPS := $(MEMMAP) $(LPI) ./Makefile 
 
-all: libs $(TEST_PROGS) # $(TEST_RUN)
+all: libs $(TEST_PROGS) $(TEST_RUN)
 
 libs: 
 	make -C $(LPP)

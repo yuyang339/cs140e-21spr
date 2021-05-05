@@ -3,7 +3,7 @@
 #include "rpi-thread.h"
 
 void trivial(void* arg) {
-    printk("trivial thread: arg=%d\n", (unsigned)arg);
+    trace("trivial thread: arg=%d\n", (unsigned)arg);
     // comment this out to test your implicit exit
     rpi_exit(0);
 }
