@@ -15,4 +15,4 @@ TEST_SRC := $(wildcard ./[1]-*.c)
 # put all your miscellaneous assembly in this file. 
 SUPPORT_OBJS := lab-c-helpers.o rpi-thread.o  thread-asm.o
 
-include Makefile.staff
+include Makefile.template
