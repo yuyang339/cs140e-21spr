@@ -56,8 +56,8 @@ all: $(TEST_RUN) # $(TEST_CHECK)
 
 %.check: %.bin
 	@echo -n "checking <$*>: ";
-	@$(INSTALL) ./$< 2>&1 > /dev/null | grep -v simple_boot | grep  $(GREP_STR) > $*.test
-	@diff ./$*.out ./$*.test
+	$(INSTALL) ./$< 2>&1 > /dev/null | grep -v simple_boot | grep  $(GREP_STR) > $*.test
+	diff ./$*.out ./$*.test
 	@echo " Success: < $< >!";
 	@rm ./$*.test
 
