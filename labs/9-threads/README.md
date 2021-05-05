@@ -225,21 +225,7 @@ context-switching code in pieces.
 ----------------------------------------------------------------------
 ### Part 3: context-switching.
 
-Now that you can save registers, it makes sense to restore them.
-Using the starter code in `test-asm.S` build a context switch routine
-`cswitch(uint32_t **old, uint32_t *new)` that:
-
-  1. Saves the callee-saved registers onto the current stack and stores the
-     final stack pointer into `old` (as above).
-  2. Switches the stack pointer to `new`.
-  3. Loads the callee-saved registers previously saved onto the new stack.
-  4. Jumps back to the address in `lr`.
-
-Testing: `3-test-cswitch` has two parts:
-  1. Checks that inserting calls that save and restore from the same
-     block (e.g., calling  `cswitch(p,p)`) does not change the behavior of code.
-  2. Check that reloading from a previously saved block the code to jump backwards
-     and re-execute as expected.  (How does this test work?)
+There is no part 3.
 
 ----------------------------------------------------------------------
 ### Part 4: building `rpi_fork` and `rpi_start_thread`
@@ -269,6 +255,9 @@ switching on it, the right thing will happen (i.e., it will invoke to
      `rpi_cswitch` will transfer control back and we can return back
      to the main program.  (If you run into problems, try first just
      rebooting when there are no runnable threads.)
+
+  - `rpi_cswitch`: this will be based on your code from `2-write-regs-asm.S`
+    except that you will add the code to restore the registers as well.
 
 What to do `rpi_fork` :
   0. Move your `cswitch` code into `rpi_cswitch` in `thread-asm.S`

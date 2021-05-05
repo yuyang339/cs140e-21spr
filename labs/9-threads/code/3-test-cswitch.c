@@ -19,10 +19,10 @@ void notmain() {
     printk("\n\n-----------------------------------------\n");
     printk("Part1: about to cswitch(old,old)\n");
     uint32_t save = 0;
-    cswitch(save,save);
+    rpi_cswitch(&save,save);
     printk("worked: gonna do alot of cswitches\n");
     for(i = 0; i < 100; i++)
-        cswitch(save,save);
+        rpi_cswitch(&save,save);
     printk("Part1: SUCCESS\n");
 
 #if 0
