@@ -32,7 +32,7 @@ void pingpong(void *arg) {
 
 void notmain(void) {
     uart_init();
-    kmalloc_init();
+    kmalloc_init_set_start(1024 * 1024);
 
     cq_t q0,q1;
     cq_init(&q0, 1);

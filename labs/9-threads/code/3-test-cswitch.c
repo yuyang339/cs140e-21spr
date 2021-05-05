@@ -9,7 +9,7 @@ void cswitch(uint32_t *old, uint32_t *new);
 
 void notmain() {
     uart_init();
-    kmalloc_init();
+    kmalloc_init_set_start(1024 * 1024);
 
 
     /*
