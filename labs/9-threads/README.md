@@ -329,17 +329,23 @@ There are a two tests:
      and then call `rpi_exit`.
 
 ----------------------------------------------------------------------
-### Part 4: Make a full threads package.
+### Part 6: Handle missing `rpi_exit` calls.
 
-Now we make your RTC threads work with context switching.
-Make the following changes:
+Now we just make sure threads work when threads do not have an explicit
+`rpi_exit`.  If your trampoline in part 4 works as expected, this should
+"just work".
 
+   - `6-test-implicit-exit.c`: should run and print `SUCCESS`.
+
+----------------------------------------------------------------------
+### Part 7: Running the larger programs.
 
 Checking:
-   1. When you run `3-test` it should work and print `SUCCESS`.
-   2. You should also be able to run `1-test` now that your yield and exit are not
-      broken.
-   3. Finally you should be able to run two LEDs in `4-test-yield`.
+   - `7-test-thread.c` should work and print `SUCCESS`.
+   - `7-test-ping-pong.c` should work and print `SUCCESS`.
+
+If you want to get fancy, you should be able to run two LEDs in 
+   - `7-test-yield.c`
 
 Congratulations!  Now you have a simple, but working thread implementation
 and understand the most tricky part of the code (context-switching)
