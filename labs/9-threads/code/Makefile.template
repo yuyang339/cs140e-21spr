@@ -18,7 +18,7 @@ CFLAGS += -Wno-unused-function -Wno-unused-variable
 # add the memmap file, libpi and the makefile as dependencies
 DEPS := $(MEMMAP) $(LPI) ./Makefile 
 
-all: libs $(TEST_PROGS) $(TEST_RUN)
+all: libs $(TEST_PROGS) # $(TEST_RUN)
 
 libs: 
 	make -C $(LPP)
@@ -54,13 +54,24 @@ endif
 %.run: %.bin
 	my-install $(TTYUSB) ./$<
 
+# i'm not sure this actually makes things better.
+emit: $(DEPS) $(TEST_PROGS)
+	@make -f ./Makefile.check emit "TESTS=$(TEST_PROGS)"
+run: $(DEPS) $(TEST_PROGS)
+	@make -f ./Makefile.check run "TESTS=$(TEST_PROGS)"
+check: $(DEPS) $(TEST_PROGS)
+	@make -f ./Makefile.check check "TESTS=$(TEST_PROGS)"
+
+update:
+	cp *.out ../code
+
 tags: 
 	ctags *.[chSs] $(LPP)/*.[ch] $(LPP)/*.[chSs]
 
 clean:
 	rm -rf $(NAME) *~ tags *.o *.bin *.elf *.list *.img Makefile.bak  *.d 
 
-.PHONY: libs all tags clean run
+.PHONY: libs all tags clean run update
 
 # stop make from deleting these suffix'd files.
 .PRECIOUS: %.list %.elf %.o %.d

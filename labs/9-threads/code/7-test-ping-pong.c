@@ -13,17 +13,17 @@ static unsigned iter = 0;
 void pingpong(void *arg) {
     struct end *e = arg;
 
-    printk("tid=%d, arg=%x\n", rpi_cur_thread()->tid, arg);
+    trace("tid=%d, arg=%x\n", rpi_cur_thread()->tid, arg);
 
     uint8_t v = 0;
     while(v < n) {
         while(!cq_nelem(e->in)) {
-            printk("tid=%d yielding\n", rpi_cur_thread()->tid);
+            trace("tid=%d yielding\n", rpi_cur_thread()->tid);
             rpi_yield();
         }
         unsigned tid = rpi_cur_thread()->tid;
         v = cq_pop(e->in);
-        printk("tid=%d: got=%d, sending=%d\n", tid,v,v+1);
+        trace("tid=%d: got=%d, sending=%d\n", tid,v,v+1);
         cq_push(e->out, v+1);
         iter++;
     }

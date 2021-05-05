@@ -4,9 +4,9 @@
 
 void trivial(void* arg) {
     // comment this out to test your implicit exit
-    printk("thread %d yielding\n", rpi_cur_thread()->tid);
+    trace("thread %d yielding\n", rpi_cur_thread()->tid);
     rpi_yield();
-    printk("thread %d exiting\n", rpi_cur_thread()->tid);
+    trace("thread %d exiting\n", rpi_cur_thread()->tid);
     rpi_exit(0);
 }
 

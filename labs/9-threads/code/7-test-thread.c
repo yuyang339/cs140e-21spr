@@ -21,7 +21,7 @@ static void thread_code(void *arg) {
 
     // check tid
     unsigned tid = rpi_cur_thread()->tid;
-	printk("in thread %p, with %x\n", tid, *x);
+	trace("in thread %p, with %x\n", tid, *x);
     demand(rpi_cur_thread()->tid == *x+1, 
                 "expected %d, have %d\n", tid,*x+1);
 
@@ -39,7 +39,7 @@ void notmain() {
     uart_init();
     kmalloc_init_set_start(1024 * 1024);
 
-    printk("about to test summing of 30 threads\n");
+    trace("about to test summing of 30 threads\n");
 
     // change this to increase the number of threads.
 	int n = 30;

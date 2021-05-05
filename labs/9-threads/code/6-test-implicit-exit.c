@@ -12,7 +12,7 @@ static void thread_code(void *arg) {
     // check tid
     rpi_thread_t *t = rpi_cur_thread();
 
-	printk("in thread %p, tid=%d with %x\n", t, t->tid, *x);
+	trace("in thread %p, tid=%d with %x\n", t, t->tid, *x);
     demand(rpi_cur_thread()->tid == *x+1, 
                 "expected %d, have %d\n", t->tid,*x+1);
 
