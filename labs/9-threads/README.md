@@ -181,7 +181,6 @@ What to do:
 What you do not have to do:
   1. Write any assembly.
   2. Do anything with the thread stack.
- 
 
 ----------------------------------------------------------------------
 ### Part 2: assembly and saving state (30 minutes)
@@ -190,19 +189,19 @@ Now we'll do some assembly language to make some building blocks:
 
   1. Does `push` write to the stack before or after changing the stack
      pointer?    One reason we need this is to know where exactly
-     we have to set the initial stack pointer to point to.
+     we have to set the initial stack pointer to point to.  Another
+     is whether the stack grows up or down.
 
      Look in `2-where-push.c` to see what we need to check this, and 
      then implement `check_push_asm` in `2-where-push-asm.S`.
 
-  2. How to write out the registers we need to save?  You'll need to
-     save the callee-saved registers, the return register, and finally
-     write the stack pointer to storage location.
+  2. How to write out the registers we need to save?  For context
+     switching we need to save (1) the callee-saved registers, (2)
+     the return register, and finally, (3) write the stack pointer to
+     a storage location (`saved_sp` in our thread block).
 
-     Look in `2-write-regs.c` to see what we need to check this, and 
+     Look in `2-write-regs.c` to see what we need to check this, and
      then implement `write_regs_to_stack` in `2-write-regs-to-stack.S`.
-
-
      When you run the test, each printed register other than the stack
      pointer should match its expected value (the location for `r4`
      should hold `4` etc).
@@ -210,7 +209,6 @@ Now we'll do some assembly language to make some building blocks:
      This pattern of doing something in assembly, then calling C code to 
      print the results and then exit (because our execution state is messed
      up) is a useful one to use throughout the lab.
-
 
 Note that the bulk register save and restore instructions store the smallest
 registers so that the smallest is at the lowest address; also, don't 
