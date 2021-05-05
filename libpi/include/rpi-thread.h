@@ -41,7 +41,7 @@ typedef struct rpi_thread {
 	struct rpi_thread *next;
 	uint32_t tid;
 
-    // not needed, but useful for testing without cswitch
+    // only used for part1: useful for testing without cswitch
     void (*fn)(void *arg);
     void *arg;
     
