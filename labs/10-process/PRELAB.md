@@ -79,7 +79,8 @@ Low-level ARM readings for the lab:
 
 There's lots of options for what to read.
 
-For the big picture, from the OSTEP book:
+For the big picture, from the OSTEP book (these are locally cached in
+`10-process/docs`):
    - [processes](https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf).
    - [process API](https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf)
    - [direct execution](https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf): 
@@ -92,7 +93,6 @@ for good discussion.   Specific high-lights for today:
   - [processes and threads](http://www.scs.stanford.edu/20wi-cs140/notes/processes.pdf).
   - [scheduling](http://www.scs.stanford.edu/20wi-cs140/notes/scheduling.pdf) -- we
     are not going to do any real scheduling, but it's good to see what is not happening.
-
 
 ### A brief general note: revist labs!
 
@@ -110,7 +110,7 @@ why are we doing what we are doing?  Is it correct?  Can you check it?
 Is there another way to do it?
 
 Also, to help re-affix the concepts, it can be worth rereading the general
-overview from the OS book:
+overview from the OSTEP book:
 
   - [threads intro](http://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf)
   - [threads API](https://pages.cs.wisc.edu/~remzi/OSTEP/threads-api.pdf)
