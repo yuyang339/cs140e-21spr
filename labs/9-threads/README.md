@@ -172,10 +172,16 @@ calls.   They should be significantly faster than normal threads since:
 Most interrupt handlers will fall into this category.
 
 What to do:
-  1. `rpi_fork` create a thread and put it in the run-queue.
-  2. `rpi_thread_start` remove threads in FIFO order, run each function, free the 
-     thread block.
+  1. `rpi_fork` create a thread block, set the `fn` and `arg` field
+     to the values passed into `rpi_fork` and put the thread on the 
+     run queue.
+  2. `rpi_thread_start` remove threads in FIFO order, and call
+      each function, free the thread block.
 
+What you do not have to do:
+  1. Write any assembly.
+  2. Do anything with the thread stack.
+ 
 
 ----------------------------------------------------------------------
 ### Part 2: assembly and saving state (30 minutes)
