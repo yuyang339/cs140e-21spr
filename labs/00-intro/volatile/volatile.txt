@@ -1,3 +1,4 @@
+go  through and make a markdown, with inline code.
 
 what is the world view
         "the right point of view is worth 80 points of iq"

@@ -1,5 +1,10 @@
-
 /*
+    engler: cs140: use cute gcc hack to figure out caller/callee
+
+    compile using:
+        arm-none-eabi-gcc -O2 -march=armv6 -c caller-callee.c -o caller-callee.o
+        arm-none-eabi-objdump -d   caller-callee.o > caller-callee.list
+
    problem: the ARM eabi specifies for *some* of the registes which are caller and which
    are callee-saved.  for others, it allows either to hold.  it's unclear in general
    what gcc does (and it appears it can make different choices depending on options).
