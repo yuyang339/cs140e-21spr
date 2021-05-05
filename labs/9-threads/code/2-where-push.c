@@ -14,13 +14,13 @@ enum { push_val = 0xdeadbeef };
 void check_push_asm(uint32_t push_val);
 
 void after_push(uint32_t *sp_after, uint32_t *sp_before) {
-    printk("sp_after=%p (val=%x), sp_after=%p (val=%x)\n",
+    printk("sp_after=%p (val=%x), sp_before=%p (val=%x)\n",
         sp_after, *sp_after, sp_before, *sp_before);
 
     if(*sp_after == push_val)
-        printk("push before modifying sp\n");
+        printk("wrote to stack after modifying sp\n");
     else if(*sp_before == push_val)
-        printk("push after modifying sp\n");
+        printk("wrote to stack before modifying sp\n");
     clean_reboot();
 }
 
