@@ -235,7 +235,6 @@ Using the starter code in `test-asm.S` build a context switch routine
   3. Loads the callee-saved registers previously saved onto the new stack.
   4. Jumps back to the address in `lr`.
 
-
 Testing: `3-test-cswitch` has two parts:
   1. Checks that inserting calls that save and restore from the same
      block (e.g., calling  `cswitch(p,p)`) does not change the behavior of code.
@@ -243,34 +242,7 @@ Testing: `3-test-cswitch` has two parts:
      and re-execute as expected.  (How does this test work?)
 
 ----------------------------------------------------------------------
-### Part 4: Make a full threads package.
-
-Now we make your RTC threads work with context switching.
-Make the following changes:
-
-  - `rpi_start_thread` will context switch into the first thread it
-     removes from the run queue.  Doing so will require creating a
-     dummy thread so that when there are no more runnable threads,
-     `rpi_cswitch` will transfer control back and we can return back
-     to the main program.  (If you run into problems, try first just
-     rebooting when there are no runnable threads.)
-
-  - `rpi_fork` should setup the thread's register save area so that an
-     initial context switch will work.  (Discussed more below.)
-
-  - `rpi_exit` if it can dequeue a runnable thread, context switch
-     into it.  Otherwise resume the initial start thread created in
-     step 1.
-
-  - Move your `cswitch` code into `rpi_cswitch` in `thread-asm.S`
-
-     Make sure you verify that your `rpi_cswitch` code works when you
-     pass the current thread as both arguments --- behaviorally this
-     is a no-op since your code should save and restore the state,
-     and resume right after the call.
-
-  - Change `rpi_yield` so that it works as expected.
-
+### Part 4: building `rpi_fork` and `rpi_start_thread`
 
 Given that you have context-switching, the main tricky thing is figuring
 out how to setup a newly created thread so that when you run context
@@ -290,6 +262,59 @@ switching on it, the right thing will happen (i.e., it will invoke to
      register that it jumps to will be nonsense.  Our hack: have our
      trampoline that calls the thread code simply call `rpi_exit` if the
      intial call to `code` returns.
+
+  - `rpi_start_thread` will context switch into the first thread it
+     removes from the run queue.  Doing so will require creating a
+     dummy thread so that when there are no more runnable threads,
+     `rpi_cswitch` will transfer control back and we can return back
+     to the main program.  (If you run into problems, try first just
+     rebooting when there are no runnable threads.)
+
+What to do `rpi_fork` :
+  1. `rpi_fork` should write the address of trampoline
+     `rpi_init_trampoline` to the `lr` offset in the thread
+      stack (make sure you understand why!)
+      and the `code` and `arg` to some other register offsets
+      (e.g., `r4` and `r5`).
+
+  2. Implement `rpi_init_trampoline` in `thread-asm.S` so that
+     it moves the register holding `arg` to `r0` and does a branch and
+     link to the register that holds `code`.
+
+  3. To handle missing `rpi_exit`: do a call to `rpi_exit` at the end
+     of the trampoline.
+
+
+What to do for `rpi_start_thread`:
+  1. If the runqueue is empty, return.
+  2. Otherwise: allocate a thread block, set the `scheduler_thread`
+     pointer to it and contxt switch into the first runable thread.
+
+Note, you *do not* have to:
+ - Setup a stack.
+ - The scheduler thread is never on the runqueue.
+ - You contxt-switch out of the scheduler thread once and into it once
+   when runque is empty.
+
+----------------------------------------------------------------------
+### Part 4: Make a full threads package.
+
+Now we make your RTC threads work with context switching.
+Make the following changes:
+
+  - `rpi_exit` if it can dequeue a runnable thread, context switch
+     into it.  Otherwise resume the initial start thread created in
+     step 1.
+
+  - Move your `cswitch` code into `rpi_cswitch` in `thread-asm.S`
+
+     Make sure you verify that your `rpi_cswitch` code works when you
+     pass the current thread as both arguments --- behaviorally this
+     is a no-op since your code should save and restore the state,
+     and resume right after the call.
+
+  - Change `rpi_yield` so that it works as expected.
+
 
    - To help debug problems: you can initially have the
      trampoline code you write (`rpi_init_trampoline`) initially just
