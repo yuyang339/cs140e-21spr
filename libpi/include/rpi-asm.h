@@ -21,5 +21,4 @@ name:                                       \
 // used to clear register before CP15 operation.
 #define CLR(reg) mov reg, #0 
 
-
 #endif
