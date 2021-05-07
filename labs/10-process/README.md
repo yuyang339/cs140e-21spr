@@ -265,6 +265,12 @@ For `3-test-vec.c`:
 ---------------------------------------------------------
 ### Full reg hash
 
+Note:
+  - do not clear `r1`.
+  - do clear `cpsr` once you're in user mode otherwise the carry
+    flags can be different.
+  - definitely don't clear `r13`!
+
 I would start with `0-test-nop.c` since it is the simplest:
 
         kernel: stack is roughly at: 0x7ffffe8
@@ -354,6 +360,27 @@ I would start with `0-test-nop.c` since it is the simplest:
         equiv values
         TRACE:EQUIV:	number instructions = 10
         TRACE:EQUIV:	reg hash = 0x28c48d80
+        DONE!!!
+
+
+For `1-test-hello.c`:
+
+    TRACE:EQUIV:	number instructions = 903
+    TRACE:EQUIV:	reg hash = 0xf5201f8f
+    DONE!!!
+
+For `0-test-exit.c`:
+
+    equiv values
+    TRACE:EQUIV:	number instructions = 10
+    TRACE:EQUIV:	reg hash = 0x7ed6b7a0
+    DONE!!!
+
+For `3-test-vec.c`:
+
+        equiv values
+        TRACE:EQUIV:	number instructions = 211
+        TRACE:EQUIV:	reg hash = 0x6c7aca3c
         DONE!!!
 
 
