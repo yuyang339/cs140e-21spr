@@ -132,3 +132,99 @@ What to do for each part:
       by writing a zeroed register into it once you make the user mode
       switch.  You also clear `lr` since we are never returning and it
       will almost certainly be different for everyone.
+
+
+-------------------------------------------------------------------
+#### PC Hashes
+
+Below are some of the hashes I got for the test programs.  The main thing
+to pay attention to is the final two `TRACE:EQUIV` print statements that
+give the final number of instructions and the final pc hash.
+
+I would start with `0-test-nop.c` since it is the simplest:
+
+    kernel: stack is roughly at: 0x7ffffe8
+    user_code=0x400004, prog name=<0-test-nop.bin>
+    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
+    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
+    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
+    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
+    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
+    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
+    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
+    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
+    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
+    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
+    0-test-nop.bin: sys_exit(-1): going to reboot
+    part=3
+    equiv values
+    TRACE:EQUIV:	number instructions = 25
+    TRACE:EQUIV:	pc hash = 0x6bc2f20b
+    DONE!!!
+
+
+Then `0-test-exit.c` since it is the simplest:
+
+    kernel: stack is roughly at: 0x7ffffe8
+    user_code=0x400004, prog name=<0-test-exit.bin>
+    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
+    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
+    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
+    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
+    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
+    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
+    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
+    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
+    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
+    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
+    0-test-exit.bin: sys_exit(0): going to reboot
+    part=3
+    equiv values
+    TRACE:EQUIV:	number instructions = 25
+    TRACE:EQUIV:	pc hash = 0x5f92b036
+    DONE!!!
+
+For `1-test-hello.c`:
+
+    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
+    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
+    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
+    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
+    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
+    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
+    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
+    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
+    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
+    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
+    hello world
+    user: stack is roughly at 0x6fffff8
+    user: cpsr=0x60000190
+    USER MODE!
+    1-test-hello.bin: sys_exit(0): going to reboot
+    part=3
+    equiv values
+    TRACE:EQUIV:	number instructions = 918
+    TRACE:EQUIV:	pc hash = 0x72ded90f
+    DONE!!!
+
+For `3-test-vec.c`:
+
+    kernel: stack is roughly at: 0x7ffffe8
+    user_code=0x400004, prog name=<3-test-vec.bin>
+    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
+    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
+    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
+    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
+    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
+    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
+    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
+    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
+    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
+    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
+    3-test-vec.bin: sys_exit(0): going to reboot
+    part=3
+    equiv values
+    TRACE:EQUIV:	number instructions = 226
+    TRACE:EQUIV:	pc hash = 0xfcc85651
+    DONE!!!
+
