@@ -261,3 +261,99 @@ For `3-test-vec.c`:
     TRACE:EQUIV:	pc hash = 0xeacf4b75
     DONE!!!
 
+
+---------------------------------------------------------
+### Full reg hash
+
+I would start with `0-test-nop.c` since it is the simplest:
+
+        kernel: stack is roughly at: 0x7ffffe8
+        user_code=0x400004, prog name=<0-test-nop.bin>
+        TRACE:	reg hash=0xfac07451
+        TRACE:	spsr=0x190
+        TRACE:	pc = 0x400004, lr = 0x400004
+        TRACE:	regs[0] = 0x400004
+        TRACE:	regs[1] = 0x7000000
+        TRACE:	regs[2] = 0x0
+        TRACE:	regs[3] = 0x0
+        TRACE:	regs[4] = 0x0
+        TRACE:	regs[5] = 0x0
+        TRACE:	regs[6] = 0x0
+        TRACE:	regs[7] = 0x0
+        TRACE:	regs[8] = 0x0
+        TRACE:	regs[9] = 0x0
+        TRACE:	regs[10] = 0x0
+        TRACE:	regs[11] = 0x0
+        TRACE:	regs[12] = 0x0
+        TRACE:	regs[13] = 0x7000000
+        TRACE:	regs[14] = 0x0
+        TRACE:	regs[15] = 0x400004
+        TRACE:------------------------------------------------------
+        TRACE:	reg hash=0x831b8654
+        TRACE:	spsr=0x190
+        TRACE:	pc = 0x400010, lr = 0x400010
+        TRACE:	regs[0] = 0x400004
+        TRACE:	regs[1] = 0x7000000
+        TRACE:	regs[2] = 0x0
+        TRACE:	regs[3] = 0x0
+        TRACE:	regs[4] = 0x0
+        TRACE:	regs[5] = 0x0
+        TRACE:	regs[6] = 0x0
+        TRACE:	regs[7] = 0x0
+        TRACE:	regs[8] = 0x0
+        TRACE:	regs[9] = 0x0
+        TRACE:	regs[10] = 0x0
+        TRACE:	regs[11] = 0x0
+        TRACE:	regs[12] = 0x0
+        TRACE:	regs[13] = 0x7000000
+        TRACE:	regs[14] = 0x400008
+        TRACE:	regs[15] = 0x400010
+        TRACE:------------------------------------------------------
+        TRACE:	reg hash=0xdb3c14aa
+        TRACE:	spsr=0x190
+        TRACE:	pc = 0x400008, lr = 0x400008
+        TRACE:	regs[0] = 0x400004
+        TRACE:	regs[1] = 0x7000000
+        TRACE:	regs[2] = 0x0
+        TRACE:	regs[3] = 0x0
+        TRACE:	regs[4] = 0x0
+        TRACE:	regs[5] = 0x0
+        TRACE:	regs[6] = 0x0
+        TRACE:	regs[7] = 0x0
+        TRACE:	regs[8] = 0x0
+        TRACE:	regs[9] = 0x0
+        TRACE:	regs[10] = 0x0
+        TRACE:	regs[11] = 0x0
+        TRACE:	regs[12] = 0x0
+        TRACE:	regs[13] = 0x7000000
+        TRACE:	regs[14] = 0x400008
+        TRACE:	regs[15] = 0x400008
+        TRACE:------------------------------------------------------
+        TRACE:	reg hash=0x79ec1afc
+        TRACE:	spsr=0x190
+        TRACE:	pc = 0x40000c, lr = 0x40000c
+        TRACE:	regs[0] = 0xffffffff
+        TRACE:	regs[1] = 0x7000000
+        TRACE:	regs[2] = 0x0
+        TRACE:	regs[3] = 0x0
+        TRACE:	regs[4] = 0x0
+        TRACE:	regs[5] = 0x0
+        TRACE:	regs[6] = 0x0
+        TRACE:	regs[7] = 0x0
+        TRACE:	regs[8] = 0x0
+        TRACE:	regs[9] = 0x0
+        TRACE:	regs[10] = 0x0
+        TRACE:	regs[11] = 0x0
+        TRACE:	regs[12] = 0x0
+        TRACE:	regs[13] = 0x7000000
+        TRACE:	regs[14] = 0x400008
+        TRACE:	regs[15] = 0x40000c
+        TRACE:------------------------------------------------------
+        0-test-nop.bin: sys_exit(-1): going to reboot
+        part=4
+        equiv values
+        TRACE:EQUIV:	number instructions = 10
+        TRACE:EQUIV:	reg hash = 0x28c48d80
+        DONE!!!
+
+
