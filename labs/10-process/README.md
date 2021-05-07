@@ -112,7 +112,6 @@ What to do for each part:
    4. Finally you will hash all the register values and the `spsr`.
       This is a very harsh test.
 
-
       *What to do* you'll build the trampoline for this part in
       `fake-os-asm.S`.  You should push all sixteen *user-level*
       registers onto the stack and the `spsr` and pass the base of
@@ -122,8 +121,14 @@ What to do for each part:
       special load at the end of the handler so you can resume 
       execution.
     
-      Your hashes should match everyone else.  I'll add tests.
+      Your hashes should match everyone else.  I'll add more tests.
 
       NOTE: we do not want the value of any exception shadow register,
       we want the actual user value, so you'll have to figure out how
       to get that with a store.
+
+      If you are getting differences: make sure you clear *all* registers
+      besides `r0` and `r1` and the `pc` --- you should clear the `cpsr`
+      by writing a zeroed register into it once you make the user mode
+      switch.  You also clear `lr` since we are never returning and it
+      will almost certainly be different for everyone.
