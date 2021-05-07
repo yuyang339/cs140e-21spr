@@ -86,8 +86,10 @@ What to do for each part:
 
    3. You will trace all the program counter values and hash them.
       This code looks very similar to Part 2, except you need to figure
-      out when the code is done executing `user_mode_run_fn` (since its
-      addresses will change).
+      out when the code has finished executing `user_mode_run_fn` (since
+      its addresses will change).  The way you can do this is to look at
+      the `pc` --- if this is above our kernel heap, it's in user mode.
+      If not, its still in the kernel.
 
    4. Finally you will hash all the values and the `spsr`.  I'll write
       more about this soon.
