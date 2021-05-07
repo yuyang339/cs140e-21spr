@@ -2,12 +2,7 @@ NAME = pitag-linker
 
 CC = gcc
 
-# check that your path is defined.
-ifndef CS240LX_2021_PATH
-$(error CS240LX_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
-endif
-
-LIBUNIX_PATH := $(CS240LX_2021_PATH)/libunix
+LIBUNIX_PATH := $(CS140E_2021_PATH)/libunix
 LIBUNIX := $(LIBUNIX_PATH)/libunix.a
 CFLAGS := -Wall -Werror -g -Wno-unused-function -Wno-unused-variable -I. -I$(LIBUNIX_PATH) -g -DRPI_UNIX -I$(LPP) -I../pi-side
 
