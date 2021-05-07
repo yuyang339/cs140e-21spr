@@ -371,6 +371,7 @@ For `1-test-hello.c`:
 
 For `0-test-exit.c`:
 
+    TRACE:simple_boot: sending 10967 bytes, crc32=22ca7401
     equiv values
     TRACE:EQUIV:	number instructions = 10
     TRACE:EQUIV:	reg hash = 0x7ed6b7a0
