@@ -73,10 +73,11 @@ What to do for each part:
      the programs using `part=0` and `part=1` and verify they both do
      the same thing.
 
-  2. This part demonstrates how to use the single-stepping routines that we give
-     you.  The exception handler used is in `fake-os/single-step.c`.  When you
-     run with it enabled, it will print out all the `pc` addresses in order 
-     that execute at user level (you cannot single-step when not in user mode).
+  2. This part demonstrates how to use the single-stepping routines that
+     we give you.  The exception handler used is in
+     `fake-os/single-step.c`.  When you run with it enabled, it will
+     print out all the `pc` addresses in order that execute at user level
+     (you cannot single-step when not in user mode).
 
      *What do to*: you should verify that the addresses being printed
      make sense.  They should first be after the `cps` instruction in
@@ -90,6 +91,14 @@ What to do for each part:
       its addresses will change).  The way you can do this is to look at
       the `pc` --- if this is above our kernel heap, it's in user mode.
       If not, its still in the kernel.
+
+      *What to do*: Implement both the exception handler in
+       `equiv.c:prefetch_abort_equiv_pc` and  the trampoline that sets
+       up its state in `fake-os-asm.S:prefetch_handler_equiv_pc` You
+       should look at how single-stepping does both of these.  If you
+       are not getting exceptions, you didn't reset the mismatching in
+       the handler.
+
 
    4. Finally you will hash all the values and the `spsr`.  I'll write
       more about this soon.
