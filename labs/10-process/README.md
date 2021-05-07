@@ -365,85 +365,15 @@ I would start with `0-test-nop.c` since it is the simplest:
 
 For `1-test-hello.c`:
 
-        TRACE:	reg hash=0xf917b070
-        TRACE:	spsr=0x190
-        TRACE:	pc = 0x400004, lr = 0x400004
-        TRACE:	regs[0] = 0x400004
-        TRACE:	regs[1] = 0x0
-        TRACE:	regs[2] = 0x0
-        TRACE:	regs[3] = 0x0
-        TRACE:	regs[4] = 0x0
-        TRACE:	regs[5] = 0x0
-        TRACE:	regs[6] = 0x0
-        TRACE:	regs[7] = 0x0
-        TRACE:	regs[8] = 0x0
-        TRACE:	regs[9] = 0x0
-        TRACE:	regs[10] = 0x0
-        TRACE:	regs[11] = 0x0
-        TRACE:	regs[12] = 0x0
-        TRACE:	regs[13] = 0x7000000
-        TRACE:	regs[14] = 0x0
-        TRACE:	regs[15] = 0x400004
-        TRACE:------------------------------------------------------
-        TRACE:	reg hash=0xdd94eeb1
-        TRACE:	spsr=0x190
-        TRACE:	pc = 0x400010, lr = 0x400010
-        TRACE:	regs[0] = 0x400004
-        TRACE:	regs[1] = 0x0
-        TRACE:	regs[2] = 0x0
-        TRACE:	regs[3] = 0x0
-        TRACE:	regs[4] = 0x0
-        TRACE:	regs[5] = 0x0
-        TRACE:	regs[6] = 0x0
-        TRACE:	regs[7] = 0x0
-        TRACE:	regs[8] = 0x0
-        TRACE:	regs[9] = 0x0
-        TRACE:	regs[10] = 0x0
-        TRACE:	regs[11] = 0x0
-        TRACE:	regs[12] = 0x0
-        TRACE:	regs[13] = 0x7000000
-        TRACE:	regs[14] = 0x400008
-        TRACE:	regs[15] = 0x400010
-        TRACE:------------------------------------------------------
-        TRACE:	reg hash=0x691ac63f
-        TRACE:	spsr=0x190
-        TRACE:	pc = 0x400014, lr = 0x400014
-        TRACE:	regs[0] = 0x400004
-        TRACE:	regs[1] = 0x0
-        TRACE:	regs[2] = 0x0
-        TRACE:	regs[3] = 0x0
-        TRACE:	regs[4] = 0x0
-        TRACE:	regs[5] = 0x0
-        TRACE:	regs[6] = 0x0
-        TRACE:	regs[7] = 0x0
-        TRACE:	regs[8] = 0x0
-        TRACE:	regs[9] = 0x0
-        TRACE:	regs[10] = 0x0
-        TRACE:	regs[11] = 0x0
-        TRACE:	regs[12] = 0x0
-        TRACE:	regs[13] = 0x6fffff8
-        TRACE:	regs[14] = 0x400008
-        TRACE:	regs[15] = 0x400014
-        TRACE:------------------------------------------------------
-
-
-        TRACE:EQUIV:	number instructions = 903
-        TRACE:EQUIV:	reg hash = 0xf5201f8f
-        DONE!!!
+    TRACE:EQUIV:	number instructions = 903
+    TRACE:EQUIV:	reg hash = 0xb44f8d18
 
 For `0-test-exit.c`:
 
-    TRACE:simple_boot: sending 10967 bytes, crc32=22ca7401
-    equiv values
     TRACE:EQUIV:	number instructions = 10
-    TRACE:EQUIV:	reg hash = 0x7ed6b7a0
-    DONE!!!
+    TRACE:EQUIV:	reg hash = 0x2d1558a7
 
 For `3-test-vec.c`:
 
-        equiv values
-        TRACE:EQUIV:	number instructions = 211
-        TRACE:EQUIV:	reg hash = 0x6c7aca3c
-        DONE!!!
-
-
+    TRACE:EQUIV:	number instructions = 211
+    TRACE:EQUIV:	reg hash = 0x3a4a9734
