@@ -10,11 +10,62 @@ you keep faulting over and over again, or a weird memory corruption
 where you thought you had mapped a virtual address to one location,
 but it was some other one, which gets trashed.)
 
+
+#### General reading
+
+General reading from the 
+[Operating systems in three easy pieces](http://pages.cs.wisc.edu/~remzi/OSTEP/)
+book:
+  1. [Address spaces](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf).
+  2. [Address translation](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-mechanism.pdf).
+  3. [Translation lookaside buffers](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf).
+  4. [Complete VM systems](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-complete.pdf).
+
+
+Useful in combination: [CS140 lecture notes](http://www.scs.stanford.edu/19wi-cs140/notes/) :
+
+  1. [Virtual memory hardware](http://www.scs.stanford.edu/19wi-cs140/notes/vm_hardware-print.pdf).
+  2. [Virtual memory OS](http://www.scs.stanford.edu/19wi-cs140/notes/vm_os-print.pdf)
+
+
+#### ARM-specific reading.
+
 Its easy to miss, so here is an incomplete cheat-sheet for key things
 in the ARM manuals in the `docs` directory:
    - [CHEATSHEET.md](CHEATSHEET.md)
 
+I recommend reading this crash-course in how to do ARM virtual memory:
+ * [Concise, concrete pi MMU](https://github.com/naums/raspberrypi/blob/master/mmu/README.md)
+Very good place to start.  You can try getting the code to work and play with
+it as a great way to remove any unease you have.
 
+The main thing you'll need for this lab: I've gone through about 100
+pages of the ARM manual and annotated it.  No guarantee that these
+are all the annotations necessary, but they definitely cover stuff you
+should understand.  
+
+In the `./docs` directory for this lab:
+   1. `armv6.b2-memory.annot.pdf`: section B2 of the ARM manual,
+      describing memory ordering requirements --- what you have to do
+      when you update the page table, the page table registers, etc.
+
+   2. `armv6.b3-coprocessor.annot.pdf`: section B3 of the ARM manual,
+      describing the different co-processor options.
+
+   3. `armv6.b4-mmu.annot.pdf`: section B4 of the ARM manual, describing
+      the page table format(s), and how to setup/manage hardware state
+      for page tables and the TLB.
+
+### Useful code to compare to
+
+Useful code (use to double-check understanding):
+ - [Linux TLB code for V6](https://elixir.bootlin.com/linux/latest/source/arch/arm/mm/tlb-v6.S).
+ - [Linux cache code for V6](https://elixir.bootlin.com/linux/latest/source/arch/arm/mm/cache-v6.S).
+ - [MMU code for vmwos](https://github.com/deater/vmwos/blob/master/kernel/memory/arm1176-mmu.c)
+ - [PiOS source](https://www.stefannaumann.de/git/snaums/PiOS/src/branch/master/source)
+
+
+------------------------------------------------------------------------
 #### The big picture
 
 Many things in systems are simple, but the terminology and details makes
@@ -79,52 +130,3 @@ The above is pretty much all we will do:
   2. Each time we change a mapping, invalidate any cache affected.
   3. When we start running a process, tell the hardware where to 
   find its translations.
-
-#### ARM-specific reading.
-
-I recommend reading this crash-course in how to do ARM virtual memory:
- * [Concise, concrete pi MMU](https://github.com/naums/raspberrypi/blob/master/mmu/README.md)
-Very good place to start.  You can try getting the code to work and play with
-it as a great way to remove any unease you have.
-
-The main thing you'll need for this lab: I've gone through about 100
-pages of the ARM manual and annotated it.  No guarantee that these
-are all the annotations necessary, but they definitely cover stuff you
-should understand.  
-
-In the `./docs` directory for this lab:
-   1. `armv6.b2-memory.annot.pdf`: section B2 of the ARM manual,
-      describing memory ordering requirements --- what you have to do
-      when you update the page table, the page table registers, etc.
-
-   2. `armv6.b3-coprocessor.annot.pdf`: section B3 of the ARM manual,
-      describing the different co-processor options.
-
-   3. `armv6.b4-mmu.annot.pdf`: section B4 of the ARM manual, describing
-      the page table format(s), and how to setup/manage hardware state
-      for page tables and the TLB.
-
-### General reading:
-
-To re-affirm your grasp of virtual memory, the slides from 
-[CS140 lecture notes](http://www.scs.stanford.edu/19wi-cs140/notes/) give
- a big picture overview:
-  1. [Virtual memory hardware](http://www.scs.stanford.edu/19wi-cs140/notes/vm_hardware-print.pdf).
-  2. [Virtual memory OS](http://www.scs.stanford.edu/19wi-cs140/notes/vm_os-print.pdf)
-
-And for more detail, the book [Operating systems in three easy pieces](http://pages.cs.wisc.edu/~remzi/OSTEP/) provides chapters online.  You want to look at:
-  1. [Address spaces](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf).
-  2. [Address translation](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-mechanism.pdf).
-  3. [Translation lookaside buffers](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf).
-  4. [Complete VM systems](http://pages.cs.wisc.edu/~remzi/OSTEP/vm-complete.pdf).
-
-
-### Useful code to compare to
-
-Useful code (use to double-check understanding):
- - [Linux TLB code for V6](https://elixir.bootlin.com/linux/latest/source/arch/arm/mm/tlb-v6.S).
- - [Linux cache code for V6](https://elixir.bootlin.com/linux/latest/source/arch/arm/mm/cache-v6.S).
- - [MMU code for vmwos](https://github.com/deater/vmwos/blob/master/kernel/memory/arm1176-mmu.c)
- - [PiOS source](https://www.stefannaumann.de/git/snaums/PiOS/src/branch/master/source)
-
-
