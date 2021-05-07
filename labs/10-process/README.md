@@ -99,6 +99,11 @@ What to do for each part:
        are not getting exceptions, you didn't reset the mismatching in
        the handler.
 
+       You should check that your hashes match everyone else's.  I'll add
+       more tests.  I would start with `0-test-nop.c` since that is a
+       trivial program.  I also checked in some pre-built binaries in
+       `fake-user-level-prebuilt` since it appears people's compilers
+       can give slightly different output.
 
    4. Finally you will hash all the values and the `spsr`.  I'll write
       more about this soon.
