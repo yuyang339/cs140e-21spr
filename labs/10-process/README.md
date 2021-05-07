@@ -33,6 +33,10 @@ The lab has five parts;
   2. You should do all `make` invocations in `fake-user-level` since
      that is what actually runs thigns.
 
+  3. All your real modifications will be done in `fake-os/equiv.c` or
+     in `fake-os/fake-os-asm.S`.  You should not have to touch
+     `fake-user-level`.
+
 What to do for each part:
 
   0. We give you the code for part 0.  This part just "loads" the
@@ -105,5 +109,21 @@ What to do for each part:
        `fake-user-level-prebuilt` since it appears people's compilers
        can give slightly different output.
 
-   4. Finally you will hash all the values and the `spsr`.  I'll write
-      more about this soon.
+   4. Finally you will hash all the register values and the `spsr`.
+      This is a very harsh test.
+
+
+      *What to do* you'll build the trampoline for this part in
+      `fake-os-asm.S`.  You should push all sixteen *user-level*
+      registers onto the stack and the `spsr` and pass the base of
+      this 17 entry array to the handler so you can hash it the same
+      as everyone else.  (Easiest way: subtract the amount you want,
+      then do an `stm`.)  The way you do this should allow a single
+      special load at the end of the handler so you can resume 
+      execution.
+    
+      Your hashes should match everyone else.  I'll add tests.
+
+      NOTE: we do not want the value of any exception shadow register,
+      we want the actual user value, so you'll have to figure out how
+      to get that with a store.
