@@ -21,4 +21,7 @@ name:                                       \
 // used to clear register before CP15 operation.
 #define CLR(reg) mov reg, #0 
 
+#define prefetch_flush(reg) mov reg, #0; mcr p15, 0, r3, c7, c5, 4
+
+
 #endif
