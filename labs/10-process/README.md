@@ -108,6 +108,8 @@ What to do for each part:
        trivial program.  I also checked in some pre-built binaries in
        `fake-user-level-prebuilt` since it appears people's compilers
        can give slightly different output.
+     
+       You should only count instructions you hash.
 
    4. Finally you will hash all the register values and the `spsr`.
       This is a very harsh test.
@@ -120,12 +122,18 @@ What to do for each part:
       then do an `stm`.)  The way you do this should allow a single
       special load at the end of the handler so you can resume 
       execution.
-    
+
+      You should push the registers from highest to lowest offset.  So,
+      `r0` at offset 0, `r1` at offset 4, r15 (the pc) at offset 60,
+      and the `spsr` at offset 64.  The base of this array should be
+      passed to the handler.  Note: stack goes down and arrays go up so
+      you'll likely have to subtract before storing on the stack.
+
       Your hashes should match everyone else.  I'll add more tests.
 
       NOTE: we do not want the value of any exception shadow register,
       we want the actual user value, so you'll have to figure out how
-      to get that with a store.
+      to get that with a store.  Some hints are given below.
 
       If you are getting differences: make sure you clear *all* registers
       besides `r0` and `r1` and the `pc` --- you should clear the `cpsr`
@@ -133,98 +141,123 @@ What to do for each part:
       switch.  You also clear `lr` since we are never returning and it
       will almost certainly be different for everyone.
 
+Hints for part 4:
+
+  - I used `stm` and `ldm`.  It's trickier to use
+    `push` and `pop` since they modify the `sp` and its illegal to do
+    so when `sp` is not the highest register pushed.
+
+  - As we covered in the interrupt handling lab: the exception
+    context has its own shadow copies of `sp` and `lr` --- so you cannot
+    simply push these "raw" --- you have to push the user level copies.
+    Further, `pc` is *not* shadowed --- so you'll have to use the computed
+    value in `lr`.
+
+  - You cannot store `spsr` directly .  You'll have to put it in a 
+    general purpose register (this is ok: we just saved a bunch so
+    can use them).
+
+  - When you are in the handler, you should check that the register
+    at the `r15` (pc) offset actually matches the `pc` value you have.
+    Also, you should check that the value at the `spsr` offset matches
+    your `spsr`.
+
+we are modify the `sp`,
+ --- since we are pushing the `sp` 
 
 -------------------------------------------------------------------
 #### PC Hashes
 
 Below are some of the hashes I got for the test programs.  The main thing
-to pay attention to is the final two `TRACE:EQUIV` print statements that
-give the final number of instructions and the final pc hash.
+to pay attention to is the final two `TRACE:EQUIV` print statements
+that give the final number of instructions and the final pc hash.
+The instruction count is just those instructions that got hashed.
 
 I would start with `0-test-nop.c` since it is the simplest:
 
-    kernel: stack is roughly at: 0x7ffffe8
-    user_code=0x400004, prog name=<0-test-nop.bin>
-    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
-    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
-    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
-    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
-    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
-    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
-    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
-    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
-    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
-    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
-    0-test-nop.bin: sys_exit(-1): going to reboot
-    part=3
-    equiv values
-    TRACE:EQUIV:	number instructions = 25
-    TRACE:EQUIV:	pc hash = 0x6bc2f20b
-    DONE!!!
 
+        TRACE:simple_boot: sending 10942 bytes, crc32=97023887
+        user_code=0x400004, prog name=<0-test-nop.bin>
+        TRACE:inst 0 = pc=0x400004, pc_hash=0xa3d1fb72
+        TRACE:inst 1 = pc=0x400010, pc_hash=0xb5f459d5
+        TRACE:inst 2 = pc=0x400008, pc_hash=0x44a6b13a
+        TRACE:inst 3 = pc=0x40000c, pc_hash=0x48be2e85
+        TRACE:inst 4 = pc=0x400014, pc_hash=0x7fb1242d
+        TRACE:inst 5 = pc=0x400018, pc_hash=0x4c6c9ecb
+        TRACE:inst 6 = pc=0x40001c, pc_hash=0x2900fa70
+        TRACE:inst 7 = pc=0x400020, pc_hash=0xca1ba4db
+        TRACE:inst 8 = pc=0x4000e0, pc_hash=0x51ddacb5
+        TRACE:inst 9 = pc=0x4000e4, pc_hash=0xeb144180
+        0-test-nop.bin: sys_exit(-1): going to reboot
+        part=3
+        equiv values
+        TRACE:EQUIV:	number instructions = 10
+        TRACE:EQUIV:	pc hash = 0xeb144180
+        DONE!!!
 
 Then `0-test-exit.c` since it is the simplest:
 
-    kernel: stack is roughly at: 0x7ffffe8
-    user_code=0x400004, prog name=<0-test-exit.bin>
-    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
-    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
-    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
-    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
-    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
-    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
-    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
-    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
-    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
-    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
-    0-test-exit.bin: sys_exit(0): going to reboot
-    part=3
-    equiv values
-    TRACE:EQUIV:	number instructions = 25
-    TRACE:EQUIV:	pc hash = 0x5f92b036
-    DONE!!!
+        kernel: stack is roughly at: 0x7ffffe8
+        user_code=0x400004, prog name=<0-test-exit.bin>
+        TRACE:inst 0 = pc=0x400004, pc_hash=0xa3d1fb72
+        TRACE:inst 1 = pc=0x400010, pc_hash=0xb5f459d5
+        TRACE:inst 2 = pc=0x400014, pc_hash=0x625d1830
+        TRACE:inst 3 = pc=0x400018, pc_hash=0x3db2a8ee
+        TRACE:inst 4 = pc=0x400020, pc_hash=0x4e403840
+        TRACE:inst 5 = pc=0x400024, pc_hash=0x31fa5b24
+        TRACE:inst 6 = pc=0x400028, pc_hash=0xfd7f8720
+        TRACE:inst 7 = pc=0x40002c, pc_hash=0xd449b7d7
+        TRACE:inst 8 = pc=0x4000ec, pc_hash=0x760878e6
+        TRACE:inst 9 = pc=0x4000f0, pc_hash=0x6142cdaa
+        0-test-exit.bin: sys_exit(0): going to reboot
+        part=3
+        equiv values
+        TRACE:EQUIV:	number instructions = 10
+        TRACE:EQUIV:	pc hash = 0x6142cdaa
 
 For `1-test-hello.c`:
 
-    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
-    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
-    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
-    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
-    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
-    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
-    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
-    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
-    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
-    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
-    hello world
-    user: stack is roughly at 0x6fffff8
-    user: cpsr=0x60000190
-    USER MODE!
-    1-test-hello.bin: sys_exit(0): going to reboot
-    part=3
-    equiv values
-    TRACE:EQUIV:	number instructions = 918
-    TRACE:EQUIV:	pc hash = 0x72ded90f
-    DONE!!!
+        TRACE:simple_boot: sending 11188 bytes, crc32=1a64f659
+        user_code=0x400004, prog name=<1-test-hello.bin>
+        TRACE:inst 0 = pc=0x400004, pc_hash=0xa3d1fb72
+        TRACE:inst 1 = pc=0x400010, pc_hash=0xb5f459d5
+        TRACE:inst 2 = pc=0x400014, pc_hash=0x625d1830
+        TRACE:inst 3 = pc=0x400018, pc_hash=0x3db2a8ee
+        TRACE:inst 4 = pc=0x4000ac, pc_hash=0x1e2417b1
+        TRACE:inst 5 = pc=0x4000b0, pc_hash=0x2467244e
+        TRACE:inst 6 = pc=0x4000b4, pc_hash=0x77935371
+        TRACE:inst 7 = pc=0x4000b8, pc_hash=0x6015a263
+        TRACE:inst 8 = pc=0x4000bc, pc_hash=0xe6ea6ef2
+        TRACE:inst 9 = pc=0x4000c0, pc_hash=0x5c44fe6b
+        hello world
+        user: stack is roughly at 0x6fffff8
+        user: cpsr=0x60000190
+        USER MODE!
+        1-test-hello.bin: sys_exit(0): going to reboot
+        part=3
+        equiv values
+        TRACE:EQUIV:	number instructions = 903
+        TRACE:EQUIV:	pc hash = 0x208a81bf
+
 
 For `3-test-vec.c`:
 
-    kernel: stack is roughly at: 0x7ffffe8
+    TRACE:simple_boot: sending 11014 bytes, crc32=f5b4e0e4
     user_code=0x400004, prog name=<3-test-vec.bin>
-    TRACE:inst 0 = pc=0x85b4, pc_hash=0x75568476
-    TRACE:inst 1 = pc=0x85b8, pc_hash=0x2ff4bde4
-    TRACE:inst 2 = pc=0x85bc, pc_hash=0x37d2d3c2
-    TRACE:inst 3 = pc=0x85c0, pc_hash=0x9999d11f
-    TRACE:inst 4 = pc=0x85c4, pc_hash=0xe238f4e9
-    TRACE:inst 5 = pc=0x85c8, pc_hash=0xbb9d7f8
-    TRACE:inst 6 = pc=0x85cc, pc_hash=0xadd07b9
-    TRACE:inst 7 = pc=0x85d0, pc_hash=0xa5b0c901
-    TRACE:inst 8 = pc=0x85d4, pc_hash=0xb693d6fc
-    TRACE:inst 9 = pc=0x85d8, pc_hash=0xe292ec8c
+    TRACE:inst 0 = pc=0x400004, pc_hash=0xa3d1fb72
+    TRACE:inst 1 = pc=0x400010, pc_hash=0xb5f459d5
+    TRACE:inst 2 = pc=0x400014, pc_hash=0x625d1830
+    TRACE:inst 3 = pc=0x400018, pc_hash=0x3db2a8ee
+    TRACE:inst 4 = pc=0x40001c, pc_hash=0x8813e346
+    TRACE:inst 5 = pc=0x400020, pc_hash=0xba9e1d0e
+    TRACE:inst 6 = pc=0x400024, pc_hash=0x9044e6cc
+    TRACE:inst 7 = pc=0x400028, pc_hash=0x81f94e0b
+    TRACE:inst 8 = pc=0x400018, pc_hash=0xc8eac881
+    TRACE:inst 9 = pc=0x40001c, pc_hash=0x55b0761c
     3-test-vec.bin: sys_exit(0): going to reboot
-    part=3
+
     equiv values
-    TRACE:EQUIV:	number instructions = 226
-    TRACE:EQUIV:	pc hash = 0xfcc85651
+    TRACE:EQUIV:	number instructions = 211
+    TRACE:EQUIV:	pc hash = 0xeacf4b75
     DONE!!!
 
