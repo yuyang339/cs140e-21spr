@@ -5,7 +5,6 @@
 // in the "kernel" address space = it's easier to interpret 
 // addresses.
 void notmain(void) {
-    sys_exit(0);
 
     user_putk("hello world\n");
     user_printk("user: stack is roughly at %x\n", reg_get_sp());
