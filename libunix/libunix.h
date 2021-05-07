@@ -31,6 +31,10 @@ char *find_ttyusb_last(void);
 void *read_file(unsigned *size, const char *name);
 
 
+// create file <name>: truncates if already exists.
+int create_file(const char *name);
+FILE *fcreate_file(const char *name);
+
 // if you want bit-manipulation routines.
 #include "bit-support.h"
 
@@ -39,6 +43,10 @@ void *read_file(unsigned *size, const char *name);
 
 
 // add any other prototypes you want!
+
+
+
+
 
 #endif
 
