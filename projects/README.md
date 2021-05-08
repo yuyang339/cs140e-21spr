@@ -16,18 +16,30 @@ We've done a bunch of hello-world level hacks: you could build them into
 something more full-features:
 
   - Add networking to the pi.  One option is to hook it up to the 
-  [esp9266](https://www.sparkfun.com/products/13678) via the uart and
-  communicate that way.  Another is to use xbee's.
+    [esp8266](https://www.sparkfun.com/products/13678) via the uart and
+    communicate that way.  Another is to use xbee's.  There's also the newer 
+    ESP32 Wi-Fi+Bluetooth chip, and a few bluetooth modules you might be able 
+    to hook up---[Sparkfun](https://www.sparkfun.com/) and 
+    [Adafruit](https://www.adafruit.com/) are good places to look.
 
   - Develop the virtual memory system into one that is full featured, able
-  to handle the different page sizes, the different protection bits, etc.
-  Have it correctly catch when code references beyond the end of the heap,
-  dereferences null, and needs to dynamically grow the stack.
+    to handle the different page sizes, the different protection bits, etc.
+    Have it correctly catch when code references beyond the end of the heap,
+    dereferences null, and needs to dynamically grow the stack.
 
-  - Do a simple `FAT32` file system so sensors can write data to the sd
-  card and keep it around; make this available using FUSE so your laptop
-  can access.  Cooler: use the wireless above to export the SD's FAT32
-  file system to your computer remotely using FUSE.
+  - Do a simple read-write `FAT32` file system so sensors can write data to the 
+    sd card and keep it around; make this available using FUSE so your laptop
+    can access.  Cooler: use the wireless above to export the SD's FAT32
+    file system to your computer remotely using FUSE.
+        - Alternatively, build support for a fancier filesystem (e.g.  
+          [Ext2](https://en.wikipedia.org/wiki/Ext2)) into your OS, and 
+          integrate some of its interesting features (like UNIX permissions).
+        - Or build a way to mount network/distributed file systems, so you can 
+          quickly update the "disk" of all your Pis remotely.  All of 
+          Stanford's clusters (myth, rice, cardinal, xenon) use a complicated 
+          distributed file system called 
+          [AFS](https://en.wikipedia.org/wiki/Andrew_File_System), but you can 
+          get a lot of milage out of something a lot simpler.
 
   - We use the `r/pi A`+, put there are many little boards out there.
     An interesting project is porting a bunch of the different code
@@ -38,7 +50,6 @@ something more full-features:
     - [pocketbeagle](https://beagleboard.org/pocket): smaller than the pi!
     - various [esp8266 boards](https://www.sparkfun.com/products/13678): 
     a low-cost, wifi capable system.
-    - [pi zero](https://www.adafruit.com/product/2885): a smaller pi. 
 
   - Assemble all the different pieces you've built into a complete, 
     small, embedded OS.   I'd suggest domains, threads, some support 
@@ -61,11 +72,134 @@ something more full-features:
     and extensible.  Rip the code down to the bare minimum, enable icache,
     dcache, BTB, any other tuning you can.  See how much faster you can
     make it compared to where we started.  
-    
+
     Take micro-benchmarks from the literature and see how much you can
     beat them by (how fast you can ping-pong bytes between threads,
     take a protection fault, etc).  If you beat linux/macos by 50x I
     wouldn't be surprised.
+
+  - Explore a different OS design.  There are several 
+    [models](https://wiki.osdev.org/Kernels) of kernel/OS design, each of which 
+    has its own pros and cons; we've focused on a UNIX-y kernel so far in this 
+    class, but the other approaches are also equally valid.
+
+  - Port real software to your OS.  We have the framework for basic UNIX system 
+    calls (open, close, read, write, fork, exec). If you port a small C Library 
+    like [Newlib](https://wiki.osdev.org/Porting_Newlib), you can compile 
+    standard portable UNIX software (cat, echo, sh) to your OS.  See what the 
+    most advanced program you can port is---a text editor? an assembler? a 
+    compiler?  Can you compile your OS from within your OS?
+      - This is how Linux got started; Linus Torvalds, a college student at the 
+        University of Helsinki, posted in a newsgroup about about a project he 
+        was working on back in 
+        1991.  He described it as a "hobby" OS that "won't be big and 
+        professional like GNU" and said "it probably never will support 
+        anything other than AT-harddisks".  You can see the post archived 
+        [here](https://www.cs.cmu.edu/~awb/linux.history.html) or 
+        [here](https://groups.google.com/g/comp.os.minix/c/dlNtH7RRrGA).  
+        Thirty years later, Linux is now the most popular operating system on 
+        Earth by many metrics, and the most popular major OS on
+        [Mars](https://www.theverge.com/2021/2/19/22291324/linux-perseverance-mars-curiosity-ingenuity).
+
+  - Port our OS to a different programming language, and show us why that 
+    programming language is better than C for OS development.  A popular 
+    new-ish language for this is [Rust](https://www.rust-lang.org/), but there 
+    are other ones like C++ (very similar to C), [D](https://dlang.org/), and 
+    [Zig](https://ziglang.org/).  There are some other languages which were 
+    historically used for OS development, like 
+    [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)) and 
+    [Pascal](https://www.freepascal.org/), each of which has interesting 
+    characteristics (for example, it's fairly easy to build a Forth 
+    interpreter/compiler).  Non-systems languages (Lisp, Java, etc.) need a lot 
+    more runtime support, but might be possible if you put in a lot of work.
+
+  - All major OSes support dynamically linked libraries, where a 
+    `.so/.dylib/.dll` file containing your library functions is linked with a 
+    binary right before runtime.  Build a [dynamic 
+    linker](https://wiki.osdev.org/Dynamic_Linker) for your OS.  You'll need to 
+    use a more advanced binary format like ELF which supports dynamic linking, 
+    and you'll need to figure out how to compile a dynamic library.
+
+  - Inter-process communication is crucial to any OS, but it's often slow.  
+    Pipes (in their simplest form) involve copying data byte-by-byte multiple 
+    times to get it from one process's address space to the kernel and into 
+    another process's address space.  Find a better model of IPC and add it to 
+    your kernel.  One of the fastest things you can do is sharing memory 
+    between processes, but you need to be careful not to open security holes 
+    this way.
+
+### Interface with Devices
+
+One thing we didn't do very much of this year, but which real OSes have to deal 
+with all the time, is talking to 3rd party devices.  Your laptop has to talk to 
+a screen, a keyboard, a mouse/trackpad, a Wi-Fi card, a Bluetooth chip, a USB 
+controller, a webcam, a microphone, speakers, and a whole host of other things 
+just to perform its basic functions.  There are a few different ideas here, but 
+you can mix/match or come up with your own!
+
+  - Graphics: the Raspberry Pi has a powerful but arcane GPU built in, the 
+    [VideoCore IV](https://docs.broadcom.com/doc/12358545).  Build a driver and 
+    appropriate system calls (or virtual files like `/dev/fb0` or however else 
+    you want to do it) to let applications on your OS control the screen, and 
+    figure out how they can share the screen effectively.
+
+  - Speed: the "primary" processor on the Pi is a vector processing unit, the 
+    [VideoCore IV VPU](https://github.com/hermanhermitage/videocoreiv).  The 
+    VPU can do a superset of what the ARM can, but its documentation is a lot 
+    harder to find.  Figure out some way to do a normally-slow calculation in 
+    parallel on the VPUs, and build an interface for your programs to offload 
+    computation to them.
+
+  - Device Drivers: There's a lot of cool and simple devices you can quickly 
+    write drivers for: LED strips (the ones based on the WS2812b controller, 
+    commonly called "Neopixels", are a good choice); servo motors (you'll need 
+    a separate motor controller); sonar and microwave-based distance sensors; 
+    accelerometers/gryoscopes/thermometers; infrared transmitters and 
+    receivers; character LCDs; graphical LCDs; etc.  Pick a few of these 
+    devices, build drivers for them and any protocols they require.  The Pi has 
+    hardware for i2c, spi, and i2s natively among others, but as you know you 
+    can build software versions of protocols as well.  Combine the devices into 
+    an interesting cohesive project, or build user-level support for them into 
+    your OS.
+
+  - Audio: the Pi A+ has a headphone jack built in, connected to GPIO pins 40 
+    (right channel) and 45 (left channel).
+        - Using either GPIO or 
+          [PWM](https://en.wikipedia.org/wiki/Pulse-width_modulation), build 
+          some sort of music player.  Try to get multiple channels and audio 
+          mixing working, so you can play interesting music.
+        - You could get a [VS1053 audio 
+          codec](https://www.adafruit.com/product/1381) and play (and record!) 
+          much higher-quality audio.  Commercial applications like Zoom have 
+          about 300 ms of end-to-end audio latency; can you do better with 2 
+          Pis and a custom network protocol?
+        - An audio driver is an interesting challenge in a multitasking system; 
+          you need to send data to the audio chip continuously, but you can't 
+          let your audio-playing application hog up the CPU forever.  You also 
+          can't buffer your audio too much in your kernel, or you'll end up 
+          with ridiculous amounts of lag that make real-time audio impossible.  
+          Upgrade your threading system to make real-time audio possible, while 
+          still giving applications their fair share of time on the CPU.
+        - MIDI, a standard communication protocol for digital instruments, is 
+          based on serial; your UART (and your software UART) can speak MIDI 
+          already!  Turn your Pi into a musical instrument, or plug it into a 
+          MIDI controller as a unique input device.
+
+  - Integration: You already have the fundamental knowledge to build drivers 
+    for basically anything you want.  Want to switch a light on and off?  Read 
+    your Stanford ID card using NFC?  Take pictures?  Print on that thermal 
+    paper they use for receipts?  Use LIDAR to map your room?  All you need is 
+    a piece of hardware, a datasheet, and time.  Talk to us if you have ideas 
+    of devices you want to interact with; we can help you look for hardware 
+    that'll work with the Pi.
+        - I (Akshay) used the Pi to translate between an electric typewriter 
+          and my laptop, making a crude teletypewriter.  Teletypewriters were 
+          also known as TTYs...  that's why our serial adapters are called 
+          "TTYs", and why they show up as `/dev/tty*` on modern UNIX systems.
+        - Another student in 240LX used the Pi to play music through servo 
+          motors.  With a similar driver, you could control a CNC machine or a 
+          3D printer (or a 2D printer, for that matter).
+
 
 ### Build a Tool
 
@@ -87,10 +221,20 @@ something more full-features:
     some of them took days to track down.
 
   - Build a debugger that can run over the UART.  Insert breakpoints to
-  stop execution.  Use the special ARM hardware to do data watch-points.
-  Figure out how to do a backtrace and to match up instruction program
-  counter values to the C code (not hard if you use the `.list` files).  
-  You'll likely have to add interrupts to the UART.
+    stop execution.  Use the special ARM hardware to do data watch-points.
+    Figure out how to do a backtrace and to match up instruction program
+    counter values to the C code (not hard if you use the `.list` files).  
+    You'll likely have to add interrupts to the UART.
+     - GDB has a protocol that lets you debug a device over a serial 
+       connection.  It's a lot more work than rolling your own debugger, but it 
+       gives you the full power of GDB to inspect your kernel and your 
+       user-level programs.
+     - UNIX supports a system call called `ptrace` which lets one process 
+       inspect and control another one, which is what GDB uses to set 
+       breakpoints and single-step.  You have most of the infrastructure for 
+       this already; find a clever way to expose it to your user-level programs 
+       (ideally without compromising security), and run your debugger at the 
+       user level instead of in the kernel.
 
   - Do a trap-based valgrind/purify so you can detect memory corruption.
     Valgrind checks every load and store to see if you are writing outside
@@ -101,34 +245,36 @@ something more full-features:
     - In the trap handler, determine if the faulting address is in bounds.
     - If so: do the load or store and return.
     - If not: give an error.
-  
+
     Given how fast our traps are, and how slow valgrind is, your approach
     might actually be faster.
 
   - Do a trap-based race detector: similar to valgrind above, Eraser
-  is a well known (but dead) tool for finding race conditions that worked
-  by instrumenting every load and store and flagging if a thread accessed 
-  the memory with inconsistent set of locks.  As above, b/c binary rewriting 
-  is hard you can use memory traps to catch each load/store and check if
-  the locks the current thread holds are consistent.
+    is a well known (but dead) tool for finding race conditions that worked
+    by instrumenting every load and store and flagging if a thread accessed the 
+    memory with inconsistent set of locks.  As above, b/c binary rewriting is 
+    hard you can use memory traps to catch each load/store and check if
+    the locks the current thread holds are consistent.
 
   - Do a statistical version of either the race detector or memory
-  checker above: set your timing interrupts to be very frequent and
-  in the handler, do the check above.  It may miss errors, but will be
-  very fast and should do a reasonable job, given a long enough run and
-  a fine-enough window.
+    checker above: set your timing interrupts to be very frequent and
+    in the handler, do the check above.  It may miss errors, but will be
+    very fast and should do a reasonable job, given a long enough run and
+    a fine-enough window.
 
   - Write cooperative thread checkers that detect when you run too long
-  with interrupts disabled, too long without yielding, in a deadlock,
-  spinning on a condition that cannot change, extend past the end of
-  the stack, have priority inversion, starvation, missed deadlines,
-  lock queues that are too long, or critical sections that are too long.
+    with interrupts disabled, too long without yielding, in a deadlock,
+    spinning on a condition that cannot change, extend past the end of
+    the stack, have priority inversion, starvation, missed deadlines,
+    lock queues that are too long, or critical sections that are too long.
 
   - Extend your bootloader checker to check other network / distributed
-  systems protocols.  (This is likely only feasible if you've taken a
-  distributed system or networking clas.)   These protocols do not get
-  exhaustively tested for every possible failure, so often have subtle flaws.
-  You're in a good position to find some.
+    systems protocols.  (This is likely only feasible if you've taken a
+    distributed system or networking class.)   These protocols do not get
+    exhaustively tested for every possible failure, so often have subtle flaws.
+    You're in a good position to find some.  There's a lab we skipped over for 
+    time reasons this year which may be a good starting point: 
+    [replay](https://github.com/dddrrreee/cs140e-20win/tree/master/labs/5-replay).
 
   - ARM code is not that hard to parse (at least compared to x86).  We can
     use this ability to make a effective, but hopefully simple lock-free
@@ -147,7 +293,7 @@ something more full-features:
 
 ### Stupid domain tricks
 
-As discusse lab, you can use ARM domains to very quickly switch the
+As discussed in lab, you can use ARM domains to very quickly switch the
 permissions for a set of pages.    It'd be interesting to use this
 ability for various things.  One possibility: use it to make embedded
 development less dangerous.  
