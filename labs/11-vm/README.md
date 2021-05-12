@@ -122,6 +122,15 @@ Then, add the mapping for the stack and the interrupt stack.
       also recall the stack grows down.
    2. For the interrupt stack use `INT_STACK_ADDR`.
 
+To make the hashes match, I did the above chunk of code, then finally
+the two stacks (user stack and then the interrupt stack).
+
+      // map stack (grows down)
+      staff_mmu_map_section(pt, STACK_ADDR-OneMB, STACK_ADDR-OneMB, dom_id);
+
+      // if we don't setup the interrupt stack = super bad infinite loop
+      staff_mmu_map_section(pt, INT_STACK_ADDR-OneMB, INT_STACK_ADDR-OneMB, dom_id);
+
 After you do both, everything should compile, run and pass `make check`.
 
 ----------------------------------------------------------------------

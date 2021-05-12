@@ -1,7 +1,7 @@
 FOUND: </dev/ttyUSB0>
 opened tty port </dev/ttyUSB0>.
 my-install: tty-usb=</dev/ttyUSB0> program=<./driver.bin> about to boot
-TRACE:simple_boot: sending 14536 bytes, crc32=d9778951
+TRACE:simple_boot: sending 15928 bytes, crc32=1b18814c
 waiting for a start
 putting code
 pi: <engler: CRC checked out!>
@@ -44,25 +44,6 @@ HASH:PTE crc:: hash=0x2f782a81,nbytes=4
 	0b10	= tag
 my.pte@ 0x0x100000 = 100000000110000100010
 HASH:PTE crc:: hash=0x5f6614fe,nbytes=4
-------------------------------
-0x0x1001fc:
-	0b1111111	= sec_base_addr
-	0x0x7f
-	  --> va=0x0x7f00000
-	           76543210
-	0b0	= nG
-	0b0	= S
-	0b0	= APX
-	0b0	= TEX
-	0b11	= AP
-	0b0	= IMP
-	0b1	= domain
-	0b0	= XN
-	0b0	= C
-	0b0	= B
-	0b10	= tag
-my.pte@ 0x0x100000 = 111111100000000110000100010
-HASH:PTE crc:: hash=0xe22b84dd,nbytes=4
 ------------------------------
 0x0x100800:
 	0b1000000000	= sec_base_addr
@@ -120,6 +101,25 @@ HASH:PTE crc:: hash=0x93a2dadc,nbytes=4
 	0b10	= tag
 my.pte@ 0x0x100000 = 100000001000000000110000100010
 HASH:PTE crc:: hash=0xb76d0d60,nbytes=4
+------------------------------
+0x0x1001fc:
+	0b1111111	= sec_base_addr
+	0x0x7f
+	  --> va=0x0x7f00000
+	           76543210
+	0b0	= nG
+	0b0	= S
+	0b0	= APX
+	0b0	= TEX
+	0b11	= AP
+	0b0	= IMP
+	0b1	= domain
+	0b0	= XN
+	0b0	= C
+	0b0	= B
+	0b10	= tag
+my.pte@ 0x0x100000 = 111111100000000110000100010
+HASH:PTE crc:: hash=0xe22b84dd,nbytes=4
 ------------------------------
 0x0x10023c:
 	0b10001111	= sec_base_addr
