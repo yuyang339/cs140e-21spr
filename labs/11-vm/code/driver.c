@@ -47,18 +47,16 @@ void vm_test(void) {
     // map the first MB: shouldn't need more memory than this.
     staff_mmu_map_section(pt, 0x0, 0x0, dom_id);
     // map the page table: for lab cksums must be at 0x100000.
-    staff_mmu_map_section(pt, 0x100000,  0x100000, dom_id);
+    unimplemented();
     // map stack (grows down)
-    staff_mmu_map_section(pt, STACK_ADDR-OneMB, STACK_ADDR-OneMB, dom_id);
+    unimplemented();
 
     // map the GPIO: make sure these are not cached and not writeback.
     // [how to check this in general?]
-    staff_mmu_map_section(pt, 0x20000000, 0x20000000, dom_id);
-    staff_mmu_map_section(pt, 0x20100000, 0x20100000, dom_id);
-    staff_mmu_map_section(pt, 0x20200000, 0x20200000, dom_id);
+    unimplemented();
 
     // if we don't setup the interrupt stack = super bad infinite loop
-    staff_mmu_map_section(pt, INT_STACK_ADDR-OneMB, INT_STACK_ADDR-OneMB, dom_id);
+    unimplemented();
 
     // 3. install fault handler to catch if we make mistake.
     mmu_install_handlers();
