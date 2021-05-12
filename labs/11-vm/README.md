@@ -149,9 +149,9 @@ You'll do this in two steps:  Part 1.A and Part 1.B.
 
 #### Part 1.A: define the page table entry structure.
 
-*** NOTE: we defined this for you, so this part is easy. ***
+**NOTE: we defined this for you, so this part is easy. **
 
-First, you should define a `struct first_level_descriptor` in file `mmu.h`
+First, you should define a `struct first_level_descriptor` in file `armv6-vm.h`
 based on the PTE layout given on B4-27 (screenshot below):
   -  You'll defined fields for the section base address, `nG`, `S`,
   `APX`, `TEX`, `AP`, `IMP`, `Domain`, `XN`, `C`, `B`, and the tag.
@@ -174,9 +174,11 @@ based on the PTE layout given on B4-27 (screenshot below):
 ----------------------------------------------------------------------
 #### Part 1.B: implement `mmu_section`
 
-Second, re-implement the `mmu_section` function we used in Part0.
-The code you wrote then should behave the same.  You'll want to 
-figure out what all the bits do.  (Hint: most will be set to 0s.)
+Now, re-implement the `mmu_section` routine we used in Part 0.
+You'll likely want to build the `fld_set_base_addr` helper.
+
+The code you wrote then should behave the same.  You'll want to figure
+out what all the bits do.  (Hint: most will be set to 0s.)
 
 Useful pages:
   - B4-9: `S`, `R`, `AXP`, `AP` (given below).
