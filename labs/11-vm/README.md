@@ -101,23 +101,26 @@ The above is pretty much all we will do:
      find its translations.
 
 ----------------------------------------------------------------------
-## Part 0: make sure you can run the simple hello program (15 minute).
+## Part 0: setup the mappings.
 
-These are a quick set of tests (0, ~5, ~5, ~10 lines of code
-respectively) to see that you have a crude picture of what is going on:
+At the start of the driver, you need to map the address space.  
+First, drop in the following code and make sure it compiles:
 
-  0. Compile and run the code provided.  
+    // map the first MB: shouldn't need more memory than this.
+    staff_mmu_map_section(pt, 0x0, 0x0, dom_id);
+    // map the page table: for lab cksums must be at 0x100000.
+    staff_mmu_map_section(pt, 0x100000,  0x100000, dom_id);
 
-        make
-        make test
+    // map the GPIO: make sure these are not cached and not writeback.
+    // [how to check this in general?]
+    staff_mmu_map_section(pt, 0x20000000, 0x20000000, dom_id);
+    staff_mmu_map_section(pt, 0x20100000, 0x20100000, dom_id);
+    staff_mmu_map_section(pt, 0x20200000, 0x20200000, dom_id);
 
-     This is just a quick debug that your system is working fine.
+Then, add the mapping for the stack.  Look in `libpi/cs140-start.S`
+to get where this is --- also recall the stack grows down.
 
-  1. Write a test case that shows you get a fault when you reference
-     unmapped memory.
-
-  2. Write a test case that maps an address range to a different 
-     one and test that its working.
+After you do both, everything should compile, run and pass `make check`.
 
 ----------------------------------------------------------------------
 ## Part 1: implement the code to setup page tables using 1MB sections (45 min)
