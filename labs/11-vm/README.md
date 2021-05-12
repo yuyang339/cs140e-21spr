@@ -219,7 +219,10 @@ For the last part of the lab, you'll handle two exceptions:
      and return.
   2. A write to memory that has been marked read-only: you should change
      the permissiona and return.
-  3. The code is in `2-test-fault.c`.
+  3. The code is in `2-test-fault.c`: you only have to fill in
+     `data_abort_vector`.  Right now it's not implemented, so it 
+     will just check the faulting address is the expected one and
+     reboot.
 
 A big part of VM is what to do when a translation does not exist,
 or the operation on it has insufficient privilege (e.g., a write to a
