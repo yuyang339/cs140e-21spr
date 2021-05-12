@@ -149,7 +149,9 @@ You'll do this in two steps:  Part 1.A and Part 1.B.
 
 #### Part 1.A: define the page table entry structure.
 
-First, you should define a `struct first_level_descriptor` in file `vm.h`
+*** NOTE: we defined this for you, so this part is easy. ***
+
+First, you should define a `struct first_level_descriptor` in file `mmu.h`
 based on the PTE layout given on B4-27 (screenshot below):
   -  You'll defined fields for the section base address, `nG`, `S`,
   `APX`, `TEX`, `AP`, `IMP`, `Domain`, `XN`, `C`, `B`, and the tag.
