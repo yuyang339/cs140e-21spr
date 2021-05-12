@@ -117,8 +117,10 @@ First, drop in the following code and make sure it compiles:
     staff_mmu_map_section(pt, 0x20100000, 0x20100000, dom_id);
     staff_mmu_map_section(pt, 0x20200000, 0x20200000, dom_id);
 
-Then, add the mapping for the stack.  Look in `libpi/cs140-start.S`
-to get where this is --- also recall the stack grows down.
+Then, add the mapping for the stack and the interrupt stack.  
+   1. Look in `libpi/cs140-start.S` to get where the normal stack is ---
+      also recall the stack grows down.
+   2. For the interrupt stack use `INT_STACK_ADDR`.
 
 After you do both, everything should compile, run and pass `make check`.
 
