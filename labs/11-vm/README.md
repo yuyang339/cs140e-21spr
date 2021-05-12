@@ -165,11 +165,25 @@ based on the PTE layout given on B4-27 (screenshot below):
   - HINT: the first field is at offset 0 and the `AssertNow` uses tricks
   to do a compile-time assert.
 
+
+
 ----------------------------------------------------------------------
 ##### The PTE for 1MB sections document:
 <table><tr><td>
   <img src="images/part1-section.png"/>
 </td></tr></table>
+
+----------------------------------------------------------------------
+## Finishing Part 1
+
+To finish part 1:
+  - Implement all routines at the end of `mmu.c` that have an `unimplemented()`.
+  - If you implement a routine `foo`: you should replace all calls to
+    `staff_foo` with calls to `foo` (there are some calls in `driver.c`
+    and in `mmu.c`.
+  - You do not have to implement `write_domain_access_ctrl`: we will do
+    this on thursday.  Doing it correctly requires following some rules
+    that we don't want to get into here.
 
 ----------------------------------------------------------------------
 #### Part 1.B: implement `mmu_section`
