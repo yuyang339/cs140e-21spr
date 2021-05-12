@@ -10,7 +10,7 @@ GREP_STR := 'HASH:\|ERROR:\|PANIC:'
 # set if you want the code to automatically run after building.
 RUN = 1
 # set if you want the code to automatically check after building.
-CHECK = 1
+# CHECK = 1
 
 TEST_SRC := $(wildcard ./[0-7]-test*.c)
 TEST_SRC := driver.c
