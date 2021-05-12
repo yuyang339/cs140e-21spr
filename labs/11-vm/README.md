@@ -223,6 +223,9 @@ For the last part of the lab, you'll handle two exceptions:
      `data_abort_vector`.  Right now it's not implemented, so it 
      will just check the faulting address is the expected one and
      reboot.
+  4. Note: you may well not have defined the trampoline for
+     `data_abort_vector` in `libpi/src/interrupts-asm.S`: you can do that,
+     or you could drop in ours:  `staff-objs/interrupts-asm.o`.
 
 A big part of VM is what to do when a translation does not exist,
 or the operation on it has insufficient privilege (e.g., a write to a
@@ -244,13 +247,13 @@ More detailed, to handle a write to an unmapped section:
      (b4-44).  The instruction encodings might be a bit hard to figure
      out, so look in `arm-coprocessor-asm.h`).  You can do these as
      inline assembly (look in
-    `cs140e-src/cycle-count.h` for an example); confusingly you'll have
+     `cs140e-src/cycle-count.h` for an example); confusingly you'll have
      to use a capitalized opcode `MRC` or `MCR`).
 
   2. We are doing 1MB segments, so these will be a section violation (encoding
      on b4-20).
 
-  3. Add a mapping for the faulting address, call `mmu_sync_pte_mod(0)` to
+  3. Add a mapping for the faulting address, call `mmu_sync_pte_mods()` to
      sync things up, and then return.
 
   4. As an extension, you can use this method to grow the stack as you access 
