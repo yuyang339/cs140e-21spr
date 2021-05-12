@@ -10,15 +10,15 @@ As with the FAT32 lab, since there are a bunch of data structures (in this case
 for the machine state) there's a bunch of data structure code.   The rough
 breakdown:
 
-   - `our-*.o`: these are the object files we give you to get you
+   - `staff-*.o`: these are the object files we give you to get you
      started. As with fat32, you can view today's and wednesday's labs
      as fetchquests for how-do-I-do-X where the goal is to implement
      everything yourself and delete our implementations.
 
-  - `vm.h`: this has the data structures we will use today.   I've tried to comment
+  - `mmu.h`: this has the data structures we will use today.   I've tried to comment
     and give some page numbers, but buyer beware.    
 
-  - `vm-helpers.c`: these contain printing and sanity checking routines
+  - `mmu-helpers.c`: these contain printing and sanity checking routines
     (same as in the fat32 lab).
 
   - `arm-coprocessor-asm.h`: has a fair number of instructions used to access the
@@ -36,7 +36,7 @@ breakdown:
 #### Check-off
 
 You need to show that:
-  1. You replaced all `our_mmu_*` routines with yours and everything works.
+  1. You replaced all `staff_mmu_*` routines with yours and everything works.
   2. You can handle protection and unallowed access faults.
 
 ------------------------------------------------------------------------------
