@@ -212,7 +212,14 @@ them for easy reference:
 
 
 ----------------------------------------------------------------------
-## Part 2: handle a couple exceptions.
+## Part 2: handle a couple exceptions: `2-test-fault.c`
+
+For the last part of the lab, you'll handle two exceptions:
+  1. A write close to the end of the stack: you should grow the stack
+     and return.
+  2. A write to memory that has been marked read-only: you should change
+     the permissiona and return.
+  3. The code is in `2-test-fault.c`.
 
 A big part of VM is what to do when a translation does not exist,
 or the operation on it has insufficient privilege (e.g., a write to a
