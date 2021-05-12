@@ -278,7 +278,7 @@ To handle a read or write to a section that has insufficient permission:
 
   1. Get the cause and fault, check that it is a section permission error.
   2. Change the permissions to what the access needs.
-  3. Call `mmu_sync_pte_mod(0)` to sync things up.
+  3. Call `mmu_sync_pte_mods()` to sync things up.
   4. Return.
 
 -----------------------------------------------------------------------
