@@ -243,6 +243,8 @@ In terms of our data structures:
   <img src="images/part3-dsb-dmb.png"/>
 </td></tr></table>
 
+
+----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ## Part 2: Implement `cp15_set_procid_ttbr0`
 
