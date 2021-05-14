@@ -32,7 +32,6 @@ The different arm-specific data structures have migrated to:
   - `armv6-cp15.h` --- the arm coprocessor 15 definition and related things.
   - `armv6-vm.h` --- the arm vm definitions.
 
-
 #### Workflow
 
 A key part of this lab will be working closely with your peers and
@@ -56,9 +55,9 @@ informal "proof" someone will have a hard time figuring out if you know
 what you are doing and if the code does what it purports to do.
 
 This class generally has no real code style requirements.  However, this
-lab has a hard requirement: you must write comments for each action stating 
-(1) why you decided to do that (give page numbers) and (2) what
-you intend to accomplish (give page numbers).
+lab has a hard requirement: you must write comments for each important
+action stating (1) why you decided to do that (give page numbers) and
+(2) what you intend to accomplish (give page numbers).
 
 #### Check-off
 
