@@ -39,7 +39,7 @@ DEPS := $(MEMMAP) $(LPI) ./Makefile
 ALL_OBJS := $(SUPPORT_OBJS) $(STAFF_OBJS) 
 
 all: libs $(TEST_PROGS) $(TEST_RUN) $(CHECK_RUN)
-	@test $(TEST_SRC) || echo "TEST_SRC is not defined";
+
 
 libs: 
 	@make -s -C $(LPP)
