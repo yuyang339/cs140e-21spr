@@ -139,12 +139,13 @@ ARMv6 manual (`docs/armv6.b2-memory.annot.pdf`).  Useful pages:
 
 Deliverables:
   1. You should replace `staff_write_domain_access_ctrl` with yours.
-  Make sure you obey any requirements for coherence stated in Chapter B2,
-  specifically B2-24.  Make sure the code still works!
+     Make sure you obey any requirements for coherence stated in Chapter B2,
+     specifically B2-24.  Make sure the code still works!
 
-  2. Change the domain call so that
-     code now crashes when it (1) executes a location we do not allow
-     execution of, (2) writes to a location that has writes disabled.
+  2. Copy `2-test-fault.c` to a new test case `3-test-no-fault.c` and
+     change it so that the code does not crash when it (1) executes a
+     location we do not allow execution of, (2) writes to a location
+     that has writes disabled.
 
 Useful pages:
   - B4-10: what the bit values mean for the `domain` field.
