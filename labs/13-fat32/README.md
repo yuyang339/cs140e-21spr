@@ -251,16 +251,18 @@ Only a few more steps to have a full read-only FAT32 driver:
    3. At this point, you should be able to pass all the tests in `tests/2-`.
 
 -------------------------------------------------------------------------
-### Part 6: read in and run `hello.bin`
+### Part 6: read in and run `hello-f.bin`
 
-   1. Store a `hello.bin` linked to a different address range onto your your SD card.
+   1. Store a `hello-f.bin` linked to a different address range onto your your SD card.
    2. Read it into a buffer at the required range.
    3. Jump to it.
 
-We don't provide the code for this; you should be able to write it yourself by 
-copying `tests/2-fat32-read.c`.  Call your copy something like 
-`tests/A-fat32-run-binary.c` to distinguish it from the tests we provided 
-(since we may push more numbered tests).
+Most of this code should be in `tests/2-fat32-jump.c` --- you'll have
+to implement some of this to jump over the header.  The CRC's of the file
+should be:
+
+        crc of BOOTCODE.BIN (nbytes=50248) = 0xfd8d57d1
+        crc of HELLO-F.BIN (nbytes=3384) = 0x7dd44481
 
 -------------------------------------------------------------------------
 
