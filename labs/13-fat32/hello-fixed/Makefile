@@ -1,4 +1,4 @@
-NAME := hello-fixed
+NAME := hello-f
 
 include $(CS140E_2021_PATH)/libpi/includes.mk
 
