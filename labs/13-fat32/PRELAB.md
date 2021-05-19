@@ -118,7 +118,7 @@ be good practice for doing so.
 
       and look for the calls to division.
 
-The helper routine `sec_read` `driver.c` uses the code you imported.
+The helper routine `pi_sec_read` `pi-sd.c` uses the code you imported.
 It allocates a buffer needed to hold `nsec` worth of data, read the data
 in, and return a pointer to the buffer.
 

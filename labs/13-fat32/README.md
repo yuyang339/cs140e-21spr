@@ -152,8 +152,7 @@ Further reading --- the first three are good summaries, the latter have more det
 You should have done this in the PRELAB:
 
   1. Make sure your SD card reader is working.
-  2. It should be able to read in the master boot record (in `driver.c`).  It 
-     should pass our sanity check in `tests/0-sd.c`
+  2. It should pass our sanity check in `tests/0-sd.c`
   3. ~~Make sure when you run with `trace_p = 1` that your checksum is the same 
      as your partner's when you swap SD cards.~~
   4. Run `make test` and make sure the `tests/0-` tests work.
@@ -162,7 +161,7 @@ You should have done this in the PRELAB:
 ### Part 1: Read the MBR. (10 minutes)
 
 You should have done this in the PRELAB:
-  1. `tests/1-mbr.c` should be able to read in the master boot record (in `driver.c`).  It should pass
+  1. `tests/1-mbr.c` should be able to read in the master boot record.  It should pass
      our sanity check `mbr_check`.
 
 -------------------------------------------------------------------------
