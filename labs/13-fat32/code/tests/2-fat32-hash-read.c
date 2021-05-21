@@ -66,7 +66,7 @@ void notmain() {
     read_and_hash(&fs, &root, "HELLO-F.BIN", 0x7dd44481);
 
     // fill in the cksum values for these.
-    printk"fill in the checksum for these three files\n");
+    printk("fill in the checksum for these three files\n");
     read_and_hash(&fs, &root, "BOOTLO~1.BIN", 0);
     read_and_hash(&fs, &root, "CONFIG.TXT", 0);
     read_and_hash(&fs, &root, "KERNEL.IMG", 0);
