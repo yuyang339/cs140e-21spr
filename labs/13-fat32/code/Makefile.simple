@@ -4,6 +4,8 @@ TTYUSB =
 # can override the default bootloader
 BOOTLOADER = my-install
 
+ENABLE_EMIT = 1
+
 # the string to extract for checking
 GREP_STR := 'HASH:\|ERROR:\|PANIC:\|PASS:\|TEST:'
 
