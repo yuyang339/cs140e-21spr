@@ -26,20 +26,20 @@ VPATH := $(sort $(dir $(SRC)))
 .SUFFIXES: .run
 
 
+# ugh: includes defines it
 include $(CS140E_2021_PATH)/libpi/includes.mk
-CFLAGS += -Wno-unused-function -Wno-unused-variable 
+CFLAGS += -Wno-unused-function -Wno-unused-variable  $(EXTRA_CFLAGS)
 
 ifndef MK_CHK
     MK_CHK := $(LPP)/mk/Makefile.check
 endif
 
 # add the memmap file, libpi and the makefile as dependencies
-DEPS := $(MEMMAP) $(LPI) ./Makefile 
+DEPS = $(MEMMAP) $(LPI) ./Makefile 
 
 ALL_OBJS := $(SUPPORT_OBJS) $(STAFF_OBJS) 
 
 all: libs $(TEST_PROGS) $(TEST_RUN) $(CHECK_RUN)
-
 
 libs: 
 	@make -s -C $(LPP)
@@ -51,7 +51,7 @@ $(SUPPORT_OBJS): $(DEPS)
 %.o: %.S $(DEPS)
 	$(CC) -c $(CPP_ASFLAGS) $< -o $@
 
-%.elf: %.o $(ALL_OBJS) $(DEPS)  
+%.elf: %.o $(ALL_OBJS) $(DEPS) $(START)
 	$(LD) $(START)  $< $(ALL_OBJS) -T $(MEMMAP) -o $@  $(LPI)
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -70,16 +70,16 @@ endif
 	$(BOOTLOADER) $(TTYUSB) ./$<
 
 ifdef STAFF
-emit: $(DEPS) $(TEST_PROGS)
+emit: libs $(DEPS) $(TEST_PROGS)
 	@make -e -f $(MK_CHK) emit "TESTS=$(TEST_PROGS)"
 else
 emit: 
 	$( error "do not run emit!" )
 endif
 
-run: $(DEPS) $(TEST_PROGS)
+run: libs $(DEPS) $(TEST_PROGS)
 	@make -f $(MK_CHK) run "TESTS=$(TEST_PROGS)"
-check: $(DEPS) $(TEST_PROGS)
+check: libs $(DEPS) $(TEST_PROGS)
 	@make -f $(MK_CHK) check "TESTS=$(TEST_PROGS)"
 
 update:

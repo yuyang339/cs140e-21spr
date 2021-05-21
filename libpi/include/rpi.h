@@ -209,7 +209,7 @@ uint32_t load_code(struct vdev *v);
 // extra student-defined libc prototypes.
 #include "../libc/libc-extra.h"
 #ifndef RPI_UNIX
-#   include "libc/assert.h"
+#   include "../libc/assert.h"
 int strcmp(const char *a, const char *b);
 int strncmp(const char* _s1, const char* _s2, size_t n);
 size_t strlen(const char *p);
