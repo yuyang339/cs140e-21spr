@@ -23,6 +23,6 @@ SUPPORT_OBJS := $(SRC:.c=.o)
 # CFLAGS_EXTRA  = -Iexternal-code
 
 # these are the binaries we give you: remove these when finished.
-STAFF_OBJS =  
+STAFF_OBJS =  spi.o
 
 include $(CS140E_2021_PATH)/libpi/mk/Makefile.template
