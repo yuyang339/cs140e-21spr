@@ -20,6 +20,11 @@ TEST_RUN   := $(patsubst %.c, %.run, $(TEST_SRC))
 endif
 TEST_OBJS   := $(patsubst %.c, %.o, $(TEST_SRC))
 
+# enable "make emit"
+ifdef STAFF
+ENABLE_EMIT :=1
+endif
+
 dep := $(patsubst %.c, %.d, $(TEST_SRC)) $(SUPPORT_OBJS:.o=.d) 
 VPATH := $(sort $(dir $(SRC)))
 
@@ -42,6 +47,8 @@ ALL_OBJS := $(SUPPORT_OBJS) $(STAFF_OBJS)
 all: libs $(TEST_PROGS) $(TEST_RUN) $(CHECK_RUN)
 
 libs: 
+	@make -s -C $(LPP)
+$(LPP):
 	@make -s -C $(LPP)
 
 $(SUPPORT_OBJS): $(DEPS)
@@ -69,7 +76,8 @@ endif
 %.run: %.bin
 	$(BOOTLOADER) $(TTYUSB) ./$<
 
-ifdef STAFF
+
+ifdef ENABLE_EMIT
 emit: libs $(DEPS) $(TEST_PROGS)
 	@make -e -f $(MK_CHK) emit "TESTS=$(TEST_PROGS)"
 else
