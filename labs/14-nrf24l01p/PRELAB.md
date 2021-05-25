@@ -54,6 +54,14 @@ When you run `code/0-test-simple` it should print out a reasonable values.
     NRF:	RX_PW_P1 (0): 0 byte fixed size packets
     NRF:	FIFO_STATUS(=10001): TX_FULL=0, TX_EMPTY=1, RX_FULL=0, RX_EMPTY=1
 
+
+Note: the below wiring diagrams are top-down views, even though the wires 
+themselves connect to the bottom of the NRF chip.  You should be able to see 
+the oscillator (the big oblong silver thing) and the antenna (the golden 
+zig-zag on the edge) when looking down at the chip.
+
+Again, **MAKE SURE YOU ONLY USE 3.3V** for the NRF chip.
+
 <table><tr><td>
   <img src="images/nrf-wire.jpg"/>
 </td></tr></table>
