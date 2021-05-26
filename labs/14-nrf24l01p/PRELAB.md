@@ -23,16 +23,15 @@ of wires.
      your own!  It's a fun project.  As with the UART, it's not hard to
      bit-bang your own version.  From the wiki:
 
-
             /*
-            * Simultaneously transmit and receive a byte on the SPI.
-            *
-            * Polarity and phase are assumed to be both 0, i.e.:
-            *   - input data is captured on rising edge of SCLK.
-            *   - output data is propagated on falling edge of SCLK.
-            *
-            * Returns the received byte.
-            */
+             * Simultaneously transmit and receive a byte on the SPI.
+             *
+             * Polarity and phase are assumed to be both 0, i.e.:
+             *   - input data is captured on rising edge of SCLK.
+             *   - output data is propagated on falling edge of SCLK.
+             *
+             * Returns the received byte.
+             */
             uint8_t SPI_transfer_byte(uint8_t byte_out) {
                 uint8_t byte_in = 0;
                 uint8_t bit;
