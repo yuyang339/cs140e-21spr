@@ -73,6 +73,20 @@ Below is the schematic for the pi and NRF.  Before you hook up anything
 damage them (and in a bad way such that they might appear to mostly work,
 rather than just fail completely).
 
+Note: the below wiring diagrams are top-down views, even though the wires 
+themselves connect to the bottom of the NRF chip.  You should be able to see 
+the oscillator (the big oblong silver thing) and the antenna (the golden 
+zig-zag on the edge) when looking down at the chip.
+
+
+<table><tr><td>
+  <img src="images/nrf-wire.jpg"/>
+</td></tr></table>
+<table><tr><td>
+  <img src="images/nrf-wire-close.jpg"/>
+</td></tr></table>
+
+
 When you run `code/0-test-simple` it should print out a reasonable values.
 
     NRF:initial state:
@@ -92,19 +106,8 @@ When you run `code/0-test-simple` it should print out a reasonable values.
     NRF:	FIFO_STATUS(=10001): TX_FULL=0, TX_EMPTY=1, RX_FULL=0, RX_EMPTY=1
 
 
-Note: the below wiring diagrams are top-down views, even though the wires 
-themselves connect to the bottom of the NRF chip.  You should be able to see 
-the oscillator (the big oblong silver thing) and the antenna (the golden 
-zig-zag on the edge) when looking down at the chip.
-
 Again, **MAKE SURE YOU ONLY USE 3.3V** for the NRF chip.
 
-<table><tr><td>
-  <img src="images/nrf-wire.jpg"/>
-</td></tr></table>
-<table><tr><td>
-  <img src="images/nrf-wire-close.jpg"/>
-</td></tr></table>
 
 A couple of things:
   1. You're going to need two pi's running at the same time, just like
