@@ -121,20 +121,21 @@ A couple of things:
      the sw-uart lab.   So refresh your memory on how to bootload two
      pi's on your laptop.  
 
-  2. If you're ambitious you could rewriting your `my-install` to handle
-     multiple binaries and output.  This will make a major difference.
+  2. If you're ambitious you could rewrite your `my-install` to handle
+     multiple binaries and output.  This will make a major difference in
+     ease-of-use.
 
   3. The nrf will stay up even if you reboot the pi --- so to hard reset
      it you will need to unplug and then plug in your pi.  This is obviously
      a big hassle, especially if your OS sometimes redoes the device bindings.
 
-     For this lab, if you have two microUSB power supplies I highly
-     recommend redoing the power setup as follows.  For both pi's,
-     disconnect the tty-usb power from them, and instead connect a
-     microUSB power adapter to each pi.   Plug both adapters into a power
-     switch you can quickly turn them off/on, thereby preserving your OS's
-     ttyUSB device connection.  Reset then just takes a flip of a switch.
-     Photos below.
+     As an improvement, if you have two microUSB power supplies I
+     highly recommend redoing the power setup as follows.  For both
+     pi's, disconnect the tty-usb power from them, and instead connect
+     a microUSB power adapter to each pi.   Plug both adapters into a
+     power switch you can quickly turn them off/on, thereby preserving
+     your OS's ttyUSB device connection.  Reset then just takes a flip
+     of a switch.  Photos below.
 
 <table><tr><td>
   <img src="images/pi-power.jpg"/>
