@@ -1,5 +1,9 @@
 ## Prelab for nrf24l01p
 
+Make sure you start on the datasheet early and make sure your hardware device
+runs before lab!
+
+---------------------------------------------------------------------
 ### Readings
 
 The NRF datasheet:
@@ -10,18 +14,20 @@ The NRF datasheet:
   - [CHEATSHEET](CHEATSHEET.md) gives a cheat-sheet of page numbers to 
     crucial parts as well as saying what to concentrate on.
 
-The NRF communicates using the serial peripheral interface (SPI) protocol.
-This is common on cheap devices, but has the downside that it needs a lot
-of wires.  
+
+SPI: The NRF communicates using the serial peripheral interface (SPI)
+protocol.  This is common on cheap devices, but has the downside that
+it needs a lot of wires.  If you're curious about how it works:
 
    -  [The wiki SPI protocol page](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface) is reasonable.
 
    - Chapter 10 (starting at page 148) of the Broadcom documents describes
      the hardware support.
 
-   - We give you a driver (`staff-objs/spi.o`), but feel free to write
-     your own!  It's a fun project.  As with the UART, it's not hard to
-     bit-bang your own version.  From the wiki:
+
+We give you a driver (`staff-objs/spi.o`), but feel free to write your
+own!  It's a fun project.  As with the UART, it's not hard to bit-bang
+your own version.  From the wiki:
 
             /*
              * Simultaneously transmit and receive a byte on the SPI.
@@ -60,7 +66,8 @@ of wires.
             }
 
 
-## Hardware hookup
+---------------------------------------------------------------------
+### Hardware hookup
 
 As mentioned above, because the NRF uses SPI, there's a lot of wires.
 It actually adds a couple of extra ones.  You want to be very careful
