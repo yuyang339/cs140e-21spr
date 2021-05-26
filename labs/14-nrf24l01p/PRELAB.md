@@ -23,6 +23,7 @@ of wires.
      your own!  It's a fun project.  As with the UART, it's not hard to
      bit-bang your own version.  From the wiki:
 
+
         /*
          * Simultaneously transmit and receive a byte on the SPI.
          *
