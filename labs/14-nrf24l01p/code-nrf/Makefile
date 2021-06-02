@@ -27,7 +27,7 @@ SUPPORT_OBJS := $(SRC:.c=.o)
 # CFLAGS_EXTRA  = -Iexternal-code
 
 # these are the binaries we give you: remove these when finished.
-STAFF_OBJS = staff-nrf-driver.o
+STAFF_OBJS = staff-nrf-driver.o spi.o
 
 include $(CS140E_2021_PATH)/libpi/mk/Makefile.template
 
