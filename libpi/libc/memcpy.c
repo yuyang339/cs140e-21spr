@@ -9,6 +9,7 @@ void *memcpy(void *dst, const void *src, size_t nbytes) {
     // do byte stores, i don't think this will necessarily lead to 
     // good behavior.
     if(aligned4(dst) && aligned4(src) && aligned4(nbytes)) {
+        assert(nbytes % 4 == 0);
         unsigned n = nbytes / 4;
         unsigned *d = dst;
         const unsigned *s = src;

@@ -94,7 +94,7 @@ update:
 	cp *.out ../code
 
 tags: 
-	ctags *.[chSs] $(LPP)/*.[ch] $(LPP)/*.[chSs]
+	ctags *.[chSs] $(LPP)/*.[Ssch] $(LPP)/*/*.[chSs]
 
 clean:
 	rm -rf $(NAME) *~ tags $(SUPPORT_OBJS) *.bin *.elf *.list *.img Makefile.bak  *.d  $(TEST_OBJS)
