@@ -22,12 +22,12 @@ TEST_SRC := 1-client-one-way.c  1-server-one-way.c 2-client-pingpong.c  2-server
 # a list of all of your object files.
 SRC :=  nrf-util.c nrf-driver.c nrf-public.c 
 # staff-nrf-driver.c
-SUPPORT_OBJS := $(SRC:.c=.o) staff-nrf-driver.o
+SUPPORT_OBJS := $(SRC:.c=.o) 
 
 # CFLAGS_EXTRA  = -Iexternal-code
 
 # these are the binaries we give you: remove these when finished.
-STAFF_OBJS = 
+STAFF_OBJS = staff-nrf-driver.o
 
 include $(CS140E_2021_PATH)/libpi/mk/Makefile.template
 
