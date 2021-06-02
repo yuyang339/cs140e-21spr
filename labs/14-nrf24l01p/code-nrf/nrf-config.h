@@ -208,9 +208,11 @@ static inline nrf_config_t nrf_retran_disable(nrf_config_t c) {
  */
 enum {
     nrf_default_nbytes              = 4,            // 4 byte packets.
-    nrf_default_channel             = 113,          // allegedly semi-safe from interference
+    // nrf_default_channel             = 113,          // allegedly semi-safe from interference
+    nrf_default_channel             = 61,          // allegedly semi-safe from interference
     nrf_default_data_rate           = nrf_2Mbps,    // lower data rate ==> longer distance.
-    nrf_default_db                  = dBm_minus18,
+    // nrf_default_db                  = dBm_minus18,
+    nrf_default_db                  = dBm_minus12,
     nrf_default_retran_attempts     = 2,            // 2 retran attempts
     nrf_default_retran_delay        = 1000,         // 500 usec retran delay
     nrf_default_addr_nbytes         = 3,
