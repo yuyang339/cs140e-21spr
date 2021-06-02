@@ -82,12 +82,15 @@ int nrf_get_data_exact(uint32_t rxaddr, void *msg, unsigned nbytes) {
     while(1) {
         unsigned usec = NRF_TIMEOUT * 1000 * 1000;
         int n = nrf_get_data_exact_timeout(rxaddr, msg, nbytes, usec);
+        if(n == nbytes) 
+            return n;
+
         if(n < 0) {
             debug("addr=%x: connection error: no traffic after %d seconds\n",
                     rxaddr,  NRF_TIMEOUT);
             nrf_dump("timeout config\n");
         }
-        return n;
+        assert(n< nbytes);
     }
 }
 
