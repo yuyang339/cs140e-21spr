@@ -1,3 +1,9 @@
+run first:
+    my-install /dev/ttyUSB0 1-client-one-way.bin
+run second:
+	my-install /dev/ttyUSB1 1-server-one-way.bin
+
+
 client:
 
 NRF:	CONFIG (1111):	PWR_UP=1, PRIM_RX=1, CRC=1 EN_CRC=1
@@ -12,6 +18,7 @@ NRF:	TX_ADDR = 0x0e7e7e7
 NRF:	RX_ADDR_P1 = 0x0a2a2a2
 NRF:	RX_PW_P1 (100): 4 byte fixed size packets
 NRF:	FIFO_STATUS(=10001): TX_FULL=0, TX_EMPTY=1, RX_FULL=0, RX_EMPTY=1
+
 
 
 Server:
