@@ -23,6 +23,9 @@ to reload user state.  If you look at the ARMv6 document, you'll see
 `ldm` behaves differently depending on if you have the `pc` (`r15`)
 as one of the registers.
 
+<table><tr><td>
+  <img src="images/ldm-pc.png"/>
+</td></tr></table>
 
 This bug is a bit interesting in that we missed this nuance for the past
 4-5 years but had managed to avoid getting bitten by it despite doing
