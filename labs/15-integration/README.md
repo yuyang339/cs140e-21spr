@@ -94,6 +94,25 @@ You'll make the following changes:
       Write a `switchto_asm` routine that takes a pointer to the `reg_save`
       array and loads everything: use this instead of the `user_mode_run_fn`.
 
+
+            // reg_save offsets for the different registers.
+            enum {
+                SP_OFF = 13,
+                PC_OFF = 15,
+                SPSR_OFF = 16,
+            };
+
+            pix_env_t pix_env_mk(uint32_t pc, uint32_t sp) {
+                pix_env_t p = {0};
+            
+                p.reg_save[0] = pc;
+                p.reg_save[1] = sp;
+                p.reg_save[SPSR_OFF] = 0x190;
+                p.reg_save[PC_OFF] = pc;
+                p.reg_save[SP_OFF] = sp;
+                return p;
+            }
+
    6. Rerun your code to make sure it still gives the same checksums.
 
    7. Now do `switchto_asm` at the end of the equivalance routine 
