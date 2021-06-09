@@ -134,5 +134,108 @@ from a process structure (which we need as a first step for an OS).
 --------------------------------------------------------------------
 Part 2: Migrate over to pix.
 
+
+If you do a pull, there should be a new directory at the top of the 
+repo: `cs140e-21spr/pix`.   Inside it's modeled on the fake OS we
+did in lab 10:
+
+            % ls
+            Makefile  pitag-linker	README.md
+            mk	  pix-kernel	pix-user	  tests
+
+The directories you'll care about:
+
+   - `pix-kernel`: this holds the kernel code (it's similar to 
+      `fake-os`).  This is the only directory you should have to 
+      modify anything in.
+   - `pix-user`: a very simple user-level library (similar to 
+     `fake-user-level`).
+   - `tests`: these are the tests from before.
+
+As a first step, you should be able to type `make check` and the 
+tests should pass:
+
+        # check hashes
+        cs140e-21spr/pix % make check
+
+        checking <1-test-hello>:  Success
+        checking <0-test-nop>:  Success
+        checking <0-test-exit>:  Success
+        checking <3-test-vec>:  Success
+
+Again, these are the same tests from lab 10.  You can also type `make run`
+to just run them and display the results to the screen without checking
+--- this can make figuring out errors easier.
+
+If you look in the `pix-kernel` directory, there's a bunch of files.
+For the most part they are `.o` files of code you've already built (that
+you will replace) or `.c` files that provide brain-dead simple versions
+of needed functionality so we can run processes.
+
+As a first step, you should migrate your code from above into:
+
+   - `pix-asm.S` : put your code in `user-mode-run-fn.S` and
+     `fake-os-asm.S` here.  
+
+     This file should define two exception vectors --- `part4_equiv_vec`
+     (this is identical to the same vector in lab 10) and
+     `proc_equiv_vec`, which calls the exception handling code you wrote
+     above that uses the process control block for state.  It should
+     also contain your `switchto_asm`.
+
+   - `equiv.c`: this should contain your equivalance checking code from
+      part 1.
+ 
+   - If you remove `staff-pix-asm.o` and `staff-equiv.o` from the `Makefile`
+     and put in your versions, `make check` should still pass.
+
+
+#### Verify that your new equivalance works
+
+
+This should be even easier:
+
 --------------------------------------------------------------------
-Part 3: Use virtual memory
+Part 3: Make sure the rest of the steps work:
+
+For these you'll change the `part` variable in `pix.c` so that it
+goes through each part in turn, making sure the test still passes.
+
+  1. `part = 1`: this should run your new equivalance code that uses
+     the process control block.
+
+  2. `part = 2`: this will switch to using virtual memory.  Make sure
+      the test passes, then change all the `staff_mmu_` calls to use you
+      routines.  You'll also have to add your `mmu.o` and `mmu-asm.o`
+      to the `Makefile`.
+
+  3. `part = 3`: this will switch to using a process control block and 
+      cloning the process.  Test should still work.
+  4. `part = 4`: this uses the `schedule()` routine to switch proceses
+      (a simple round-robin scheduler).
+  5. `part = 5`: this will run multiple processes.  As a first step,
+      just run it.  It should run the same process multiple times.
+      Then, in your `equiv.c` change it to call `schedule()` instead
+      of `switchto_asm` when `pix_config.use_schedule_p` flag is set.
+      This will switch between processes at every single instruction.
+      If you inspect the results of `make run` you should see the
+      same checksum for all. 
+
+Congratulations!  This is a very hard set of tests.  At this point you
+have rock-solid context switching code and a ruthless way to immediately
+detect a different in any register at any instruction from any mistake
+that leads to a user-visible change.  You can use this setup to keep
+doing many changes with an induction-based safety net.  Some simple changes:
+  1. Change the page size.
+  2. Use two page tables (one for system, one for user-level)
+  3. Compile `pix` with higher level optimizations.
+  4. Turn on caching; switch from write-through to write-back.
+  5. Change the expensive virtual memory coherence methods from lab 12
+     to be more targeted (and much more efficien).  In particular, don't
+     kill the entire TLB when modifying a PTE entry (or defer the coherene
+     until the end).
+  6. If you turn on interrupts, and change the frequency, there should be
+     no user-visible difference.
+
+There's tons of additional ones!   The cool thing is your checksums should
+never change.
