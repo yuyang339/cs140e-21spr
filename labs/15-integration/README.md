@@ -113,6 +113,12 @@ You'll make the following changes:
                 return p;
             }
 
+      Then you should be able to call `switchto_asm`:
+
+            switchto_asm(&p->reg_save[0]);
+
+      And have it work correctly.
+
    6. Rerun your code to make sure it still gives the same checksums.
 
    7. Now do `switchto_asm` at the end of the equivalance routine 
