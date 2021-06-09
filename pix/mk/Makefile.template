@@ -1,0 +1,124 @@
+######################################################################
+# you should not have to modify below.
+#
+MK_CUR := $(lastword $(MAKEFILE_LIST)) 
+
+# export all of the makefile variables.
+export TTYUSB 
+export BOOTLOADER
+export GREP_STR 
+
+PIX_PATH = $(CS140E_2021_PATH)/pix
+include $(PIX_PATH)/mk/includes.mk
+
+TYPE= reg-equiv.
+
+export PIX_KERNEL_PATH
+export PIX_USER_PATH
+export PIX_BIN
+export TYPE
+export PITAG_LINKER
+
+MAKEFLAGS += --no-print-directory
+TEST_PROGS := $(patsubst %.c, %.bin, $(TEST_SRC))
+TEST_PTAG := $(patsubst %.c, %.ptag, $(TEST_SRC))
+
+# if CHECK is defined, do that, otherwise if RUN is defined do that.
+ifeq ($(CHECK),1)
+CHECK_RUN := check
+else ifeq ($(RUN),1)
+TEST_RUN   := $(patsubst %.c, %.run, $(TEST_SRC))
+endif
+TEST_OBJS   := $(patsubst %.c, %.o, $(TEST_SRC))
+
+dep := $(patsubst %.c, %.d, $(TEST_SRC)) $(SUPPORT_OBJS:.o=.d) 
+VPATH := $(sort $(dir $(SRC)))
+
+.SUFFIXES: .run
+
+ifndef MK_CHK
+    MK_CHK := $(PIX_PATH)/mk/Makefile.check
+else
+    $(error "does not match")
+endif
+
+
+# add the memmap file, libpi and the makefile as dependencies
+DEPS = $(MEMMAP) $(PIX_USER) ./Makefile  $(PITAG_LINKER)
+
+ALL_OBJS := $(SUPPORT_OBJS) $(STAFF_OBJS) 
+
+all: libs $(TEST_PROGS) $(TEST_RUN) #  $(CHECK_RUN)
+
+libs: 
+	@make -s -C $(PIX_KERNEL_PATH)
+	@make -s -C $(PITAG_PATH)
+	@make -s -C $(PIX_USER_PATH)
+
+$(PIX_USER):
+	@make -s -C $(PIX_USER_PATH)
+$(PIX_KERNEL):
+	@make -s -C $(PIX_KERNEL_PATH)
+$(PITAG_LINKER):
+	@make -s -C $(PITAG_PATH)
+
+$(SUPPORT_OBJS): $(DEPS)
+
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.S $(DEPS)
+	$(CC) -c $(CPP_ASFLAGS) $< -o $@
+
+%.elf: %.o $(ALL_OBJS) $(DEPS) $(PIX_USER)
+	$(LD) $(START)  $< $(ALL_OBJS) -T $(MEMMAP) -o $@  $(PIX_USER)
+
+ifneq ($(MAKECMDGOALS),clean)
+ifneq ($(MAKECMDGOALS),cleanall)
+-include $(dep)  # include dep files
+endif
+endif
+
+./%.d: %.c $(DEPS)
+	$(CC) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@
+%.list: %.elf
+	$(OD) -D   $*.elf > $*.list
+%.bin: %.list
+	$(OCP) $*.elf -O binary $*.bin
+
+%.ptag: %.bin libs
+	@$(PITAG_LINKER) $(PIX_BIN) $*.bin $*.ptag
+
+%.run: %.ptag
+	$(BOOTLOADER) $(TTYUSB) ./$<
+
+ifdef STAFF
+emit: $(DEPS) $(TEST_PROGS)
+	@make -e -f $(MK_CHK) emit "TESTS=$(TEST_PROGS)"
+else
+emit: 
+	$( error "do not run emit!" )
+endif
+
+run: libs $(TEST_PROGS) $(TEST_PTAG)
+	@make -f $(MK_CHK) run "TESTS=$(TEST_PROGS)"
+check: libs $(TEST_PROGS) $(TEST_PTAG)
+	@make -f $(MK_CHK) check "TESTS=$(TEST_PROGS)"
+
+update:
+	cp *.out ../code
+
+tags: 
+	ctags *.[chSs] $(LPP)/*.[ch] $(LPP)/*.[chSs]
+
+clean:
+	rm -rf $(NAME) *~ tags $(SUPPORT_OBJS) *.bin *.elf *.list *.img Makefile.bak  *.d  $(TEST_OBJS) *.ptag
+
+cleanall:
+	@make -s -C ./ clean
+	@make -f $(MK_CHK) cleanall "TESTS=$(TEST_PROGS)"
+	@make -s -C $(PIX_PATH) clean
+
+.PHONY: libs all tags clean run update cleanall
+
+# stop make from deleting these suffix'd files.
+.PRECIOUS: %.list %.elf %.o %.d

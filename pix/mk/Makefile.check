@@ -1,0 +1,80 @@
+# stand-alone makefile for testing: aims to compare subsequent runs ("make checkall")
+# against a previous reference run ("make emitall")
+#
+# if you do:
+#   - "make run" it will run all programs in TESTS
+#   - "make emit" it emit .outs for all programs in TESTS
+#   - "make check" it will check all programs in TESTS against their .out
+#   - "make cksum" it will compute checksums for all programs in TESTS
+#
+# Should not have to invoke this directly: ./Makefile does.
+#
+# We seperate this out to hopefully clean up the various makefiles: they worry
+# about making binaries, this one worries about testing.
+
+# shut up "ntering/leaving"
+MAKEFLAGS += --no-print-directory
+
+# we only look at this output
+GREP_STR ?= 'TRACE:\|ERROR:\|PANIC:' 
+BOOT_CMD := $(BOOTLOADER) $(TTYUSB)
+
+.SUFFIXES: .out .run .check .emit
+
+# this will be passed in by the caller.
+# TESTS      := $(patsubst %.c, %, $(TESTS_SRC)) 
+ifndef TESTS
+$(error TESTS is not defined: makefile invoked incorrectly)
+endif
+
+TEST_RUN   := $(patsubst %.bin, %.run, $(TESTS))  
+TEST_EMIT  := $(patsubst %.bin, %.emit, $(TESTS))  
+TEST_CHECK := $(patsubst %.bin, %.check, $(TESTS))  
+TEST_CKSUM := $(patsubst %.bin, %.cksum, $(TESTS))  
+TEST_OUT   := $(patsubst %.bin, %.out, $(TESTS))  
+TEST_PITAG := $(patsubst %, %.ptag, $(TESTS)) 
+
+# set whatever you want the default action to be.
+all: $(TEST_PITAG) $(TEST_RUN) # $(TEST_CHECK) 
+
+%.ptag: %.bin
+	@$(PITAG_LINKER) $(PIX_BIN) $*.bin $*.ptag
+	
+%.run: %.ptag
+	@echo "\n----------------[about to run <./$*]-----------------------";
+	$(BOOT_CMD) ./$< 
+	@echo "-----------------[done running <./$*>]-----------------------";
+
+%.err: %.ptag
+	@-./$<  && echo "Fail: did not detect error" || echo "Success: detected error";
+
+# note: this will fail if output does not contain a trace.
+# we pull everything into .out so that it's easier to debug.
+%.emit: %.ptag
+	@echo -n "generating <$*.$(TYPE)out> and <$*.$(TYPE)raw>: ";
+	@$(BOOT_CMD) ./$< >  $*.$(TYPE)raw 2>&1
+	@grep -v simple_boot $*.$(TYPE)raw | grep $(GREP_STR) > $*.$(TYPE)out
+	@echo " success!";
+
+%.check: %.ptag
+	@echo -n "checking <$*>: ";
+	@$(BOOT_CMD) ./$< 2>&1 > /dev/null | grep -v simple_boot | grep  $(GREP_STR) > $*.test
+	@diff ./$*.$(TYPE)out ./$*.test || (echo "mismatch in reference ($*.$(TYPE)out) and test ($*.test): compare them (and $*.$(TYPE)raw) directly to see why"; exit 1)
+	@echo " Success: <$*.test> matched reference <$*.$(TYPE)out>!";
+	@rm ./$*.test
+
+# not sure if there is a better way: use these fake target to run our
+# checks for everything.
+emit: $(TEST_EMIT) 
+check: $(TEST_CHECK)  
+run: $(TEST_RUN) 
+cksum:  $(TEST_CKSUM)
+
+clean:
+	rm -f *.ptag
+cleanall:
+	rm -f *.$(TYPE)out *.$(TYPE)raw
+
+.PHONY: all clean run emit check cksum
+
+.PRECIOUS: %.raw %.out 
