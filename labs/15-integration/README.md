@@ -117,7 +117,9 @@ You'll make the following changes:
 
             switchto_asm(&p->reg_save[0]);
 
-      And have it work correctly.
+      And have it work equivalantly to:
+
+            user_mode_run_fn((void*)p->reg_save[15], p->reg_save[13]);
 
    6. Rerun your code to make sure it still gives the same checksums.
 
