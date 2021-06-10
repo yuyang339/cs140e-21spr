@@ -50,10 +50,13 @@ What to do:
 Part 1: save state to a process structure
 
 For our OS we'll want to save the current registers into a process
-structure rather than onto a random exception stack.  For this part,
-define a trivial process structure in the `fake-os.h` header
-along with a pointer to a global variable:
+structure rather than onto a random exception stack.  
 
+
+For this part, put the following trivial process structure in the
+`fake-os.h` header along with the external pointer declatation:
+
+    // add this to your fake-os.h
     typedef struct {
         // register save area: keep it at offset 0 for easy
         // assembly calculations.
@@ -66,34 +69,40 @@ along with a pointer to a global variable:
     extern pix_env_t *pix_cur_process;
 
 
+Add this to your `fake-os.c`:
     
+    static pix_env_t init_process;
+    pix_env_t *pix_cur_process = &init_process;
+
 
 You'll make the following changes:
 
-   0. In `fake-os.c`: Allocate global `pix_env_t` and set
-      `pix_cur_process` to point to it.
+   0. Run your code to make sure it still gives the same checksums.
 
-   1. Make a copy of your assembly and have it load the location to 
-      save registers to using the `pix_cur_process` variable.  You
-      might want to look at the old interrupt code to see how to do 
-      this easily in assembly.
+   1. Make a copy of your assembly and have it load the location to
+      save registers to using the `pix_cur_process` variable.
+      You might want to look at the old interrupt code (in
+      `7-interrupts/timer-int/interrupts-asm.S`) to see how to do
+      this easily in assembly.  Note: you will need to do two `ldr`
+      instructions: one to get the value of the global variable
+      `pix_cur_process` and then another to load its contents.
 
-   2. Rerun your code to make sure it still gives the same checksums.
 
-   3. Make a copy of your equivalance code that stores the current context
+   2. Make a copy of your equivalance code that stores the current context
       in this process structure and uses it to track the current hash.
       Have the assembly routine from (1) pass a pointer to the current
       context structure in.
 
-   4. Rerun your code and make sure it still gives the same checksums.
+      Hint: check that the passed in variable matches what you expect
+      (i.e., the actual contents of `pix_cur_process`).
+
+   3. Rerun your code and make sure it still gives the same checksums.
       (You'll notice a pattern: this is how I always make changes so 
-       that I don't have to think that hard.)
+      that I don't have to think that hard.)
 
-   5. Initialize your process structure save area so the registers
-      in it have the same values as would be set by your `user_mode_run_fn`.
-      Write a `switchto_asm` routine that takes a pointer to the `reg_save`
-      array and loads everything: use this instead of the `user_mode_run_fn`.
-
+   4. Initialize your process structure save area so the registers
+      in it have the same values as would be set by your
+      `user_mode_run_fn`.  
 
             // reg_save offsets for the different registers.
             enum {
@@ -102,6 +111,7 @@ You'll make the following changes:
                 SPSR_OFF = 16,
             };
 
+            // initialize the register save area
             pix_env_t pix_env_mk(uint32_t pc, uint32_t sp) {
                 pix_env_t p = {0};
             
@@ -112,6 +122,11 @@ You'll make the following changes:
                 p.reg_save[SP_OFF] = sp;
                 return p;
             }
+
+    5. Write a `switchto_asm` routine that takes a pointer to the
+       `reg_save` array and loads everything: use this instead of the
+       `user_mode_run_fn`.  It should use `rfe` instead of changing
+       `spsr` first.
 
       Then you should be able to call `switchto_asm`:
 
@@ -124,13 +139,15 @@ You'll make the following changes:
    6. Rerun your code to make sure it still gives the same checksums.
 
    7. Now do `switchto_asm` at the end of the equivalance routine 
-      `equiv_run_fn_proc`.
+      `equiv_run_fn_proc` instead of returning.
 
    8. Rerun your code to make sure it still gives the same checksums.
+   9. Merge all of your assembly (`user-mode-run-fn.S` and `fake-os-asm.S`)
+      into a file called `pix-asm.S`
+   10. Rerun your code to make sure it still gives the same checksums.
 
 Great: now you have code that will correctly save and restore registers
 from a process structure (which we need as a first step for an OS).
-
 --------------------------------------------------------------------
 Part 2: Migrate over to pix.
 
@@ -174,8 +191,7 @@ of needed functionality so we can run processes.
 
 As a first step, you should migrate your code from above into:
 
-   - `pix-asm.S` : put your code in `user-mode-run-fn.S` and
-     `fake-os-asm.S` here.  
+   - `pix-asm.S` : copy it from above into this `pix-kernel`.
 
      This file should define two exception vectors --- `part4_equiv_vec`
      (this is identical to the same vector in lab 10) and
@@ -189,9 +205,7 @@ As a first step, you should migrate your code from above into:
    - If you remove `staff-pix-asm.o` and `staff-equiv.o` from the `Makefile`
      and put in your versions, `make check` should still pass.
 
-
 #### Verify that your new equivalance works
-
 
 This should be even easier:
 
