@@ -4,10 +4,11 @@ NAME = pix-kernel
 TTYUSB = 
 
 
+# these are .o's only --- you should swap in your versions.
 STAFF_OBJS = staff-breakpoint.o staff-mmu.o staff-mmu-asm.o staff-pix-asm.o staff-equiv.o
 
 # these should be yours
-# YOUR_OBJS := pix-asm.o equiv.o
+YOUR_OBJS := # pix-asm.o equiv.o
 
 OBJS := pix.o  $(YOUR_OBJS) \
         staff-pmap.o staff-vm.o staff-env.o  \
