@@ -4,14 +4,37 @@ NAME = pix-kernel
 TTYUSB = 
 
 
-STAFF_OBJS = staff-breakpoint.o staff-mmu.o staff-mmu-asm.o   staff-pix-asm.o staff-equiv.o
+STAFF_OBJS = staff-breakpoint.o staff-mmu.o staff-mmu-asm.o staff-pix-asm.o staff-equiv.o
 
-# modify these
-YOUR_OBJS := #  equiv.o  pix-asm.o
+# these should be yours
+# YOUR_OBJS := pix-asm.o equiv.o
+
 OBJS := pix.o  $(YOUR_OBJS) \
-        staff-pmap.o staff-env.o  staff-loader.o  staff-vm.o
+        staff-pmap.o staff-vm.o staff-env.o  \
+        staff-loader.o 
  
 dep := $(OBJS:.o=.d) $(STAFF_OBJS:.o=.d)
+
+ALL_STUDENT_FILES =             \
+            Makefile            \
+            breakpoint.h        \
+            pitag.h             \
+            pix.c               \
+            pix-constants.h     \
+            pix-internal.h      \
+            reg-util.h          \
+            staff-breakpoint.o  \
+            staff-env.c         \
+            staff-loader.c      \
+            staff-pmap.c        \
+            staff-vm.c          \
+            syscalls.h          \
+            vector-base.h       \
+            staff-equiv.o       \
+            staff-mmu-asm.o     \
+            staff-mmu.o         \
+            staff-pix-asm.o 
+
 
 # VPATH := $(sort $(dir $(SRC)))
 
@@ -54,6 +77,9 @@ run: $(NAME).bin
 check: $(NAME).bin
 	make -C .. check
 # my-install $(TTYUSB) $(NAME).bin
+
+update:
+	cp $(ALL_STUDENT_FILES) ../pix-kernel
 
 tags: 
 	ctags *.[chSs] $(LPP)/*.[Sch] $(LPP)/*/*.[chS]

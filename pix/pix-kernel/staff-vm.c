@@ -28,11 +28,14 @@ static inline int is_device_mem(uint32_t addr) {
         && addr <= 0x20200000;
 }
 
+// trivial data abort that just prints out the pc and faulting
+// address: look for the pc in the .list file for the given test.
 void data_abort_vector(unsigned lr) {
     // b4-44
     unsigned fault_addr;
     asm volatile("MRC p15, 0, %0, c6, c0, 0" : "=r" (fault_addr));
-    panic("pc=%x, fault addr=%x\n", lr, fault_addr);
+    panic("pc=%x, fault addr=%x: look for pc address in the test\n", 
+            lr, fault_addr);
 }
 
 /*************************************************************
@@ -117,6 +120,17 @@ void ident_map_user(fld_t *pt, uint32_t va, unsigned id, unsigned perm) {
     pte->nG = 1; // not global.
 }
 
+// for the moment: identity map the user address <va> and mark private
+void map_user(fld_t *pt, uint32_t va, unsigned id, unsigned perm) {
+    uint32_t pa = sec_to_pa(sec_alloc());
+
+    mmu_debug("about to copy %p to %p\n", va, pa);
+    memcpy((void*)pa, (void*)va, OneMB);
+    fld_t *pte = staff_mmu_map_section(pt, va, pa, id);
+    pte->AP = perm;
+    pte->nG = 1; // not global.
+}
+
 // allocate and map the common global kernel regions: GPIO memory,
 // the kernel code, data, various stacks.
 //
@@ -147,6 +161,10 @@ void vm_map_kernel(pix_pt_t *pt) {
 }
 
 void vm_start(pix_env_t *init_proc) {
+    // probably should not be buried in here.
+    // also should probably seperate different types
+    // of allocations so that it's easier to have hashes
+    // for the various data structures?
     kmalloc_init_set_start(OneMB);
 
     fld_t *pt = staff_mmu_pt_alloc(4096);
@@ -155,15 +173,23 @@ void vm_start(pix_env_t *init_proc) {
 
     init_proc->asid = kernel_asid;
     init_proc->pt = pt;
+
+
     uint32_t code = init_proc->reg_save[15];
     uint32_t sp = init_proc->reg_save[13];
 
-    // for the moment do an indentity map
+    // for the moment do an indentity map and check that the values
+    // are what we expect.
+    //
+    // another step: change this so the physical address is a different
+    // location.
     assert(code ==  (0x400000 + 4));
     assert(sp == 0x7000000);
     code &= ~0b111;
-    ident_map_user(init_proc->pt, code, dom_id, user_perm);
-    ident_map_user(init_proc->pt, sp - OneMB, dom_id, user_perm);
+
+
+    map_user(init_proc->pt, code, dom_id, user_perm);
+    map_user(init_proc->pt, sp - OneMB, dom_id, user_perm);
 
     staff_mmu_init();
     assert(!mmu_is_enabled());
@@ -180,16 +206,20 @@ void vm_start(pix_env_t *init_proc) {
     assert(mmu_is_enabled());
 }
 
-// reuse any global entry; allocate and copy any private entry.
+// clone the address space described by <pt_old> into the address
+// space of <pt_new>: 
+//  - keep all global entries identical
+//  - allocate and copy any non-global entry.
 void vm_pt_clone(pix_pt_t *pt_new,  const pix_pt_t *pt_old) {
     for(unsigned sec = 0; sec < MAX_PTE ; sec++) {
         const fld_t *pte = &pt_old[sec];
         fld_t *pte_new = &pt_new[sec];
 
         *pte_new = *pte;
+
+        // entry is not active.
         if(!pte->tag)
             continue;
-
 
         // private: allocate a section and copy.
         if(pte->nG) {
@@ -199,6 +229,10 @@ void vm_pt_clone(pix_pt_t *pt_new,  const pix_pt_t *pt_old) {
 
             uint32_t s0 = pte->sec_base_addr;
             sec_copy(page, s0);
+
+            // this will slow things down significantly, but is a useful
+            // sanity check that everything works.  should have a <paranoid>
+            // option in pix_config?
             assert(memcmp(sec_to_alias(page), sec_to_alias(s0), OneMB) == 0);
         }
     }

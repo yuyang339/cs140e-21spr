@@ -31,13 +31,13 @@ void schedule(void) {
         output("pix done. rebooting!\n");
         clean_reboot();
     }
-    proc_debug("going to run %d\n", env_id(e));
+    proc_debug("going to run %d\n", env_pid(e));
 
     staff_set_procid_ttbr0(0x140e, e->asid, (void*)e->pt);
     pix_set_curproc(e);
     proc_debug("switched: going to jump to pid=%d: e->init=%p\n", pix_pid(),
                     e->reg_save[15]);
-    switchto_asm(&e->reg_save[0], 0);
+    switchto_asm(&e->reg_save[0]);
 }
 
 
@@ -99,7 +99,7 @@ void notmain(void) {
 
     debug("mode=%s, sp=%x\n", mode_str(cpsr_get()),reg_get_sp());
 
-    unsigned part = 4;
+    unsigned part = 0;
     assert(part <= 5);
     // part 0: just make sure things work.
     if(part == 0) {
@@ -155,6 +155,7 @@ void notmain(void) {
                 pix_config.use_schedule_p = 1;
 
             if(part >= 5) {
+                printk("you'll have to do a `make run` rather than `make check`\n");
                 // start off with just one more process
                 env_clone(&init_proc);
                 // uncomment to add more.
