@@ -263,6 +263,17 @@ goes through each part in turn, making sure the test still passes.
       If you inspect the results of `make run` you should see the
       same checksum for all. 
 
+            void prefetch_abort_equiv_proc(...) {
+                ...
+                if(pix_config.use_schedule_p)
+                    schedule();
+                else
+                    switchto_asm(regs);
+                not_reached();
+           }
+
+
+
 Congratulations!  This is a very hard set of tests.  At this point you
 have rock-solid context switching code and a ruthless way to immediately
 detect a different in any register at any instruction from any mistake
