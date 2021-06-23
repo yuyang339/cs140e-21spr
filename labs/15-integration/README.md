@@ -217,11 +217,14 @@ As a first step, you should migrate your code from above into:
    - If you remove `staff-pix-asm.o` and `staff-equiv.o` from the `Makefile`
      and put in your versions, `make check` should still pass.
 
-#### Verify that your new equivalance works
+#### Putting it all together.
+
+Here you'll go through a set of steps and make sure that each passes
+the checksum tests.
 
 For these you'll change the `part` variable in `pix.c` so that it
 goes through each part in turn, making sure the test still passes.
-(Yeah, this is pretty gross, I admit.):
+(Yeah, this is pretty gross, apologies.)
 
   1. `part = 1`: this should run your new equivalance code that uses
      the process control block.
@@ -233,6 +236,7 @@ goes through each part in turn, making sure the test still passes.
 
   3. `part = 3`: this will switch to using a process control block and 
       cloning the process.  Test should still work.
+
   4. `part = 4`: this uses the `schedule()` routine to switch proceses
       (a simple round-robin scheduler).
   5. `part = 5`: this will run multiple processes.  As a first step,
@@ -247,7 +251,10 @@ Congratulations!  This is a very hard set of tests.  At this point you
 have rock-solid context switching code and a ruthless way to immediately
 detect a different in any register at any instruction from any mistake
 that leads to a user-visible change.  You can use this setup to keep
-doing many changes with an induction-based safety net.  Some simple changes:
+doing many changes with an induction-based safety net.  
+
+Some simple changes:
+  0. change the linker to load multiple programs at once.
   1. Change the page size.
   2. Use two page tables (one for system, one for user-level)
   3. Compile `pix` with higher level optimizations.
@@ -258,6 +265,8 @@ doing many changes with an induction-based safety net.  Some simple changes:
      until the end).
   6. If you turn on interrupts, and change the frequency, there should be
      no user-visible difference.
+  7. Load the binaries from the SD card using your FAT32 file system.
+  8. Send the binaries over the NRF network.
 
 There's tons of additional ones!   The cool thing is your checksums should
 never change.
