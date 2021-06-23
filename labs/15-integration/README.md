@@ -52,7 +52,6 @@ Part 1: save state to a process structure
 For our OS we'll want to save the current registers into a process
 structure rather than onto a random exception stack.  
 
-
 For this part, put the following trivial process structure in the
 `fake-os.h` header along with the external pointer declatation:
 
@@ -68,37 +67,44 @@ For this part, put the following trivial process structure in the
 
     extern pix_env_t *pix_cur_process;
 
-
-Add this to your `fake-os.c`:
+Add this to your `fake-os.c` at the top:
     
     static pix_env_t init_process;
     pix_env_t *pix_cur_process = &init_process;
-
 
 You'll make the following changes:
 
    0. Run your code to make sure it still gives the same checksums.
 
    1. Make a copy of your assembly and have it load the location to
-      save registers to using the `pix_cur_process` variable.
-      You might want to look at the old interrupt code (in
-      `7-interrupts/timer-int/interrupts-asm.S`) to see how to do
-      this easily in assembly.  Note: you will need to do two `ldr`
-      instructions: one to get the value of the global variable
-      `pix_cur_process` and then another to load its contents.
+      save registers to using the `pix_cur_process` variable
+      (above).  You might want to look at the old interrupt code (in
+      `7-interrupts/timer-int/interrupts-asm.S`) to see how to do this
+      easily in assembly.
 
+      As a sanity check: before rewriting the assembly code, first pass in
+      the value you loaded above into the single step exception handler
+      as an argument and `assert` that it is equal to the value held in
+      your `pix_cur_process`.
+
+      Note: you will need to do two `ldr` instructions: one to get the
+      value of the global variable `pix_cur_process` and then another to
+      load its contents.  You should be able to do an `=pix_cur_process`
+      in the assembly for the first one.
+
+      Note: An easy mistake to make is to forget that `r0`, `r1` and
+      the other caller saved registers will get trashed by the exception
+      handler --- so don't assume their original values are still there!
 
    2. Make a copy of your equivalance code that stores the current context
       in this process structure and uses it to track the current hash.
       Have the assembly routine from (1) pass a pointer to the current
       context structure in.
 
-      Hint: check that the passed in variable matches what you expect
-      (i.e., the actual contents of `pix_cur_process`).
-
    3. Rerun your code and make sure it still gives the same checksums.
-      (You'll notice a pattern: this is how I always make changes so 
-      that I don't have to think that hard.)
+      (You'll notice a pattern: this is how I always make changes --
+      tiny change, then verify checksum equivalance --- so that I don't
+      have to think that hard.)
 
    4. Initialize your process structure save area so the registers
       in it have the same values as would be set by your
@@ -142,15 +148,17 @@ You'll make the following changes:
       `equiv_run_fn_proc` instead of returning.
 
    8. Rerun your code to make sure it still gives the same checksums.
+
    9. Merge all of your assembly (`user-mode-run-fn.S` and `fake-os-asm.S`)
       into a file called `pix-asm.S`
+
    10. Rerun your code to make sure it still gives the same checksums.
 
 Great: now you have code that will correctly save and restore registers
 from a process structure (which we need as a first step for an OS).
+
 --------------------------------------------------------------------
 Part 2: Migrate over to pix.
-
 
 If you do a pull, there should be a new directory at the top of the 
 repo: `cs140e-21spr/pix`.   Inside it's modeled on the fake OS we
@@ -173,6 +181,7 @@ As a first step, you should be able to type `make check` and the
 tests should pass:
 
         # check hashes
+        cs140e-21spr % cd pix
         cs140e-21spr/pix % make check
 
         checking <1-test-hello>:  Success
@@ -214,6 +223,7 @@ Part 3: Make sure the rest of the steps work:
 
 For these you'll change the `part` variable in `pix.c` so that it
 goes through each part in turn, making sure the test still passes.
+(Yeah, this is pretty gross, I admit.):
 
   1. `part = 1`: this should run your new equivalance code that uses
      the process control block.
