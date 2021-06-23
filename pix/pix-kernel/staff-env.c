@@ -47,14 +47,14 @@ static pix_env_t *env_alloc(void) {
 // in a linked list?  idk.
 pix_env_t *env_get_next(void) {
     assert(pix_cur_process);
-    unsigned id = env_id(pix_cur_process);
+    unsigned id = env_id(pix_cur_process) + 1;
 
     // round robin.
     for(unsigned i = 0; i < MAX_ENV; i++) {
         unsigned index = (i + id) % MAX_ENV;
         pix_env_t *e = &envs[index];
         if(e->pid) {
-            proc_debug("found env=%d\n", index);
+            proc_debug("found env=%d, idx=%d\n", e->pid, i);
             return e;
         }
     }
