@@ -225,6 +225,9 @@ the checksum tests.
 
 Note: to print the first N do this:
 
+            pix_equiv_t *c = &pix_get_curproc()->ctx;
+
+
             if(n < c->print_first_n) {
                 trace("\treg hash=%x\n", c->reg_hash);
                 trace("\tspsr=%x\n", spsr);
