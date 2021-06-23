@@ -222,6 +222,19 @@ As a first step, you should migrate your code from above into:
 Here you'll go through a set of steps and make sure that each passes
 the checksum tests.
 
+
+Note: to print the first N do this:
+
+            if(n < c->print_first_n) {
+                trace("\treg hash=%x\n", c->reg_hash);
+                trace("\tspsr=%x\n", spsr);
+                trace("\tpc = %x, lr = %x\n", regs[15], pc);
+                for(int i = 0; i < 16; i++)
+                    trace("\tregs[%d] = %x\n", i, regs[i]);
+                trace("------------------------------------------------------\n");
+            }
+
+
 For these you'll change the `part` variable in `pix.c` so that it
 goes through each part in turn, making sure the test still passes.
 (Yeah, this is pretty gross, apologies.)
