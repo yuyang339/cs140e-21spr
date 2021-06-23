@@ -177,6 +177,9 @@ The directories you'll care about:
      `fake-user-level`).
    - `tests`: these are the tests from before.
 
+It's more real than the fake-os we used before in that it has virtual memory, process
+blocks and tracks segments.
+
 As a first step, you should be able to type `make check` and the 
 tests should pass:
 
@@ -215,11 +218,6 @@ As a first step, you should migrate your code from above into:
      and put in your versions, `make check` should still pass.
 
 #### Verify that your new equivalance works
-
-This should be even easier:
-
---------------------------------------------------------------------
-Part 3: Make sure the rest of the steps work:
 
 For these you'll change the `part` variable in `pix.c` so that it
 goes through each part in turn, making sure the test still passes.
