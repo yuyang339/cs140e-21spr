@@ -14,11 +14,9 @@
 static const unsigned gpio_set0  = (GPIO_BASE + 0x1C);
 static const unsigned gpio_clr0  = (GPIO_BASE + 0x28);
 static const unsigned gpio_lev0  = (GPIO_BASE + 0x34);
-
 //
 // Part 1 implement gpio_set_on, gpio_set_off, gpio_set_output
 //
-
 // set <pin> to be an output pin.  
 //
 // note: fsel0, fsel1, fsel2 are contiguous in memory, so you 
@@ -26,18 +24,26 @@ static const unsigned gpio_lev0  = (GPIO_BASE + 0x34);
 void gpio_set_output(unsigned pin) {
     // implement this
     // use <gpio_fsel0>
+    unsigned reg = (unsigned)(pin / 10);
+    unsigned reg_address = GPIO_BASE + reg*4;
+    unsigned ra = GET32(reg_address);
+    ra &= ~(7<<((pin%10))*3);
+    ra |= 0b001<<((pin%10)*3);
+    PUT32(reg_address, ra);
 }
 
 // set GPIO <pin> on.
 void gpio_set_on(unsigned pin) {
     // implement this
     // use <gpio_set0>
+    put32((volatile unsigned *)gpio_set0, 1<<pin);
 }
 
 // set GPIO <pin> off
 void gpio_set_off(unsigned pin) {
     // implement this
     // use <gpio_clr0>
+    put32((volatile unsigned *)gpio_clr0, 1<<pin);
 }
 
 // set <pin> to <v> (v \in {0,1})
@@ -55,12 +61,17 @@ void gpio_write(unsigned pin, unsigned v) {
 // set <pin> to input.
 void gpio_set_input(unsigned pin) {
     // implement.
+    unsigned reg = (unsigned)(pin / 10);
+    unsigned reg_address = GPIO_BASE + reg*4;
+    unsigned ra = GET32(reg_address);
+    ra &= ~(7<<((pin%10))*3);
+    ra |= 0b000<<((pin%10)*3);
+    PUT32(reg_address, ra);
 }
 
 // return the value of <pin>
 int gpio_read(unsigned pin) {
     unsigned v = 0;
-
-    // implement.
+    v = GET32(gpio_lev0) & (1<<pin);
     return v;
 }
