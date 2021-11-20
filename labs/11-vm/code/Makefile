@@ -20,5 +20,5 @@ SUPPORT_OBJS = mmu-helpers.o mmu.o  mmu-asm.o
 
 # these are the binaries we give you: remove these when finished.
 STAFF_OBJS =  staff-mmu-asm.o staff-mmu.o 
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 include $(CS140E_2021_PATH)/libpi/mk/Makefile.template

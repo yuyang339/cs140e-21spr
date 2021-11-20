@@ -6,3 +6,13 @@ unsigned foo(unsigned arg0, unsigned arg1) {
     printf("real foo: have arguments (%d,%d)\n", arg0,arg1);
     return arg0 + arg1;
 }
+
+unsigned ___real_foo(unsigned arg0, unsigned arg1) {
+    printf("real foo: have arguments (%d,%d)\n", arg0,arg1);
+    return arg0 + arg1;
+}
+
+unsigned ___wrap_foo(unsigned arg0, unsigned arg1) {
+    printf("real foo: have arguments (%d,%d)\n", arg0,arg1);
+    return arg0 + arg1;
+}

@@ -1,5 +1,5 @@
 MAKEFLAGS += --no-print-directory
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 PIX_PATH = $(CS140E_2021_PATH)/pix
 include $(PIX_PATH)/mk/includes.mk
 

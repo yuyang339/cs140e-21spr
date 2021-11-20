@@ -19,7 +19,7 @@ enum {
 };
 
 void put32(volatile void *addr, uint32_t v) {
-    PUT32((uint32_t)(uint64_t)addr, v);
+    PUT32((uint32_t)((uint64_t)addr & 0xffffffff), v);
 }
 
 // same, but takes <addr> as a uint32_t
@@ -28,13 +28,13 @@ void PUT32(uint32_t addr, uint32_t v) {
     case gpio_lev0:  panic("illegal write to gpio_lev0!\n");
     default: 
         output("store (addr,v) for later lookup\n");
-        unimplemented();
+        *(uint32_t *)(uint64_t)addr |= v;
     }
     trace("PUT32:%x:%x\n", addr,v);
 }
 
 uint32_t get32(const volatile void *addr) {
-    return GET32((uint32_t)(uint64_t)addr);
+    return GET32((uint32_t)((uint64_t)addr & 0xffffffff));
 }
 
 /*
@@ -57,7 +57,7 @@ uint32_t GET32(uint32_t addr) {
     case gpio_lev0:  v = fake_random();  break;
     default: 
         // return value of last write, or random if this is the first read.
-        unimplemented();
+        v = *(uint32_t *)(uint64_t)addr;
         break;
     }
     trace("GET32:%x:%x\n", addr,v);

@@ -1,7 +1,7 @@
 NAME = pitag-linker
 
 CC = gcc
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 LIBUNIX_PATH := $(CS140E_2021_PATH)/libunix
 LIBUNIX := $(LIBUNIX_PATH)/libunix.a
 CFLAGS := -Wall -Werror -g -Wno-unused-function -Wno-unused-variable -I. -I$(LIBUNIX_PATH) -g -DRPI_UNIX

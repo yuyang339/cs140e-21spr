@@ -22,7 +22,7 @@ dep := $(OBJS:.o=.d)  # one dependency file for each source
 # where to look for everything.
 # note: if tests have the same name, you'll get a collision.
 VPATH := $(sort $(dir $(TESTS)))
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 LPP = $(CS140E_2021_PATH)/libpi
 LIBPI_FAKE = ../libpi-fake.a
 CC = gcc

@@ -17,7 +17,7 @@ $(OBJS): $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) -Wl,$(TRACE_FLAGS) $(OBJS) -o $@ 
+	$(CC) $(TRACE_FLAGS) $(OBJS) -o $@ 
 
 clean:
 	rm -rf $(NAME) *~ *.o Makefile.bak  

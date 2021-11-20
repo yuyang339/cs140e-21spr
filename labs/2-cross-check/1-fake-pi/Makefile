@@ -3,7 +3,7 @@ MAKEFLAGS += --no-print-directory
 
 # if you want to compile everything in a directory, do something like this.
 # SOURCES := $(wildcard ./*.c)
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 # define where gpio.c is, and the programs you want to run.
 LPP = $(CS140E_2021_PATH)
 GPIO         := $(LPP)/labs/1-gpio/code/gpio.c

@@ -8,3 +8,7 @@
 [0m2021.11.19 18:30:51 WARN  Build server is not auto-connectable.[0m
 [0m2021.11.19 18:30:51 WARN  no build tool detected in workspace '/Users/yangyus/Documents/github/cs140e-21spr/labs/1-gpio'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
 [0m2021.11.19 18:42:52 INFO  shutting down Metals[0m
+[0m2021.11.20 19:09:52 INFO  Started: Metals version 0.10.9 in workspace '/Users/yangyus/Documents/github/cs140e-21spr/labs/1-gpio' for client Visual Studio Code 1.62.2.[0m
+[0m2021.11.20 19:09:55 INFO  time: initialize in 3.11s[0m
+[0m2021.11.20 19:09:57 WARN  Build server is not auto-connectable.[0m
+[0m2021.11.20 19:09:57 WARN  no build tool detected in workspace '/Users/yangyus/Documents/github/cs140e-21spr/labs/1-gpio'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m

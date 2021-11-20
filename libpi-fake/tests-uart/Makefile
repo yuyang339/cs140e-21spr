@@ -1,7 +1,7 @@
 # trivial makefile: can define the SRC here or pass it in.
 # note: this is useful or dangerous: we strip out all the 
 # directory stuff so we can put the executable here.
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 # the path to your uart.c: should be in libpi/src
 PI_SRC = $(CS140E_2021_PATH)/libpi/src/uart.c
 

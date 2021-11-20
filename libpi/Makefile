@@ -9,7 +9,7 @@
 
 # how to make 'make' stop with a fatal error if warning?
 MAKEFLAGS += --error-undefined-variables
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 # check that your path is defined.
 ifndef CS140E_2021_PATH
 $(error CS140E_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)

@@ -7,7 +7,7 @@ TESTS = test2-swi
 TESTS := $(wildcard ./test*.c)
 TESTS = 0-test-nop 1-test-hello
 # TESTS = test0-nop
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 # if you want to run with register checking.
 TYPE= reg-equiv.
 

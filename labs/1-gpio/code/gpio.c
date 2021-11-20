@@ -26,24 +26,24 @@ void gpio_set_output(unsigned pin) {
     // use <gpio_fsel0>
     unsigned reg = (unsigned)(pin / 10);
     unsigned reg_address = GPIO_BASE + reg*4;
-    unsigned ra = GET32(reg_address);
+    unsigned ra = get32((volatile unsigned*)reg_address);
     ra &= ~(7<<((pin%10))*3);
     ra |= 0b001<<((pin%10)*3);
-    PUT32(reg_address, ra);
+    put32((volatile unsigned*)reg_address, ra);
 }
-
+// put32(gpio_fsel0, get32(gpio_fsel0) & ~111b);
 // set GPIO <pin> on.
-void gpio_set_on(unsigned pin) {
+void gpio_set_on(uint32_t pin) {
     // implement this
     // use <gpio_set0>
-    put32((volatile unsigned *)gpio_set0, 1<<pin);
+    put32((volatile uint32_t*)gpio_set0, 1<<pin);
 }
 
 // set GPIO <pin> off
 void gpio_set_off(unsigned pin) {
     // implement this
     // use <gpio_clr0>
-    put32((volatile unsigned *)gpio_clr0, 1<<pin);
+    put32((volatile uint32_t*)gpio_clr0, 1<<pin);
 }
 
 // set <pin> to <v> (v \in {0,1})
@@ -61,17 +61,17 @@ void gpio_write(unsigned pin, unsigned v) {
 // set <pin> to input.
 void gpio_set_input(unsigned pin) {
     // implement.
-    unsigned reg = (unsigned)(pin / 10);
-    unsigned reg_address = GPIO_BASE + reg*4;
-    unsigned ra = GET32(reg_address);
+    uint32_t reg = (uint32_t)(pin / 10);
+    uint32_t reg_address = GPIO_BASE + reg*4;
+    uint32_t ra = get32((volatile uint32_t*)reg_address);
     ra &= ~(7<<((pin%10))*3);
     ra |= 0b000<<((pin%10)*3);
-    PUT32(reg_address, ra);
+    put32((volatile uint32_t*)reg_address, ra);
 }
 
 // return the value of <pin>
 int gpio_read(unsigned pin) {
-    unsigned v = 0;
-    v = GET32(gpio_lev0) & (1<<pin);
+    uint32_t v = 0;
+    v = get32((volatile uint32_t*)gpio_lev0) & (1<<pin);
     return v;
 }

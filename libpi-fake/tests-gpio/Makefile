@@ -6,7 +6,7 @@ MAKEFLAGS += --no-print-directory
 
 TEST_SRC := $(wildcard ./[0125]-*.c)                      \
             $(wildcard ./[34]-unix-*.c)   
-
+CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 
 # make them local to this directory
 OBJS := $(patsubst %.c, %.o, $(TEST_SRC))

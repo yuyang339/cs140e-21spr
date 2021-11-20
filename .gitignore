@@ -6,3 +6,12 @@
 *.swo
 staff-*.txt
 .gdb_history
+*.json
+*.d
+*.log
+*.db
+*.elf
+*.list
+*.a
+*.bin
+*.o
