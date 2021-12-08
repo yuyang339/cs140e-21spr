@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
     char *dev_name;
     if(argc == 2)
         dev_name = find_ttyusb_last();
+        //dev_name = find_ttyusb();
     else if(argc == 3)
         dev_name = argv[1];
     else

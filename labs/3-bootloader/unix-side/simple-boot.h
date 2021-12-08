@@ -33,8 +33,8 @@ trace_get32(int fd) {
 
 static inline void
 trace_put8(int fd, uint8_t v) {
-    if(trace_p)
-        trace("PUT8:%x\n", v);
+    // if(trace_p)
+    //     trace("PUT8:%x\n", v);
     put_uint8(fd, v);
 }
 static inline void
