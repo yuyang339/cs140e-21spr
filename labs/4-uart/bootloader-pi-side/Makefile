@@ -1,6 +1,6 @@
 NAME = bootloader
 OBJS = $(NAME).o
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 LPP = $(CS140E_2021_PATH)/libpi/
 LPI = $(LPP)/libpi.a
 

@@ -28,7 +28,7 @@ SUPPORT_OBJS := $(SRC:.c=.o)
 
 # these are the binaries we give you: remove these when finished.
 STAFF_OBJS = staff-nrf-driver.o spi.o
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 include $(CS140E_2021_PATH)/libpi/mk/Makefile.template
 
 

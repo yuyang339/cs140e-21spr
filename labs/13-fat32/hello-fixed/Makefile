@@ -1,5 +1,5 @@
 NAME := hello-f
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 include $(CS140E_2021_PATH)/libpi/includes.mk
 
 CFLAGS += -Wno-unused-function -Wno-unused-variable 

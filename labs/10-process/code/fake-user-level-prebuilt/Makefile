@@ -16,7 +16,7 @@ OS_BIN = $(OS_PATH)/fake-os.bin
 
 # if you want to compile everything in a directory, do something like this.
 # SOURCES := $(wildcard ./*.c)
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 include $(CS140E_2021_PATH)/libpi/includes.mk
 
 MEMMAP := ./memmap

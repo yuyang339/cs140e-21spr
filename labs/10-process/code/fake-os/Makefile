@@ -1,5 +1,5 @@
 NAME = fake-os
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 # define this if you need to give the device for your pi
 TTYUSB = 
 

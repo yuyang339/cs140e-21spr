@@ -1,5 +1,5 @@
 NAME= pi-cat
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 LIBUNIX=$(CS140E_2021_PATH)/libunix
 LU = $(LIBUNIX)/libunix.a
 

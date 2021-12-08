@@ -6,7 +6,7 @@ BOOTLOADER = my-install
 
 # the string to extract for checking
 GREP_STR := 'HASH:\|ERROR:\|PANIC:\|PASS:\|TEST:'
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 # set if you want the code to automatically run after building.
 RUN = 1
 # set if you want the code to automatically check after building.

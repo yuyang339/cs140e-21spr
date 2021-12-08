@@ -24,7 +24,7 @@ TEST_PROGS := $(patsubst %.c, %.bin, $(TEST_SRC))
 OBJS := $(FAT32_DRIVER_SRC:.c=.o) $(FAT32_DRIVER_HELPERS_SRC:.c=.o)
 EXTERNAL_OBJS := $(EXTERNAL_SRC:.c=.o)
 DEFAULT_TEST_BIN := $(DEFAULT_TEST:.c=.bin)
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 # check that your path is defined.
 ifndef CS140E_2021_PATH
 $(error CS140E_2021_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
