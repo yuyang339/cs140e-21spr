@@ -11,7 +11,6 @@
 */
 
 #include "libunix.h"
-
 #include "simple-boot.h"
 
 // Implement steps
@@ -29,25 +28,15 @@
 // you can fail here. when you do a read and the pi doesn't send data quickly enough.
 
 void simple_boot(int fd, const uint8_t *buf, unsigned n) {
-
     // if you want to trace PUT/GET set
-
     // trace_p = 1;
-
     if(pi_roundup(n,4) % 4 != 0)
-
     panic("boot code size (%d bytes) is not a multiple of 4!\n", n);
-
     // all implementations should have the same message: same bytes,
-
     // same crc32: cross-check these values to detect if your <read_file>
-
     // is busted.
-
     trace("simple_boot: sending %d bytes, crc32=%x\n", n, crc32(buf,n));
-
     output("waiting for a start\n");
-
     uint32_t op;
 
 // we drain the initial pipe: can have garbage.  the code is a bit odd b/c
@@ -69,13 +58,9 @@ void simple_boot(int fd, const uint8_t *buf, unsigned n) {
 // message.
 
     while((op = get_op(fd)) != GET_PROG_INFO) {
-
         output("expected initial GET_PROG_INFO, got <%x>: discarding.\n", op);
-
         // have to remove just one byte since if not aligned, stays not aligned
-
         get_uint8(fd);
-
     }
 
 // enum {
@@ -157,9 +142,7 @@ void simple_boot(int fd, const uint8_t *buf, unsigned n) {
 //  =======================================================
 
     // 1. reply to the GET_PROG_INFO
-
     // unimplemented();
-
     trace_put32(fd, PUT_PROG_INFO);
 
     // 2. drain any extra GET_PROG_INFOS
@@ -167,47 +150,27 @@ void simple_boot(int fd, const uint8_t *buf, unsigned n) {
     // unimplemented();
 
     uint32_t cksum = crc32(buf,n);
-
     trace_put32(fd, ARMBASE);
-
     trace_put32(fd, n);
-
     trace_put32(fd, cksum);
-
     // 3. check that we received a GET_CODE
-
     // unimplemented();
-
     while((op = get_op(fd)) != GET_CODE) {
-
     output("expected GET_CODE, got <%x>: discarding.\n", op);
-
     // have to remove just one byte since if not aligned, stays not aligned
-
     get_uint8(fd);
-
 }
 
 uint32_t received_cksum = trace_get32(fd);
-
 if (received_cksum != cksum) return;
-
 // 4. handle it: send a PUT_CODE + the code.
-
 // unimplemented();
+    trace_put32(fd, PUT_CODE);
+    for(int i=0; i<n; i++) {
+        trace_put8(fd, *(buf+i));
+    }
 
-trace_put32(fd, PUT_CODE);
-
-for(int i=0; i<n; i++) {
-
-trace_put8(fd, *(buf+i));
-
-}
-
-// 5. Wait for BOOT_SUCCESS
-
-ck_eq32(fd, "BOOT_SUCCESS mismatch", BOOT_SUCCESS, get_op(fd));
-
-output("bootloader: Done.\n");
-
+    // 5. Wait for BOOT_SUCCESS
+    ck_eq32(fd, "BOOT_SUCCESS mismatch", BOOT_SUCCESS, get_op(fd));
+    output("bootloader: Done.\n");
 }

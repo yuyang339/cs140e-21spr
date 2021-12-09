@@ -15,7 +15,6 @@
 // forever if no data arrives in <boot_get32>
 
 #ifndef __GETCODE_H__
-
 #define __GETCODE_H__
 
 /*****************************************************************
@@ -29,29 +28,18 @@
 // the machine if you lose data or it does not show up.
 
 uint32_t boot_get32(void) {
-
     uint32_t u = boot_get8();
-
     u |= boot_get8() << 8;
-
     u |= boot_get8() << 16;
-
     u |= boot_get8() << 24;
-
     return u;
-
 }
 
 void boot_put32(uint32_t u) {
-
     boot_put8((u >> 0)  & 0xff);
-
     boot_put8((u >> 8)  & 0xff);
-
     boot_put8((u >> 16) & 0xff);
-
     boot_put8((u >> 24) & 0xff);
-
 }
 
 // send a string <msg> to the unix side to print.
@@ -81,7 +69,6 @@ void boot_put32(uint32_t u) {
 //      after you have completely received a message.
 
 static void boot_putk(const char *msg) {
-
 // lame strlen since we do not have one atm.
     int n;
     for(n = 0; msg[n]; n++);
@@ -89,7 +76,6 @@ static void boot_putk(const char *msg) {
     boot_put32(n);
     for(n = 0; msg[n]; n++)
         boot_put8(msg[n]);
-
 }
 
 #define die(code) do {      \
@@ -124,50 +110,32 @@ static void boot_putk(const char *msg) {
 //     can overflow.
 
 static unsigned
-
 has_data_timeout(unsigned timeout) {
-
     // implement this!
-
     if(!boot_has_data()) {
-
         delay_ms(timeout);
-
         return 0;
-
     } else {
-
         return 1;
-
     }
-
 }
 
 // send a <GET_PROG_INFO> message every 300ms.
 
 static void wait_for_data(unsigned usec_timeout) {
-
     do {
-
         boot_put32(GET_PROG_INFO);
-
     } while(!has_data_timeout(usec_timeout));
-
 }
 
 // IMPLEMENT this routine.
-
 //
-
 // Simple bootloader: put all of your code here.
 
 static inline long get_code(void) {
-
 // 1. keep sending GET_PROG_INFO every 300ms until
-
 // there is data.
-
-wait_for_data(300 * 1000);
+    wait_for_data(300 * 1000);
 
 /****************************************************************
 
@@ -175,68 +143,41 @@ wait_for_data(300 * 1000);
 
 */
 
-long addr = 0;
-
-// 2. expect: [PUT_PROG_INFO, addr, nbytes, cksum]
-
-//    we echo cksum back in step 4 to help debugging.
-
-uint32_t op;
-
+    long addr = 0;
+    // 2. expect: [PUT_PROG_INFO, addr, nbytes, cksum]
+    //    we echo cksum back in step 4 to help debugging.
+    uint32_t op;
     while((op = boot_get32()) != PUT_PROG_INFO) {
+    }
+    addr = boot_get32();
+    uint32_t nbytes = boot_get32();
+    uint32_t cksum = boot_get32();
+    // 3. If the binary will collide with us, abort.
+    //    you can assume that code must be below where the booloader code
+    //    gap starts.
+    // 4. send [GET_CODE, cksum] back.
 
-}
+    boot_put32(GET_CODE);
+    boot_put32(cksum);
+    // 5. expect: [PUT_CODE, <code>]
+    //  read each sent byte and write it starting at
+    //  <addr> using PUT8
 
-addr = boot_get32();
+    while((op = boot_get32()) != PUT_CODE) {
+    }
 
-uint32_t nbytes = boot_get32();
+    uint8_t* pi_addr = (uint8_t*)addr;
+    for(int i = 0; i < nbytes; i++) {
+        *(pi_addr+i) = boot_get8();
+    }
 
-uint32_t cksum = boot_get32();
-
-// 3. If the binary will collide with us, abort.
-
-//    you can assume that code must be below where the booloader code
-
-//    gap starts.
-
-// 4. send [GET_CODE, cksum] back.
-
-boot_put32(GET_CODE);
-
-boot_put32(cksum);
-
-// 5. expect: [PUT_CODE, <code>]
-
-//  read each sent byte and write it starting at
-
-//  <addr> using PUT8
-
-while((op = boot_get32()) != PUT_CODE) {
-
-}
-
-uint8_t* pi_addr = (uint8_t*)addr;
-
-for(int i = 0; i < nbytes; i++) {
-
-    *(pi_addr+i) = boot_get8();
-
-}
-
-// 6. verify the cksum of the copied code.
-
-uint32_t calculated_cksum = crc32((uint8_t*)addr, nbytes);
-
-if (calculated_cksum != cksum) return 0;
-
-// 7. send back a BOOT_SUCCESS!
-
-boot_putk("Yang: success: Received the program!\n");
-
-boot_put32(BOOT_SUCCESS);
-
+    // 6. verify the cksum of the copied code.
+    uint32_t calculated_cksum = crc32((uint8_t*)addr, nbytes);
+    if (calculated_cksum != cksum) return 0;
+    // 7. send back a BOOT_SUCCESS!
+    boot_putk("Yang: success: Received the program!\n");
+    boot_put32(BOOT_SUCCESS);
     return addr;
-
 }
 
 #endif

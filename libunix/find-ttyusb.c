@@ -45,31 +45,18 @@ static int filter(const struct dirent *d) {
 //     };
 
     for(int j = 0; j < 2; j++) {
-
         const char * ttyusb_prefix = ttyusb_prefixes[j];
-
         int prefix_len = strlen(ttyusb_prefix);
-
         int found = 1;
-
         for(int i = 0; i < prefix_len; i++) {
-
             if (*(ttyusb_prefix+i) != *(d->d_name+i)) {
-
                 found = 0;
-
                 break;
-
             }
-
         }
-
         if (found == 1) return 1;
-
     }
-
     return 0;
-
 }
 
 // find the TTY-usb device (if any) by using <scandir> to search for
@@ -83,90 +70,59 @@ static int filter(const struct dirent *d) {
 // error: panic's if 0 or more than 1 devices.
 
 char *find_ttyusb(void) {
-
 // use <alphasort> in <scandir>
-
 // return a malloc'd name so doesn't corrupt.
-
     struct dirent **namelist;
-
     int n;
-
     char * res;
-
     n = scandir("/dev", &namelist, NULL, alphasort);
-
     if (n <= 0)
-
 // perror("find_ttyusb n<=0");
-
         return "find_ttyusb n<=0";
-
     else {
-
         while (n--) {
-
             if (filter(namelist[n]) == 1) {
-
                 int name_len = strlen(namelist[n]->d_name);
-
                 res = (char *)malloc(name_len + 1);
-
                 strcpy(res, namelist[n]->d_name);
-
                 return res;
-
             }
-
             free(namelist[n]);
-
         }
-
         free(namelist);
-
     }
 
 // perror("find_ttyusb: not found");
-
     return "find_ttyusb: not found";
-
 }
 
 // return the most recently mounted ttyusb (the one
-
 // mounted last).  use the modification time
-
 // returned by stat().
 
 char *find_ttyusb_last(void) {
-
     struct dirent **namelist;
-
     int n;
-
     char * res = NULL;
     time_t t = {0};
     n = scandir("/dev", &namelist, NULL, alphasort);
     if (n <= 0)
         return "find_ttyusb_last n<=0";
     else {
-        res = (char*)malloc(17);
+        res = (char*)malloc(24);
         while (n--) {
             if (filter(namelist[n]) == 1) {
                 // int size = strlen(namelist[n]->d_name);
-                char * dest = (char *)malloc(17);
-                dest[0] = '/';
-                dest[1] = 'd';
-                dest[2] = 'e';
-                dest[3] = 'v';
-                dest[4] = '/';
-                char * path = strcat(dest, namelist[n]->d_name);
+                char * dest = (char *)malloc(24);
+                
+                strcat(dest, "/dev/");
+                strcat(dest, namelist[n]->d_name);
                 struct stat buf;
-                stat(path, &buf);
+                stat(dest, &buf);
                 if (buf.st_mtime > t) {
                     t = buf.st_mtime;
                     // int name_len = strlen(namelist[n]->d_name);
-                    strcpy(res, path);
+                    strcpy(res, dest);
                 }
                 free(dest);
             }
@@ -174,87 +130,48 @@ char *find_ttyusb_last(void) {
         }
         // free(namelist);
     }
-
     if (res == NULL) return "find_ttyusb_last: not found";
-
     return res;
-
 }
 
 // return the oldest mounted ttyusb (the one mounted
-
 // "first") --- use the modification returned by
-
 // stat()
 
 char *find_ttyusb_first(void) {
-
     struct dirent **namelist;
-
     int n;
-
     char * res = NULL;
-
     time_t t = time(NULL);
-
     n = scandir("/dev", &namelist, NULL, alphasort);
-
     if (n <= 0)
-
         return "find_ttyusb_first n< 0";
-
     else {
-
         while (n--) {
-
             if (filter(namelist[n]) == 1) {
-
                 int size = strlen(namelist[n]->d_name);
-
                 char * dest = malloc(size+6);
-
                 dest[0] = '/';
-
                 dest[1] = 'd';
-
                 dest[2] = 'e';
-
                 dest[3] = 'v';
-
                 dest[4] = '/';
-
                 char * path = strcat(dest, namelist[n]->d_name);
-
                 struct stat buf;
-
                 stat(path, &buf);
-
                 if (buf.st_mtime < t) {
-
                     t = buf.st_mtime;
-
                     int name_len = strlen(namelist[n]->d_name);
-
                     res = (char*)malloc(name_len + 1);
-
                     strcpy(res, namelist[n]->d_name);
-
-                }   
-
+                }
             }
-
             // free(namelist[n]);
-
         }
-
         free(namelist);
-
     }
-
     if (res == NULL) return "find_ttyusb_first: not found";
-
     return res;
-
 }
 
 // struct stat
