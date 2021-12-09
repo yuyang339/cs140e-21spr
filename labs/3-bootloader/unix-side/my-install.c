@@ -58,7 +58,6 @@ int main(int argc, char *argv[]) {
     char *pi_prog = argv[argc-1];
 	unsigned nbytes;
     uint8_t *code = read_file(&nbytes, pi_prog);
-
     // 4. let's send it!
 	output("%s: tty-usb=<%s> program=<%s> about to boot\n", progname, dev_name, pi_prog);
     simple_boot(fd, code, nbytes);

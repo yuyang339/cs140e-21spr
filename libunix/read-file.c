@@ -83,21 +83,27 @@
 void *read_file(unsigned *size, const char *name) {
     struct stat buf;
     stat(name, &buf);
-    *size = buf.st_size;
-    FILE * fp = fopen(name, "r");
-    unsigned size_with_zero_pad = (*size+4) - (*size)%4;
-    void * res = malloc(size_with_zero_pad);
-    if(fp != NULL){
-        char symbol;
-        while((symbol = getc(fp)) != EOF) {
-            strcat(res, &symbol);
+    // *size = buf.st_size;
+    FILE * fp = fopen(name, "rb");
+    unsigned size_with_zero_pad = (buf.st_size+4) - buf.st_size%4;
+    *size = size_with_zero_pad;
+    char * res = (char *)malloc(size_with_zero_pad);
+    int i = 0;
+    if(fp){
+        while(1) {
+            int symbol = fgetc(fp);
+            if (symbol == EOF) break;
+            *(res+i) = (char)symbol;
+            i++;
         }
-        fclose(fp);
-        for(int i = 0; i < size_with_zero_pad-*size; i++) {
-            *((char*)res+i) = 0;
+        output("res@@ %s\n", res);
+        for(int i = 0; i < size_with_zero_pad-buf.st_size; i++) {
+            *(res+i) = 0;
         }
+    } else {
+        output("@@@cannot open file\n");
     }
-
+    fclose(fp);
     return res;
 
 }
