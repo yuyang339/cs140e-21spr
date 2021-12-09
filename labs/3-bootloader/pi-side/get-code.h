@@ -112,12 +112,14 @@ static void boot_putk(const char *msg) {
 static unsigned
 has_data_timeout(unsigned timeout) {
     // implement this!
-    if(!boot_has_data()) {
-        delay_ms(timeout);
-        return 0;
-    } else {
-        return 1;
+    unsigned rb = timer_get_usec();
+    while(!boot_has_data()) {
+        unsigned ra = timer_get_usec();
+        if ((ra-rb) >= timeout) {
+            return 0;
+        }
     }
+    return 1;
 }
 
 // send a <GET_PROG_INFO> message every 300ms.
