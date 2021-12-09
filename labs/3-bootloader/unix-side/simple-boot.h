@@ -13,7 +13,7 @@
 //
 // there are other ways to do this --- this is
 // clumsy, but simple.
-static int trace_p = 0;
+static int trace_p = 1;
 
 static inline uint8_t
 trace_get8(int fd) {

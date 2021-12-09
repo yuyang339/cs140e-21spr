@@ -135,7 +135,7 @@ static void wait_for_data(unsigned usec_timeout) {
 static inline long get_code(void) {
 // 1. keep sending GET_PROG_INFO every 300ms until
 // there is data.
-    wait_for_data(300 * 1000);
+    wait_for_data(300);
 
 /****************************************************************
 
@@ -148,6 +148,7 @@ static inline long get_code(void) {
     //    we echo cksum back in step 4 to help debugging.
     uint32_t op;
     while((op = boot_get32()) != PUT_PROG_INFO) {
+        boot_get8();
     }
     addr = boot_get32();
     uint32_t nbytes = boot_get32();
@@ -164,6 +165,7 @@ static inline long get_code(void) {
     //  <addr> using PUT8
 
     while((op = boot_get32()) != PUT_CODE) {
+        boot_get8();
     }
 
     uint8_t* pi_addr = (uint8_t*)addr;

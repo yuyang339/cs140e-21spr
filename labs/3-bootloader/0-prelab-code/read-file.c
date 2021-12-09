@@ -81,37 +81,21 @@
 // };
 
 void *read_file(unsigned *size, const char *name) {
-
     struct stat buf;
-
     stat(name, &buf);
-
     *size = buf.st_size;
-
     FILE * fp = fopen(name, "r");
-
     unsigned size_with_zero_pad = (*size+4) - (*size)%4;
-
     void * res = malloc(size_with_zero_pad);
-
     if(fp != NULL){
-
         char symbol;
-
         while((symbol = getc(fp)) != EOF) {
-
             strcat(res, &symbol);
-
         }
-
         fclose(fp);
-
         for(int i = 0; i < size_with_zero_pad-*size; i++) {
-
             *((char*)res+i) = 0;
-
         }
-
     }
 
     return res;
