@@ -135,11 +135,11 @@ void simple_boot(int fd, const uint8_t *buf, unsigned n) {
 
 // message.
 
-    // while((op = get_op(fd)) != GET_PROG_INFO) {
-    //     output("expected initial GET_PROG_INFO, got <%x>: discarding.\n", op);
-    //     // have to remove just one byte since if not aligned, stays not aligned
-    //     get_uint8(fd);
-    // }
+    while((op = get_op(fd)) != GET_PROG_INFO) {
+        output("expected initial GET_PROG_INFO, got <%x>: discarding.\n", op);
+        // have to remove just one byte since if not aligned, stays not aligned
+        get_uint8(fd);
+    }
 
     // 1. reply to the GET_PROG_INFO
     // unimplemented();

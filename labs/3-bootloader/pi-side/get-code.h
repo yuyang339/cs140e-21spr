@@ -137,7 +137,7 @@ static void wait_for_data(unsigned usec_timeout) {
 static inline long get_code(void) {
 // 1. keep sending GET_PROG_INFO every 300ms until
 // there is data.
-    wait_for_data(300);
+    wait_for_data(300*1000);
 
 /****************************************************************
 
