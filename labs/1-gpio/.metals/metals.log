@@ -13,3 +13,10 @@
 [0m2021.11.20 19:09:57 WARN  Build server is not auto-connectable.[0m
 [0m2021.11.20 19:09:57 WARN  no build tool detected in workspace '/Users/yangyus/Documents/github/cs140e-21spr/labs/1-gpio'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
 [0m2021.11.20 20:00:53 INFO  shutting down Metals[0m
+[0m2021.12.16 07:11:26 INFO  Started: Metals version 0.10.9 in workspace '/Users/yangyus/Documents/github/cs140e-21spr/labs/1-gpio' for client Visual Studio Code 1.62.2.[0m
+[0m2021.12.16 07:11:28 INFO  time: initialize in 2.69s[0m
+[0m2021.12.16 07:11:30 WARN  Build server is not auto-connectable.[0m
+[0m2021.12.16 07:11:30 WARN  no build tool detected in workspace '/Users/yangyus/Documents/github/cs140e-21spr/labs/1-gpio'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Dec 16, 2021 9:25:23 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.12.16 09:49:23 INFO  shutting down Metals[0m

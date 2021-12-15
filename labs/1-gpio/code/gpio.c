@@ -34,7 +34,7 @@ void gpio_set_output(unsigned pin) {
 }
 // put32(gpio_fsel0, get32(gpio_fsel0) & ~111b);
 // set GPIO <pin> on.
-void gpio_set_on(uint32_t pin) {
+void gpio_set_on(unsigned pin) {
     // implement this
     // use <gpio_set0>
     // put32((volatile uint32_t*)gpio_set0, 1<<pin);

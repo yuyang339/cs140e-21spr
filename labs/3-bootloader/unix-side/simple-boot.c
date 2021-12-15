@@ -162,7 +162,10 @@ void simple_boot(int fd, const uint8_t *buf, unsigned n) {
     }
 
 uint32_t received_cksum = trace_get32(fd);
-if (received_cksum != cksum) return;
+if (received_cksum != cksum) {
+    output("cksum failed.\n");
+    return;
+}
 // 4. handle it: send a PUT_CODE + the code.
 // unimplemented();
     trace_put32(fd, PUT_CODE);
