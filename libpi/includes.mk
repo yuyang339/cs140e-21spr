@@ -1,7 +1,6 @@
 # setup useful variables that can be used by make.
 
 ARM = arm-none-eabi
-# CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
 
 CC = $(ARM)-gcc
 LD  = $(ARM)-ld

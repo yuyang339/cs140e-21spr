@@ -23,7 +23,7 @@ TEST_SRC := 0-test-exit.c 0-test-nop.c 3-test-vec.c
 TEST_SRC := 1-test-hello.c
 TEST_SRC := 0-test-nop.c
 TEST_SRC := $(wildcard ./[0-9]-test*.c)
-CS140E_2021_PATH=/Users/yangyus/Documents/github/cs140e-21spr
+
 # put all your miscellaneous assembly in this file. 
 SUPPORT_OBJS = 
 
