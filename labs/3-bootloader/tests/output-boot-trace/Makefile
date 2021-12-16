@@ -43,7 +43,7 @@ all: run
 %.check: % 
 	@echo -n "checking <$*>: ";
 	@$(BOOTLOAD) ./$* 2>&1 > /dev/null | grep $(GREP_STR) | grep -v 20200034 | uniq > ./$<.test
-	@diff ./$<.test  ./$<.test
+	@diff ./$<.out  ./$<.test
 	@echo " Success: <$*>!";
 	
 
