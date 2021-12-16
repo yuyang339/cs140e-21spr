@@ -20,3 +20,6 @@ labs/1-gpio/.metals/metals.h2.db
 labs/1-gpio/.metals/metals.log
 labs/3-bootloader/unix-side/my-install
 labs/3-bootloader/unix-side/my-install
+labs/3-bootloader/tests/my-install
+labs/3-bootloader/tests/output-boot-trace/my-install.trace
+labs/3-bootloader/unix-side/my-install

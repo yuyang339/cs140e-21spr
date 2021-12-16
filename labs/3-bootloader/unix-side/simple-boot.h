@@ -18,8 +18,8 @@ static int trace_p = 1;
 static inline uint8_t
 trace_get8(int fd) {
     uint8_t v = get_uint8(fd);
-    if(trace_p)
-        trace("GET8:%x\n", v);
+    // if(trace_p)
+    //     trace("GET8:%x\n", v);
     return v;
 }
 

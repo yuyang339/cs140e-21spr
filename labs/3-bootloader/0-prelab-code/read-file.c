@@ -85,9 +85,8 @@ void *read_file(unsigned *size, const char *name) {
     stat(name, &buf);
     // *size = buf.st_size;
     FILE * fp = fopen(name, "rb");
-    unsigned size_with_zero_pad = (buf.st_size+4) - buf.st_size%4;
-    *size = size_with_zero_pad;
-    char * res = (char *)malloc(size_with_zero_pad);
+    *size = buf.st_size;
+    char * res = (char *)malloc(buf.st_size);
     int i = 0;
     if(fp){
         while(1) {
@@ -95,9 +94,6 @@ void *read_file(unsigned *size, const char *name) {
             if (symbol == EOF) break;
             *(res+i) = (char)symbol;
             i++;
-        }
-        for(int i = 0; i < size_with_zero_pad-buf.st_size; i++) {
-            *(res+i) = 0;
         }
     } else {
         output("@@@cannot open file\n");
