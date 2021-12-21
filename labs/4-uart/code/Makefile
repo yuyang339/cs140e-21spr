@@ -22,7 +22,7 @@ libs:
 	make -C $(LPP)
 
 no-uart: hello-no-uart.bin
-	my-install $<
+	~/bin/my-install.trace $<
 
 hello-no-uart.elf: $(NAME).o
 	$(LD) $(START) $< -T $(LPP)/memmap -o $@  $(LIBS)
@@ -42,7 +42,7 @@ $(NAME).elf: $(OBJS) $(MEMMAP) $(DEPS)
 	$(OCP) $*.elf -O binary $*.bin
 
 run: $(NAME).bin
-	my-install $(NAME).bin
+	~/bin/my-install.trace $(NAME).bin
 
 tags: 
 	ctags *.[chSs] $(LPP)/*.[ch] $(LPP)/*.[chSs]
