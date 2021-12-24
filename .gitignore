@@ -25,3 +25,7 @@ labs/3-bootloader/tests/output-boot-trace/my-install.trace
 labs/3-bootloader/unix-side/my-install
 labs/3-bootloader/tests/output-no-boot-trace/my-install
 labs/3-bootloader/unix-side/my-install
+labs/3-bootloader/unix-side/my-install
+labs/3-bootloader/unix-side/my-install
+labs/4-uart/pi-cat/pi-cat
+labs/4-uart/pi-cat/tags

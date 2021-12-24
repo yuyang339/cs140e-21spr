@@ -64,6 +64,7 @@ get_op(int fd) {
     // tracing operations here except for the first word after we are 
     // sure it is not a <PRINT_STRING>
     uint32_t op = get_uint32(fd);
+
     if(op != PRINT_STRING) {
         if(trace_p)
             trace("GET32:%x\n", op);

@@ -43,8 +43,6 @@ void uart_init(void) {
     PUT32(AUX_ENB, ra);
 
     // set the baud rate to 115,200
-    // 250MHz, 283
-    // 1GHz, 1166
     ra = GET32(AUX_MU_BAUD);;
     ra &= ~(283);
     ra |= (283);

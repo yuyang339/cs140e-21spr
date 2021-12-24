@@ -35,7 +35,7 @@ $(NAME).elf: $(NAME).o $(MEMMAP) $(DEPS)
 
 # your my-install should figure this out
 run: $(NAME).bin
-	my-install $(NAME).bin
+	~/bin/my-install $(NAME).bin
 
 tags: 
 	ctags *.[chSs] $(LPP)/*.[ch] $(LPP)/*.[chSs]

@@ -179,6 +179,7 @@ static inline long get_code(void) {
     uint32_t calculated_cksum = crc32((uint8_t*)addr, nbytes);
     if (calculated_cksum != cksum) return 0;
     // 7. send back a BOOT_SUCCESS!
+    
     boot_putk("Yang: success: Received the program!\n");
     boot_put32(BOOT_SUCCESS);
     return addr;
