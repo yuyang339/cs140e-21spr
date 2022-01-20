@@ -29,3 +29,4 @@ labs/3-bootloader/unix-side/my-install
 labs/3-bootloader/unix-side/my-install
 labs/4-uart/pi-cat/pi-cat
 labs/4-uart/pi-cat/tags
+labs/4-uart/bootloader-pi-side/kernel.img

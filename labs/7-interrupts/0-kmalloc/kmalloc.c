@@ -6,6 +6,9 @@ extern char __heap_start__;
 // track if initialized.
 static int init_p;
 
+unsigned* heap_ptr;
+unsigned* kmalloc_addr;
+
 // this is the minimum alignment: must always
 // roundup to at least sizeof(union align)
 union align {
@@ -49,7 +52,15 @@ static inline unsigned roundup(unsigned x, unsigned n) {
 void *kmalloc(unsigned nbytes) {
     assert(nbytes);
     demand(init_p, calling before initialized);
-    unimplemented();
+    // unimplemented();
+    unsigned size = max_u32(sizeof(align), 4);
+    if (!is_aligned_ptr(kmalloc_addr, size)) {
+        kmalloc_addr = (unsigned *)roundup((unsigned)kmalloc_addr, size);
+    }
+    
+    heap_ptr = kmalloc_addr+roundup(nbytes, size);
+    trace("kmalloc=%p\n", heap_ptr);
+    return kmalloc_addr;
 }
 
 /*
@@ -60,10 +71,15 @@ void *kmalloc_aligned(unsigned nbytes, unsigned alignment) {
     assert(nbytes);
     demand(init_p, calling before initialized);
     demand(is_pow2(alignment), assuming power of two);
-
     if(alignment <= 4)
         return kmalloc(nbytes);
-    unimplemented();
+    // unimplemented();
+    if (!is_aligned_ptr(heap_ptr, alignment)) {
+        heap_ptr = (unsigned *)roundup((unsigned)heap_ptr, alignment);
+    }
+    kmalloc_addr = heap_ptr;
+    heap_ptr += roundup(nbytes, alignment);
+    return kmalloc_addr;
 }
 
 /*
@@ -78,7 +94,9 @@ void kmalloc_init(void) {
     if(init_p)
         return;
     init_p = 1;
-    unimplemented();
+    // unimplemented();
+    heap_ptr = (unsigned *)roundup((unsigned)&__heap_start__, 4);
+    kmalloc_addr = heap_ptr;
 }
 
 /*
@@ -88,7 +106,9 @@ void kmalloc_init(void) {
 void kmalloc_init_set_start(unsigned _addr) {
     demand(!init_p, already initialized);
     init_p = 1;
-    unimplemented();
+    // unimplemented();
+    heap_ptr = (unsigned *)roundup(_addr, 4);
+    kmalloc_addr = heap_ptr;
 }
 
 
@@ -97,7 +117,8 @@ void kmalloc_init_set_start(unsigned _addr) {
  * pointer back to the beginning.
  */
 void kfree_all(void) {
-    unimplemented();
+    // unimplemented();
+    heap_ptr = (unsigned *)(unsigned)&__heap_start__;
 }
 
 // return pointer to the first free byte.
@@ -106,5 +127,6 @@ void kfree_all(void) {
 //    assert(<addr> < kmalloc_heap_ptr());
 // 
 void *kmalloc_heap_ptr(void) {
-    unimplemented();
+    // unimplemented();
+    return kmalloc_addr;
 }
